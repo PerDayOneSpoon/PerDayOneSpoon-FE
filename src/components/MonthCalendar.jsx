@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { ReactComponent as IconLeft } from '../assets/icons/icon-left.svg';
+import { ReactComponent as IconRight } from '../assets/icons/icon-right.svg';
 import Calendar from 'react-calendar';
 import moment from 'moment';
 import styled from 'styled-components';
@@ -27,6 +29,8 @@ const MonthCalendar = () => {
         tileContent={tileContent}
         view={'month'}
         calendarType={'Hebrew'}
+        nextLabel={<IconRight />}
+        prevLabel={<IconLeft />}
         showFixedNumberOfWeeks={true}
         formatDay={(locale, date) => moment(date).format('DD')}
       />
@@ -49,11 +53,34 @@ const CutomCalendar = styled(Calendar)`
   }
 
   .react-calendar__navigation {
-    justify-content: space-evenly;
+    position: relative;
+    justify-content: flex-start;
+
+    button:hover,
+    button:focus {
+      background-color: transparent;
+    }
   }
   .react-calendar__navigation__label {
     flex-grow: initial !important;
+    font-size: 20px;
   }
+
+  .react-calendar__navigation__prev-button,
+  .react-calendar__navigation__next-button {
+    min-width: 24px;
+    padding: 0;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .react-calendar__navigation__prev-button {
+    right: 32px;
+  }
+  .react-calendar__navigation__next-button {
+    right: 0;
+  }
+
   .react-calendar__navigation__prev2-button,
   .react-calendar__navigation__next2-button {
     display: none;

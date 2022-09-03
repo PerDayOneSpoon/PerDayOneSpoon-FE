@@ -20,8 +20,8 @@ const Container = styled.div`
 `;
 
 const BadgeImg = styled.div`
-  width: 96px;
-  height: 96px;
+  width: 100%;
+  aspect-ratio: 1/1;
   border-radius: 20px;
   background-color: #eee;
   margin-bottom: 6px;

@@ -89,5 +89,5 @@ const Title = styled.h2`
 const BadgeContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-  gap: 30px;
+  gap: 16px;
 `;

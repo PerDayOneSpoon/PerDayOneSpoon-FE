@@ -1,24 +1,17 @@
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { ReactComponent as IconAdd } from '../assets/icons/icon-add.svg';
+import { ReactComponent as IconLeft } from '../assets/icons/icon-left.svg';
 
-const Header = ({ isMain, isTitle, title }) => {
-  if (isMain) {
-    return (
-      <Container>
-        <ContainerInner isMain={isMain}>
-          <DateText>2022년 8월 31일</DateText>
-          <IconGroup>
-            <Icon />
-            <Icon />
-          </IconGroup>
-        </ContainerInner>
-      </Container>
-    );
-  } else if (isTitle) {
+const Header = ({ isTitle, title }) => {
+  const navigate = useNavigate();
+
+  if (isTitle) {
     return (
       <Container>
         <ContainerInner isTitle={isTitle}>
           <IconContainer>
-            <Icon />
+            <IconLeft onClick={() => navigate(-1)} />
           </IconContainer>
           <TitleText>{title}</TitleText>
           <button>추가</button>
@@ -29,10 +22,9 @@ const Header = ({ isMain, isTitle, title }) => {
     return (
       <Container>
         <ContainerInner>
-          <IconGroup>
-            <Icon />
-            <Icon />
-          </IconGroup>
+          <IconContainer>
+            <IconAdd onClick={() => navigate('/create')} />
+          </IconContainer>
         </ContainerInner>
       </Container>
     );
@@ -56,26 +48,13 @@ const ContainerInner = styled.div`
   height: 100%;
   display: flex;
   align-items: center;
-  justify-content: ${({ isMain, isTitle }) =>
-    isMain || isTitle ? 'space-between' : 'flex-end'};
+  justify-content: ${({ isTitle }) => (isTitle ? 'space-between' : 'flex-end')};
 `;
 
-const DateText = styled.h2``;
-
-const IconGroup = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const IconContainer = styled.div``;
-
-const Icon = styled.div`
+const IconContainer = styled.div`
   width: 24px;
   height: 24px;
-  background-color: black;
-  & + & {
-    margin-left: 6px;
-  }
+  cursor: pointer;
 `;
 
 const TitleText = styled.h2``;

@@ -14,15 +14,15 @@ const Goal = () => {
             <Period>시작날짜 - 끝나는 날짜</Period>
           </div>
         </RightContent>
-        <Icon />
+        <Icon onClick={(e) => e.stopPropagation()} />
       </Contents>
       {isTimer && (
         <TimerContainer>
-          <Time>10:00</Time>
           <Timer>
+            <Time>10:00</Time>
             <ProgressBar />
-            <Button>시작</Button>
           </Timer>
+          <Button onClick={(e) => e.stopPropagation()}>시작</Button>
         </TimerContainer>
       )}
     </Container>
@@ -72,26 +72,32 @@ const Icon = styled.div`
 `;
 
 const TimerContainer = styled.div`
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
   margin-top: 16px;
 `;
 
-const Time = styled.div``;
+const Time = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+`;
 
 const Timer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  width: 100%;
 `;
 
 const ProgressBar = styled.div`
   width: 100%;
-  height: 10px;
+  height: 16px;
   margin-top: 4px;
   background-color: white;
-  border-radius: 6px;
+  border-radius: 4px;
 `;
 
 const Button = styled.button`
   width: 50px;
+  margin-bottom: -4px;
   margin-left: 16px;
 `;
