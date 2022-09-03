@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
-const NavBarIcon = ({ imgSrc, label }) => {
+const NavBarIcon = ({ imgSrc, label, handleNavIconClick }) => {
   return (
-    <Container>
+    <Container onClick={handleNavIconClick}>
       <IconContainer>
         <NavIcon src={imgSrc} />
       </IconContainer>
@@ -19,15 +19,18 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  cursor: pointer;
 `;
 
 const IconContainer = styled.div`
-  width: 24px;
-  height: 24px;
+  width: 20px;
+  height: 20px;
   margin-bottom: 2px;
 `;
 const NavIcon = styled.img`
   width: 100%;
   object-fit: cover;
 `;
-const Label = styled.div``;
+const Label = styled.div`
+  font-size: 14px;
+`;

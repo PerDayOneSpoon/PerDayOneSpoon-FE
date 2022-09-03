@@ -24,10 +24,19 @@ const NavBar = () => {
     },
   ];
 
+  const handleNavIconClick = (val) => {
+    console.log(val);
+  };
+
   return (
     <NavContainer>
       {data.map((item) => (
-        <NavBarIcon key={item.id} label={item.label} imgSrc={item.imgSrc} />
+        <NavBarIcon
+          key={item.id}
+          label={item.label}
+          imgSrc={item.imgSrc}
+          handleNavIconClick={() => handleNavIconClick(item.label)}
+        />
       ))}
     </NavContainer>
   );
