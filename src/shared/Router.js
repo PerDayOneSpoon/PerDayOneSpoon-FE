@@ -8,6 +8,7 @@ import FriendsPage from '../pages/FriendsPage';
 import MyPage from '../pages/MyPage';
 import SearchPage from '../pages/SearchPage';
 import GraphPage from '../pages/GraphPage';
+import SettingPage from '../pages/SettingPage';
 
 const Router = () => {
   return (
@@ -21,6 +22,7 @@ const Router = () => {
         <Route path='/mypage' element={<MyPage />} />
         <Route path='/search' element={<SearchPage />} />
         <Route path='/graph' element={<GraphPage />} />
+        <Route path='/setting' element={<SettingPage />} />
       </Routes>
     </BrowserRouter>
   );
