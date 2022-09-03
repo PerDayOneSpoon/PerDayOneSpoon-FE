@@ -6,7 +6,7 @@ import NavBar from '../components/NavBar';
 
 const MainPage = () => {
   return (
-    <Layout>
+    <Layout hasNavBar={true}>
       <Header isMain={true} />
       <MonthCalendar />
       <GoalList />
