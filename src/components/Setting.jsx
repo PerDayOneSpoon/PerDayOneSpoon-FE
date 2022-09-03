@@ -1,65 +1,80 @@
 import styled from 'styled-components';
+import { ReactComponent as IconAddCharacter } from '../assets/icons/icon-add-character.svg';
 
 const Setting = () => {
   return (
-    <>
-      <StTop />
-      <StSettingTop>
-        <p>계정</p>
-        <button>저장</button>
-      </StSettingTop>
-      <StPictureBox>
-        <StPicture />
-      </StPictureBox>
-      <StProfileText>프로필 사진 바꾸기</StProfileText>
-      <St1 />
-      <St2 />
-    </>
+    <Container>
+      <Top>
+        <IconContainer>
+          <IconAddCharacter />
+        </IconContainer>
+        <ChangingText>프로필사진바꾸기</ChangingText>
+      </Top>
+      <Hr></Hr>
+
+      <SettingForm>
+        <FormLeft>이름</FormLeft>
+        <FormRight>이름</FormRight>
+      </SettingForm>
+      <SettingForm>
+        <FormLeft>상태 메세지</FormLeft>
+        <FormRight>상태 메세지</FormRight>
+      </SettingForm>
+    </Container>
   );
 };
 
 export default Setting;
 
-const StTop = styled.div`
-  height: 44px;
-`;
+const Container = styled.div``;
 
-const StSettingTop = styled.div`
-  background-color: #f28787;
+const Top = styled.div`
+  height: 172px;
+  padding: 16px;
+  margin-bottom: 32px;
   display: flex;
-`;
-
-const StPictureBox = styled.div`
-  background-color: pink;
-  display: flex;
+  align-items: center;
   justify-content: center;
-  padding-top: 24px;
-  padding-bottom: 15px;
+  flex-direction: column;
+  box-sizing: border-box;
 `;
 
-const StPicture = styled.div`
-  width: 96px;
-  height: 96px;
-  background-color: #eee;
-  border-radius: 50px;
+const IconContainer = styled.div`
+  margin-bottom: 16px;
+  cursor: pointer;
 `;
 
-const StProfileText = styled.div`
-  background-color: #dbdbfc;
+const ChangingText = styled.div`
+  width: 100%;
+  border: none;
+  padding: 4px;
+  outline: none;
+  background-color: transparent;
+  text-align: center;
+`;
+
+const Hr = styled.hr`
+  width: 100%;
+`;
+
+const SettingForm = styled.div`
+  display: flex;
+  align-items: center;
+
+  & + & {
+    margin-top: 32px;
+  }
+`;
+
+const FormLeft = styled.div`
+  width: 90px;
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
   letter-spacing: 0.15px;
-  display: flex;
-  justify-content: center;
 `;
-
-const St1 = styled.div`
-  background-color: #fbfba1;
-  height: 224px;
-`;
-
-const St2 = styled.div`
-  background-color: #b7e3f4;
-  height: 348px; ;
+const FormRight = styled.div`
+  margin-left: 16px;
+  opacity: 0.3;
+  border-bottom: 1px solid black;
 `;

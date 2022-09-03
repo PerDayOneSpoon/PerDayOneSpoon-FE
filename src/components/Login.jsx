@@ -56,7 +56,6 @@ const StTop = styled.div`
 `;
 
 const StMainLogoBox = styled.div`
-  background-color: #88d488;
   width: 100%;
   padding-top: 73px;
   display: flex;
@@ -70,7 +69,6 @@ const StMainDiv = styled.div`
 `;
 
 const StMainText = styled.div`
-  background-color: pink;
   padding-top: 23px;
   padding-bottom: 8px;
   text-align: center;
@@ -81,7 +79,6 @@ const StMainText = styled.div`
 `;
 
 const StSubText = styled.div`
-  background-color: #fdd371;
   font-weight: 400;
   font-size: 12px;
   line-height: 16px;
@@ -91,14 +88,12 @@ const StSubText = styled.div`
 `;
 
 const StLoginStart = styled.div`
-  background-color: yellow;
   display: flex;
   justify-content: center;
   height: 51px;
 `;
 
 const StLoginButtonBox = styled.div`
-  background-color: skyblue;
   width: 100%;
   padding-top: 29px;
   padding-bottom: 136px;
