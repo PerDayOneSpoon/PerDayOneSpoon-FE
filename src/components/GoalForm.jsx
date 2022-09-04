@@ -4,9 +4,11 @@ import { ReactComponent as IconAddCharacter } from '../assets/icons/icon-add-cha
 import BottomSheetModal from '../components/BottomSheetModal';
 import MonthCalendar from './MonthCalendar';
 import { colors } from '../theme/theme';
+import { useRecoilState } from 'recoil';
+import { modalState } from '../recoil/modalAtom';
 
 const GoalForm = () => {
-  const handleModalClose = () => {};
+  const [isOpen, setIsOpen] = useRecoilState(modalState);
 
   return (
     <>
@@ -24,7 +26,9 @@ const GoalForm = () => {
           </SetForm>
           <SetForm>
             <FormLeft>시작 날짜</FormLeft>
-            <FormRight>2022년 08월 31일</FormRight>
+            <FormRight onClick={() => setIsOpen(true)}>
+              2022년 08월 31일
+            </FormRight>
           </SetForm>
           <SetForm>
             <FormLeft>종료 날짜</FormLeft>
@@ -46,11 +50,7 @@ const GoalForm = () => {
       </BottomSheetModal> */}
 
       {/* 날짜 설정 모달 */}
-      <BottomSheetModal
-        isHeader={true}
-        headerTitle='날짜'
-        handleModalClose={handleModalClose}
-      >
+      <BottomSheetModal isHeader={true} headerTitle='날짜'>
         <MonthCalendar />
       </BottomSheetModal>
 
