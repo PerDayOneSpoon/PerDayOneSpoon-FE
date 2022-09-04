@@ -1,7 +1,7 @@
 import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
 
-const GlobalStyles = createGlobalStyle` 
+const GlobalStyles = createGlobalStyle`   
   ${reset}
   body {
     overflow-y: scroll;
