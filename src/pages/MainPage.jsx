@@ -5,8 +5,12 @@ import GoalList from '../components/GoalList';
 import NavBar from '../components/NavBar';
 import axios from 'axios';
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import * as refreshToken from '../shared/common';
 
 const MainPage = () => {
+  const navigate = useNavigate();
+
   useEffect(() => {
     getMainAuth();
   }, []);
@@ -14,44 +18,34 @@ const MainPage = () => {
   function getMainAuth() {
     console.log('getMainAuth...');
     console.log(localStorage.getItem('access-token'));
+    const accessToken = localStorage.getItem('access-token');
+
+    if (accessToken == null || accessToken === '') {
+      navigate('/login');
+      return false;
+    }
 
     axios
       .get(`https://park-minhyeok.shop/api/main/auth`, {
         headers: {
-          //Authorization: `${localStorage.getItem('access-token')}`,
-          Authorization:
-            'Bearer yJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJiank5MjNAbmF2ZXIuY29tIiwibWVtYmVyIjoi67Cw7KeAIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY2MjI5NTczNH0.7aOM70vc0guhSx9Vs-xMQkLGLz1AHnizQLcmbzfxdNe7Z7Wz0v7NFvRLn8a_AsB60TLm7m6ANhd0_gAHLYoEGw',
+          Authorization: `${localStorage.getItem('access-token')}`,
         },
       })
-      .then(function (response) {
-        console.log('api/main/auth response success');
-        console.log(response.data);
+      .then(function (res) {
+        console.log('api/main/auth res success');
+        console.log(res.data);
 
-        //response.data.code === 400
-        if (response.data.message === '토큰이 만료되었습니다.') {
-          getNewAccessToken();
-        } else if (response.data.message === '변조된 토큰입니다.') {
-          getNewAccessToken();
+        if (res.data.code === 200) {
+          console.log(res.data);
+        } else if (res.data.message === '토큰이 만료되었습니다.') {
+          //res.data.code === 400
+          refreshToken.getNewAccessToken();
         }
       })
       .catch(function (error) {
-        console.log('api/main/auth response error');
-
+        console.log('api/main/auth res error');
         console.log('error : ' + error);
-      });
-  }
-
-  function getNewAccessToken() {
-    console.log('getNewAccessToken...');
-    axios
-      .post(`${process.env.REACT_APP_BASE_URL}/api/user/login/reissue`, {
-        refreshtoken: localStorage.getItem('refresh-token'),
-      })
-      .then(function (response) {
-        console.log(response.data);
-      })
-      .catch(function (error) {
-        console.log('error : ' + error);
+        navigate('/login');
       });
   }
 

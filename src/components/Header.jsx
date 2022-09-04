@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { ReactComponent as IconAdd } from '../assets/icons/icon-add.svg';
@@ -5,6 +6,14 @@ import { ReactComponent as IconLeft } from '../assets/icons/icon-left.svg';
 
 const Header = ({ isTitle, title }) => {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem('access-token');
+
+    if (accessToken == null || accessToken === '') {
+      navigate('/login');
+    }
+  }, []);
 
   if (isTitle) {
     return (
