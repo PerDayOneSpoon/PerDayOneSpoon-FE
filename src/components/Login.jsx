@@ -1,12 +1,14 @@
 import styled from 'styled-components';
-import { KAKAO_AUTH_URL } from '../api/api';
+import { KAKAO_AUTH_URL, GOOGLE_AUTH_URL } from '../api/api';
 
 const Login = () => {
   const handleKakaoLogin = () => {
     window.location.href = KAKAO_AUTH_URL;
   };
 
-  console.log(KAKAO_AUTH_URL);
+  const handleGoogleLogin = () => {
+    window.location.href = GOOGLE_AUTH_URL;
+  };
 
   return (
     <>
@@ -39,7 +41,7 @@ const Login = () => {
         </div>
 
         <div>
-          <StLoginButton />
+          <StLoginButton onClick={handleGoogleLogin} />
           <StLoginText>
             구글로<br></br>시작하기
           </StLoginText>
