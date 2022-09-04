@@ -58,7 +58,7 @@ const MainPage = () => {
   return (
     <Layout hasNavBar={true}>
       <Header />
-      <MonthCalendar />
+      <MonthCalendar isMain={true} />
       <GoalList />
       <NavBar />
     </Layout>

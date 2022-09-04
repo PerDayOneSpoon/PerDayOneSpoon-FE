@@ -3,10 +3,10 @@ import { ReactComponent as IconLeft } from '../assets/icons/icon-left.svg';
 import { ReactComponent as IconRight } from '../assets/icons/icon-right.svg';
 import Calendar from 'react-calendar';
 import moment from 'moment';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import 'react-calendar/dist/Calendar.css';
 
-const MonthCalendar = () => {
+const MonthCalendar = ({ isMain }) => {
   const [value, setValue] = useState(new Date());
   const data = ['1', '2', '3', '4', '5'];
 
@@ -26,13 +26,14 @@ const MonthCalendar = () => {
     <Container>
       <CutomCalendar
         value={value}
-        tileContent={tileContent}
+        tileContent={isMain ? tileContent : null}
         view={'month'}
         calendarType={'Hebrew'}
         nextLabel={<IconRight />}
         prevLabel={<IconLeft />}
         showFixedNumberOfWeeks={true}
         formatDay={(locale, date) => moment(date).format('DD')}
+        isMain={isMain}
       />
     </Container>
   );
@@ -41,20 +42,29 @@ const MonthCalendar = () => {
 export default MonthCalendar;
 
 const Container = styled.div`
-  height: 340px;
-  margin-bottom: 16px;
-  padding-bottom: 16px;
+  /* height: 340px; */
 `;
 
 const CutomCalendar = styled(Calendar)`
   &.react-calendar {
     width: 100%;
     border: none;
+    margin-bottom: ${({ isMain }) => (isMain ? '16px' : null)};
+  }
+
+  .react-calendar__tile--active {
+    border-radius: 50%;
+  }
+
+  .react-calendar__month-view__days button {
+    height: unset !important;
+    aspect-ratio: 1/1;
   }
 
   .react-calendar__navigation {
     position: relative;
-    justify-content: flex-start;
+    align-items: center;
+    justify-content: ${({ isMain }) => (isMain ? 'flex-start' : 'center')};
 
     button:hover,
     button:focus {
@@ -64,21 +74,32 @@ const CutomCalendar = styled(Calendar)`
   .react-calendar__navigation__label {
     flex-grow: initial !important;
     font-size: 20px;
+    padding-top: 0;
+    padding: 0 ${({ isMain }) => (!isMain ? '24px' : null)};
   }
+
+  ${({ isMain }) =>
+    isMain &&
+    css`
+      .react-calendar__navigation__prev-button,
+      .react-calendar__navigation__next-button {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+      .react-calendar__navigation__prev-button {
+        right: 32px;
+      }
+      .react-calendar__navigation__next-button {
+        right: 0;
+      }
+    `}
 
   .react-calendar__navigation__prev-button,
   .react-calendar__navigation__next-button {
     min-width: 24px;
+    height: 24px;
     padding: 0;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-  .react-calendar__navigation__prev-button {
-    right: 32px;
-  }
-  .react-calendar__navigation__next-button {
-    right: 0;
   }
 
   .react-calendar__navigation__prev2-button,

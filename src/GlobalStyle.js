@@ -1,8 +1,11 @@
 import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
 
-const GlobalStyles = createGlobalStyle` 
+const GlobalStyles = createGlobalStyle`   
   ${reset}
+  :root {
+       --vh: 100%;
+   }
   body {
     overflow-y: scroll;
     -ms-overflow-style: none; /* IE and Edge */
