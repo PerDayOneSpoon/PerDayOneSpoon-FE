@@ -9,6 +9,7 @@ import MyPage from '../pages/MyPage';
 import SearchPage from '../pages/SearchPage';
 import GraphPage from '../pages/GraphPage';
 import SettingPage from '../pages/SettingPage';
+import KakaoLogin from '../components/KakaoLogin';
 
 const Router = () => {
   return (
@@ -16,6 +17,7 @@ const Router = () => {
       <Routes>
         <Route path='/' element={<MainPage />} />
         <Route path='/login' element={<LoginPage />} />
+        <Route path='/user/login/callback' element={<KakaoLogin />} />
         <Route path='/collection' element={<CollectionPage />} />
         <Route path='/friends' element={<FriendsPage />} />
         <Route path='/create' element={<CreatePage />} />
