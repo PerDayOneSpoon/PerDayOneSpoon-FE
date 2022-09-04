@@ -6,8 +6,6 @@ import MonthCalendar from './MonthCalendar';
 import { colors } from '../theme/theme';
 
 const GoalForm = () => {
-  const [isModal, setIsModal] = useState(false);
-
   const handleModalClose = () => {};
 
   return (

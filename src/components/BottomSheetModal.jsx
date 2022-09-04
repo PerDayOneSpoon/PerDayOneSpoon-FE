@@ -1,30 +1,34 @@
 import styled, { css } from 'styled-components';
 import { isMobile } from 'react-device-detect';
 import { ReactComponent as IconClose } from '../assets/icons/icon-close.svg';
+import { useRecoilState } from 'recoil';
+import { modalState } from '../recoil/modalAtom';
 
-const BottomSheetModal = ({
-  children,
-  isHeader,
-  headerTitle,
-  handleModalClose,
-}) => {
+const BottomSheetModal = ({ children, isHeader, headerTitle }) => {
+  const [isOpen, setIsOpen] = useRecoilState(modalState);
+  const handleModalClose = () => {
+    setIsOpen(false);
+  };
+
   return (
-    <ModalContainer isMobile={isMobile} onClick={handleModalClose}>
-      <ModalContent onClick={(e) => e.stopPropagation()}>
-        {isHeader && (
-          <ModalHeader>
-            <IconContainer>
-              <IconClose onClick={handleModalClose} />
-            </IconContainer>
-            <Title>{headerTitle}</Title>
-            <ButtonContainer>
-              <button>확인</button>
-            </ButtonContainer>
-          </ModalHeader>
-        )}
-        {children}
-      </ModalContent>
-    </ModalContainer>
+    isOpen && (
+      <ModalContainer isMobile={isMobile} onClick={handleModalClose}>
+        <ModalContent onClick={(e) => e.stopPropagation()}>
+          {isHeader && (
+            <ModalHeader>
+              <IconContainer>
+                <IconClose onClick={handleModalClose} />
+              </IconContainer>
+              <Title>{headerTitle}</Title>
+              <ButtonContainer>
+                <button>확인</button>
+              </ButtonContainer>
+            </ModalHeader>
+          )}
+          {children}
+        </ModalContent>
+      </ModalContainer>
+    )
   );
 };
 

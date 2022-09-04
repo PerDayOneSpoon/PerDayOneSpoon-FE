@@ -1,6 +1,13 @@
 import { useEffect } from 'react';
 import Router from './shared/Router';
 import GlobalStyles from './GlobalStyle';
+import {
+  RecoilRoot,
+  atom,
+  selector,
+  useRecoilState,
+  useRecoilValue,
+} from 'recoil';
 
 function App() {
   function setScreenSize() {
@@ -13,10 +20,10 @@ function App() {
   });
 
   return (
-    <>
+    <RecoilRoot>
       <GlobalStyles />
       <Router />
-    </>
+    </RecoilRoot>
   );
 }
 
