@@ -1,11 +1,28 @@
 import styled, { css } from 'styled-components';
 import { isMobile } from 'react-device-detect';
+import { ReactComponent as IconClose } from '../assets/icons/icon-close.svg';
 
-const BottomSheetModal = () => {
+const BottomSheetModal = ({
+  children,
+  isHeader,
+  headerTitle,
+  handleModalClose,
+}) => {
   return (
-    <ModalContainer isMobile={isMobile}>
-      <ModalContent>
-        fdfsdfsdfdsfdsfsdffffffffffdfsdfsdfdsfdsfsdffffffffffdfsdfsdfdsfdsfsdffffffffffdfsdfsdfdsfdsfsdffffffffffdfsdfsdfdsfdsfsdfffffffff????
+    <ModalContainer isMobile={isMobile} onClick={handleModalClose}>
+      <ModalContent onClick={(e) => e.stopPropagation()}>
+        {isHeader && (
+          <ModalHeader>
+            <IconContainer>
+              <IconClose onClick={handleModalClose} />
+            </IconContainer>
+            <Title>{headerTitle}</Title>
+            <ButtonContainer>
+              <button>확인</button>
+            </ButtonContainer>
+          </ModalHeader>
+        )}
+        {children}
       </ModalContent>
     </ModalContainer>
   );
@@ -27,14 +44,12 @@ const ModalContainer = styled.div`
           transform: translateX(-50%);
         `}
   z-index: 999;
-  background-color: rgba(0, 0, 0, 0.65);
+  background-color: rgba(0, 0, 0, 0.5);
   max-width: 422px;
   width: 100%;
   height: 100vh;
   height: -webkit-fill-available;
   height: fill-available;
-  border: 1px solid green;
-
   margin-right: -16px;
 `;
 
@@ -48,10 +63,18 @@ const ModalContent = styled.div`
   padding: 16px;
   background-color: white;
   box-sizing: border-box;
-  border: 1px solid blue;
   border-radius: 10px 10px 0px 0px;
 `;
 
-const Wrap = styled.div`
-  width: 100%;
+const ModalHeader = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
 `;
+
+const IconContainer = styled.div`
+  cursor: pointer;
+`;
+const Title = styled.div``;
+const ButtonContainer = styled.div``;
