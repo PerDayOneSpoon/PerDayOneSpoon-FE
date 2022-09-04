@@ -17,8 +17,17 @@ function KakaoLogin() {
       .then((res) => {
         console.log('res@@@@@', res);
 
-        localStorage.setItem('access-token', res.headers.authorization);
-        localStorage.setItem('refresh-token', res.headers.refreshtoken);
+        if (res.data.code === 200) {
+          localStorage.setItem('access-token', res.headers.authorization);
+          localStorage.setItem('refresh-token', res.headers.refreshtoken);
+
+          navigate('/');
+        } else {
+          navigate('/login');
+        }
+      })
+      .catch(function (error) {
+        console.log('error : ' + error);
       });
   }, [code, navigate]);
 
