@@ -1,6 +1,13 @@
 import styled from 'styled-components';
+import { KAKAO_AUTH_URL } from '../api/api';
 
 const Login = () => {
+  const handleKakaoLogin = () => {
+    window.location.href = KAKAO_AUTH_URL;
+  };
+
+  console.log(KAKAO_AUTH_URL);
+
   return (
     <>
       <StTop />
@@ -23,7 +30,7 @@ const Login = () => {
 
       <StLoginButtonBox>
         <div>
-          <StLoginButton />
+          <StLoginButton onClick={handleKakaoLogin} />
           <StLoginText>
             카카오로
             <br />
