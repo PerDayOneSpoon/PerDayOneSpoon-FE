@@ -8,7 +8,7 @@ export const getNewAccessToken = async () => {
   const refreshToken = localStorage.getItem('refresh-token');
   await axios
     .post(
-      `${process.env.REACT_APP_BASE_URL}/user/login/reissue`,
+      `${process.env.REACT_APP_BASE_URL}/login/reissue`,
       {},
       {
         headers: {
@@ -18,10 +18,12 @@ export const getNewAccessToken = async () => {
     )
     .then(function (res) {
       console.log(res.data);
+      console.log('res.headers!!!!!!!', res.headers);
       if (res.data.code === 200) {
         localStorage.setItem('access-token', res.headers.authorization);
         localStorage.setItem('refresh-token', res.headers.refreshtoken);
         // localStorage -> token reSave
+
         window.location.reload();
         // navigate('/');
       }
