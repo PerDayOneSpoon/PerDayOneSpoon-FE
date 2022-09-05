@@ -8,14 +8,14 @@ function GoogleLogin() {
 
   let code = new URL(window.location.href).searchParams.get('code');
 
-  console.log('code@@@@@', code);
+  console.log('code!!!!!!', code);
 
   useEffect(() => {
     axios
       .get(`${API.GOOGLE_LOGIN}?code=${code}`)
 
       .then((res) => {
-        console.log('res@@@@@', res);
+        console.log('res!!!!!', res);
 
         if (res.data.code === 200) {
           localStorage.setItem('access-token', res.headers.authorization);

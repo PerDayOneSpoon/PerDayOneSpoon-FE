@@ -5,7 +5,9 @@ export const getNewAccessToken = async () => {
   console.log('getNewAccessToken...');
 
   const navigate = useNavigate;
+
   const refreshToken = localStorage.getItem('refresh-token');
+
   await axios
     .post(
       `${process.env.REACT_APP_BASE_URL}/login/reissue`,
@@ -16,20 +18,22 @@ export const getNewAccessToken = async () => {
         },
       }
     )
+
     .then(function (res) {
       console.log(res.data);
       console.log('res.headers!!!!!!!', res.headers);
+
       if (res.data.code === 200) {
         localStorage.setItem('access-token', res.headers.authorization);
         localStorage.setItem('refresh-token', res.headers.refreshtoken);
-        // localStorage -> token reSave
 
         window.location.reload();
         // navigate('/');
       }
     })
+
     .catch(function (error) {
-      console.log('error : ' + error);
+      console.log('error!!!!!!', error);
 
       // logout api
       localStorage.removeItem('access-token');

@@ -15,7 +15,7 @@ const MainPage = () => {
     getMainAuth();
   }, []);
 
-  function getMainAuth() {
+  const getMainAuth = () => {
     console.log('getMainAuth!!!!');
     console.log(localStorage.getItem('access-token'));
 
@@ -27,11 +27,12 @@ const MainPage = () => {
     }
 
     axios
-      .get(`https://park-minhyeok.shop/api/main/auth`, {
+      .get(`${process.env.REACT_APP_BASE_URL}/api/main/auth`, {
         headers: {
           Authorization: accessToken,
         },
       })
+
       .then(function (res) {
         console.log('api/main/auth res success!!!!!!!');
         console.log('res!!!!!!!!!', res);
@@ -39,16 +40,11 @@ const MainPage = () => {
         if (res.status === 200) {
           console.log('res.status === 200!!!!!!', res);
         }
-
-        // else if (res.data.code === 408) {
-        //   console.log('res.data.code === 408!!!!!!!!');
-        //   refreshToken.getNewAccessToken();
-        // }
       })
+
       .catch(function (error) {
         console.log('api/main/auth res error!!!!!!!', error);
 
-        // 추후 삭제 navigae만 살리기, 변조된 토큰일시 그래프페이지에 테스트!!!!!
         if (error.message === 'Request failed with status code 408') {
           console.log('408');
           refreshToken.getNewAccessToken();
@@ -56,7 +52,7 @@ const MainPage = () => {
           navigate('/login');
         }
       });
-  }
+  };
 
   return (
     <Layout hasNavBar={true}>
