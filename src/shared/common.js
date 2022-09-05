@@ -22,7 +22,9 @@ export const getNewAccessToken = async () => {
         localStorage.setItem('access-token', res.headers.authorization);
         localStorage.setItem('refresh-token', res.headers.refreshtoken);
         // localStorage -> token reSave
-        window.location.reload(); //page refresh
+
+        // window.location.reload();
+        navigate('/');
       }
     })
     .catch(function (error) {
