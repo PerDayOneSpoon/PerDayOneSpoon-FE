@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
+import FriendsItem from './FriendsItem';
 
 const Search = () => {
   const data = [
@@ -20,21 +21,21 @@ const Search = () => {
     {
       freindsid: '2',
       email: 'dsfjsd@naver.com',
-      userId: '전소연',
+      userId: '단비',
       user_code: '012621',
       socialid: 'qweqwjk123',
     },
     {
       freindsid: '2',
       email: 'dsfjsd@naver.com',
-      userId: '배지',
+      userId: '김단비',
       user_code: '012621',
       socialid: 'qweqwjk123',
     },
     {
       freindsid: '2',
       email: 'dsfjsd@naver.com',
-      userId: '킹갓소연',
+      userId: '눈사람단비',
       user_code: '012621',
       socialid: 'qweqwjk123',
     },
@@ -54,8 +55,8 @@ const Search = () => {
       <div className='container'>
         {data
           .filter((val) => {
-            if (searchTerm == '') {
-              return val;
+            if (searchTerm === null || searchTerm === '') {
+              return false;
             } else if (
               val.userId.toLowerCase().includes(searchTerm.toLowerCase())
               // ||
@@ -65,11 +66,7 @@ const Search = () => {
             }
           })
           .map((val, key) => {
-            return (
-              <div className='beaches' key={key}>
-                <p>{val.userId}</p>
-              </div>
-            );
+            return <FriendsItem val={val} key={key} />;
           })}
       </div>
     </div>
