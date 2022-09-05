@@ -10,6 +10,7 @@ import SearchPage from '../pages/SearchPage';
 import SettingPage from '../pages/SettingPage';
 import KakaoLogin from '../components/KakaoLogin';
 import GoogleLogin from '../components/GoogleLogin';
+import GraphPage from '../pages/GraphPage';
 
 const Router = () => {
   return (
@@ -25,6 +26,7 @@ const Router = () => {
         <Route path='/mypage' element={<MyPage />} />
         <Route path='/search' element={<SearchPage />} />
         <Route path='/setting' element={<SettingPage />} />
+        <Route path='/graph' element={<GraphPage />} />
       </Routes>
     </BrowserRouter>
   );
