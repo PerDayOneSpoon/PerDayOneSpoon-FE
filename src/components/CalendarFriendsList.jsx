@@ -6,25 +6,30 @@ const CalendarFriendsList = () => {
     {
       id: 1,
       profile: '이미지',
-      name: '친구1',
+      name: '나',
     },
     {
       id: 2,
       profile: '이미지',
-      name: '친구2',
+      name: '친구1',
     },
     {
       id: 3,
       profile: '이미지',
-      name: '친구3',
+      name: '친구2',
     },
     {
       id: 4,
       profile: '이미지',
-      name: '친구4',
+      name: '친구3',
     },
     {
       id: 5,
+      profile: '이미지',
+      name: '친구4',
+    },
+    {
+      id: 6,
       profile: '이미지',
       name: '친구5',
     },

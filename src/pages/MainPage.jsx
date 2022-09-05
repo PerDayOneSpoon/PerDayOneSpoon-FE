@@ -60,7 +60,7 @@ const MainPage = () => {
     <Layout hasNavBar={true}>
       <Header />
       <Graph />
-      <GoalList />
+      <GoalList isMain={true} />
       <NavBar />
     </Layout>
   );

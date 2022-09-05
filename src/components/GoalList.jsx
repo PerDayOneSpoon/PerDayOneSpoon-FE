@@ -3,7 +3,7 @@ import { colors } from '../theme/theme';
 import Goal from './Goal';
 import GoalEmpty from './GoalEmpty';
 
-const GoalList = () => {
+const GoalList = ({ isMain }) => {
   const data = [
     { id: 1, title: 'a' },
     { id: 2, title: 'b' },
@@ -19,7 +19,7 @@ const GoalList = () => {
   return (
     <Container>
       {data.map((item) => (
-        <Goal key={item.id} data={item} />
+        <Goal key={item.id} data={item} isMain={isMain} />
       ))}
     </Container>
   );

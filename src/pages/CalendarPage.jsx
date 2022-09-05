@@ -7,7 +7,7 @@ import MonthCalendar from '../components/MonthCalendar';
 import GoalList from '../components/GoalList';
 import NavBar from '../components/NavBar';
 
-const FriendsPage = () => {
+const Calendar = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,4 +29,4 @@ const FriendsPage = () => {
   );
 };
 
-export default FriendsPage;
+export default Calendar;

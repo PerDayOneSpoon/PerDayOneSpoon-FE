@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 
-const Goal = () => {
-  const [isTimer, setIsTimer] = useState(false);
+const Goal = ({ isMain }) => {
+  const [isTimer, seIsTimer] = useState(false);
 
   return (
-    <Container onClick={() => setIsTimer(!isTimer)}>
+    <Container onClick={() => seIsTimer(!isTimer)}>
       <Contents>
         <RightContent>
           <Chracter />
@@ -16,7 +16,7 @@ const Goal = () => {
         </RightContent>
         <Icon onClick={(e) => e.stopPropagation()} />
       </Contents>
-      {isTimer && (
+      {isMain && isTimer && (
         <TimerContainer>
           <Timer>
             <Time>10:00</Time>
