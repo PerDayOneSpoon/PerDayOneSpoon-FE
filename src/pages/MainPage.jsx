@@ -27,7 +27,7 @@ const MainPage = () => {
     }
 
     axios
-      .get(`https://park-minhyeok.shop/api/main/auth`, {
+      .get(`${process.env.REACT_APP_BASE_URL}/api/main/auth`, {
         headers: {
           Authorization: accessToken,
         },

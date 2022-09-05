@@ -25,39 +25,42 @@ const Setting = () => {
     }
 
     axios
-      .get(`https://park-minhyeok.shop/set/profile`, {
+      .get(`${process.env.REACT_APP_BASE_URL}/confirm/profile`, {
         headers: {
           Authorization: accessToken,
         },
       })
+
       .then(function (res) {
         if (res.status === 200) {
           console.log(res.data);
-          //setMyInfo(res.data);
+          setMyInfo(res.data);
         } else if (res.data.code === 408) {
           console.log('res.data.code === 408');
           refreshToken.getNewAccessToken();
         }
       })
+
       .catch(function (error) {
+        console.log('error!!!!!!!', error);
+
         // if (error.message === 'Request failed with status code 400') {
         //   refreshToken.getNewAccessToken();
         // } else {
         //   navigate('/login');
         // }
-        // temp data
 
-        const temp = {
-          id: 1,
-          email: 'fdf@naver.com',
-          nickname: '바지',
-          code: 200,
-          socialcode: '142523',
-          imgurl: 'sfdjsklf.png',
-          status: '배고파',
-        };
+        // const temp = {
+        //   id: 1,
+        //   email: 'fdf@naver.com',
+        //   nickname: '바지',
+        //   code: 200,
+        //   socialcode: '142523',
+        //   imgurl: 'sfdjsklf.png',
+        //   status: '배고파',
+        // };
 
-        setMyInfo(temp);
+        // setMyInfo(temp);
       });
   }
 
@@ -65,13 +68,13 @@ const Setting = () => {
     const accessToken = localStorage.getItem('access-token');
 
     axios
-      .delete(`https://park-minhyeok.shop/delete/user/logout`, {
+      .delete(`${process.env.REACT_APP_BASE_URL}/delete/user/logout`, {
         headers: {
           Authorization: accessToken,
         },
       })
       .then(function (res) {
-        console.log(res);
+        console.log('res!!!!!!', res);
         // localStorage.removeItem('access-token')
         if (res.status === 200) {
           //res.data.code === 200
@@ -100,7 +103,7 @@ const Setting = () => {
       <Middle>
         <SettingForm>
           <FormLeft>이름</FormLeft>
-          <FormRight>이름</FormRight>
+          <FormRight>{myInfo.nickname}</FormRight>
         </SettingForm>
         <SettingForm>
           <FormLeft>상태 메세지</FormLeft>
