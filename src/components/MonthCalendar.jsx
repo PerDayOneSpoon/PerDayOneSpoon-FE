@@ -119,7 +119,7 @@ const CutomCalendar = styled(Calendar)`
 
 const MarkContainer = styled.div`
   position: absolute;
-  bottom: 4px;
+  bottom: 12px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;

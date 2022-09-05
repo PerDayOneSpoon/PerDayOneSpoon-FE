@@ -1,25 +1,32 @@
 import styled from 'styled-components';
-import { ReactComponent as IconAddCharacter } from '../assets/icons/icon-add-character.svg';
+import Header from './Header';
+import UserInfo from './UserInfo';
+import { colors } from '../theme/theme';
 
 const Setting = () => {
   return (
     <Container>
+      <Header isTitle={true} title='계정' />
       <Top>
-        <IconContainer>
-          <IconAddCharacter />
-        </IconContainer>
+        <UserInfo />
         <ChangingText>프로필사진바꾸기</ChangingText>
       </Top>
-      <Hr></Hr>
 
-      <SettingForm>
-        <FormLeft>이름</FormLeft>
-        <FormRight>이름</FormRight>
-      </SettingForm>
-      <SettingForm>
-        <FormLeft>상태 메세지</FormLeft>
-        <FormRight>상태 메세지</FormRight>
-      </SettingForm>
+      <Middle>
+        <SettingForm>
+          <FormLeft>이름</FormLeft>
+          <FormRight>이름</FormRight>
+        </SettingForm>
+        <SettingForm>
+          <FormLeft>상태 메세지</FormLeft>
+          <FormRight>상태 메세지</FormRight>
+        </SettingForm>
+      </Middle>
+
+      <Bottom>
+        <AccountButton>로그아웃</AccountButton>
+        <AccountButton>회원탈퇴</AccountButton>
+      </Bottom>
     </Container>
   );
 };
@@ -39,22 +46,20 @@ const Top = styled.div`
   box-sizing: border-box;
 `;
 
-const IconContainer = styled.div`
-  margin-bottom: 16px;
+const ChangingText = styled.button`
+  width: 100%;
+  border: none;
+  outline: none;
+  padding: 4px;
+  font-size: 16px;
+  background-color: transparent;
+  text-align: center;
   cursor: pointer;
 `;
 
-const ChangingText = styled.div`
-  width: 100%;
-  border: none;
-  padding: 4px;
-  outline: none;
-  background-color: transparent;
-  text-align: center;
-`;
-
-const Hr = styled.hr`
-  width: 100%;
+const Middle = styled.div`
+  border-top: 1px solid ${colors.border};
+  padding-top: 24px;
 `;
 
 const SettingForm = styled.div`
@@ -62,19 +67,42 @@ const SettingForm = styled.div`
   align-items: center;
 
   & + & {
-    margin-top: 32px;
+    margin-top: 24px;
   }
 `;
 
 const FormLeft = styled.div`
-  width: 90px;
+  min-width: 90px;
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
   letter-spacing: 0.15px;
 `;
+
 const FormRight = styled.div`
+  width: 100%;
   margin-left: 16px;
   opacity: 0.3;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid ${colors.border};
+  padding: 8px 0;
+`;
+
+const Bottom = styled.div`
+  margin-top: 100px;
+`;
+const AccountButton = styled.button`
+  width: 100%;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  text-align: left;
+  color: red;
+  font-size: 16px;
+  padding: 8px 0;
+  border-bottom: 1px solid ${colors.border};
+  cursor: pointer;
+
+  & + & {
+    margin-top: 10px;
+  }
 `;
