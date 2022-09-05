@@ -65,7 +65,7 @@ const Setting = () => {
     const accessToken = localStorage.getItem('access-token');
 
     axios
-      .delete(`https://park-minhyeok.shop/set/logout`, {
+      .delete(`https://park-minhyeok.shop/delete/user/logout`, {
         headers: {
           Authorization: accessToken,
         },
