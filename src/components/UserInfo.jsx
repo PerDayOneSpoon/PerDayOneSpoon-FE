@@ -1,14 +1,14 @@
 import styled from 'styled-components';
 
-const UserInfo = ({ isMypage, user }) => {
+const UserInfo = ({ isMypage, myInfo }) => {
   if (isMypage) {
     return (
       <Container>
         <ProfileImgContainer>
           <ProfileImg />
         </ProfileImgContainer>
-        <UserName>{user.name}</UserName>
-        <UserStatus>{user.status}</UserStatus>
+        <UserName>{myInfo.nickname}</UserName>
+        <UserStatus>{myInfo.status}</UserStatus>
       </Container>
     );
   }
