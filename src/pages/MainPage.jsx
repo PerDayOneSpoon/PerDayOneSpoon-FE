@@ -28,23 +28,31 @@ const MainPage = () => {
     axios
       .get(`https://park-minhyeok.shop/api/main/auth`, {
         headers: {
-          Authorization: `${localStorage.getItem('access-token')}`,
+          Authorization: accessToken,
         },
       })
       .then(function (res) {
         console.log('api/main/auth res success');
-        console.log(res.data);
+        console.log(res);
 
-        if (res.data.code === 200) {
-          console.log(res.data);
+        if (res.status === 200) {
+          console.log(res);
         } else if (res.data.code === 408) {
+          console.log('res.data.code === 408');
           refreshToken.getNewAccessToken();
         }
       })
       .catch(function (error) {
         console.log('api/main/auth res error');
-        console.log('error : ' + error);
-        navigate('/login');
+        console.log(error);
+
+        // 추후 삭제 navigae만 살리기, 변조된 토큰일시 그래프페이지에 테스트!!!!!
+        if (error.message === 'Request failed with status code 401') {
+          console.log('401');
+          refreshToken.getNewAccessToken();
+        } else {
+          navigate('/login');
+        }
       });
   }
 
