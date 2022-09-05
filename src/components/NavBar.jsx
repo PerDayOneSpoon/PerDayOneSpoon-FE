@@ -4,6 +4,7 @@ import { NAV_BAR_HEIGHT } from '../constants/common';
 import NavBarIcon from './NavBarIcon';
 import { ReactComponent as IconHome } from '../assets/icons/icon-home.svg';
 import { ReactComponent as IconMypage } from '../assets/icons/icon-mypage.svg';
+import { ReactComponent as IconBadge } from '../assets/icons/icon-badge.svg';
 
 const NavBar = () => {
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ const NavBar = () => {
     },
     {
       id: 3,
-      icon: <IconHome />,
+      icon: <IconBadge />,
       label: '뱃지',
     },
     {
