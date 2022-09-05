@@ -37,8 +37,7 @@ const MainPage = () => {
 
         if (res.data.code === 200) {
           console.log(res.data);
-        } else if (res.data.message === '토큰이 만료되었습니다.') {
-          //res.data.code === 400
+        } else if (res.data.code === 408) {
           refreshToken.getNewAccessToken();
         }
       })
