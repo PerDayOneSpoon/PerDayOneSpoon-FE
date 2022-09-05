@@ -2,8 +2,93 @@ import styled from 'styled-components';
 import Header from './Header';
 import UserInfo from './UserInfo';
 import { colors } from '../theme/theme';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import * as refreshToken from '../shared/common';
 
 const Setting = () => {
+  const navigate = useNavigate();
+
+  const [myInfo, setMyInfo] = useState({});
+
+  useEffect(() => {
+    getProfile();
+  }, []);
+
+  function getProfile() {
+    const accessToken = localStorage.getItem('access-token');
+
+    if (accessToken == null || accessToken === '') {
+      navigate('/login');
+      return false;
+    }
+
+    axios
+      .get(`https://park-minhyeok.shop/set/profile`, {
+        headers: {
+          Authorization: accessToken,
+        },
+      })
+      .then(function (res) {
+        if (res.status === 200) {
+          console.log(res.data);
+          //setMyInfo(res.data);
+        } else if (res.data.code === 408) {
+          console.log('res.data.code === 408');
+          refreshToken.getNewAccessToken();
+        }
+      })
+      .catch(function (error) {
+        // if (error.message === 'Request failed with status code 400') {
+        //   refreshToken.getNewAccessToken();
+        // } else {
+        //   navigate('/login');
+        // }
+        // temp data
+
+        const temp = {
+          id: 1,
+          email: 'fdf@naver.com',
+          nickname: '바지',
+          code: 200,
+          socialcode: '142523',
+          imgurl: 'sfdjsklf.png',
+          status: '배고파',
+        };
+
+        setMyInfo(temp);
+      });
+  }
+
+  const doLogout = () => {
+    const accessToken = localStorage.getItem('access-token');
+
+    axios
+      .delete(`https://park-minhyeok.shop/set/logout`, {
+        headers: {
+          Authorization: accessToken,
+        },
+      })
+      .then(function (res) {
+        console.log(res);
+        // localStorage.removeItem('access-token')
+        if (res.status === 200) {
+          //res.data.code === 200
+          localStorage.removeItem('access-token');
+          localStorage.removeItem('refresh-token');
+          navigate('/login');
+        } else if (res.data.code === 400) {
+          console.log('res.data.code === 400');
+        }
+      })
+      .catch(function (error) {
+        if (error.data.code === 400) {
+          console.log('error.data.code === 400');
+        }
+      });
+  };
+
   return (
     <Container>
       <Header isTitle={true} title='계정' />
@@ -19,12 +104,12 @@ const Setting = () => {
         </SettingForm>
         <SettingForm>
           <FormLeft>상태 메세지</FormLeft>
-          <FormRight>상태 메세지</FormRight>
+          <FormRight>{myInfo.status}</FormRight>
         </SettingForm>
       </Middle>
 
       <Bottom>
-        <AccountButton>로그아웃</AccountButton>
+        <AccountButton onClick={doLogout}>로그아웃</AccountButton>
         <AccountButton>회원탈퇴</AccountButton>
       </Bottom>
     </Container>
