@@ -11,7 +11,7 @@ const MonthCalendar = ({ isMain }) => {
   const data = ['1', '2', '3', '4', '5'];
 
   const tileContent = ({ date, view }) => {
-    if (view === 'month' && date.getDay() === 0) {
+    if (view === 'month' && date.getDay() === 1) {
       return (
         <MarkContainer>
           {data.map((item) => (
@@ -52,8 +52,45 @@ const CutomCalendar = styled(Calendar)`
     margin-bottom: ${({ isMain }) => (isMain ? '16px' : null)};
   }
 
+  .react-calendar__tile:enabled:hover,
+  .react-calendar__tile:enabled:focus {
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    abbr {
+      /* display: inline-block; */
+      background-color: #eee;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
   .react-calendar__tile--active {
     border-radius: 50%;
+    background: transparent;
+    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    abbr {
+      display: inline-block;
+      width: 30px;
+      height: 30px;
+      background-color: red;
+      color: white;
+      border-radius: 50%;
+      vertical-align: middle;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   }
 
   .react-calendar__month-view__days button {
@@ -119,7 +156,7 @@ const CutomCalendar = styled(Calendar)`
 
 const MarkContainer = styled.div`
   position: absolute;
-  bottom: 12px;
+  bottom: 4px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;

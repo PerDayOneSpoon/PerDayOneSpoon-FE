@@ -8,7 +8,21 @@ import { useRecoilState } from 'recoil';
 import { modalState } from '../recoil/modalAtom';
 
 const GoalForm = () => {
-  const [isOpen, setIsOpen] = useRecoilState(modalState);
+  const [modal, setModal] = useRecoilState(modalState);
+
+  const handleOkClick = () => {
+    if (modal.type === 'month') {
+      console.log('month ok click');
+    }
+    if (modal.type === 'time') {
+      console.log('time ok click');
+    }
+  };
+
+  const handleModalTitle = (type) => {
+    if (type === 'time') return '시간';
+    if (type === 'month') return '날짜';
+  };
 
   return (
     <>
@@ -22,11 +36,13 @@ const GoalForm = () => {
         <Bottom>
           <SetForm>
             <FormLeft>목표일</FormLeft>
-            <FormRight>목표일 설정</FormRight>
+            <FormRight onClick={() => setModal({ open: true, type: 'day' })}>
+              목표일 설정
+            </FormRight>
           </SetForm>
           <SetForm>
             <FormLeft>시작 날짜</FormLeft>
-            <FormRight onClick={() => setIsOpen(true)}>
+            <FormRight onClick={() => setModal({ open: true, type: 'month' })}>
               2022년 08월 31일
             </FormRight>
           </SetForm>
@@ -36,7 +52,9 @@ const GoalForm = () => {
           </SetForm>
           <SetForm>
             <FormLeft>시간 설정</FormLeft>
-            <FormRight>미설정</FormRight>
+            <FormRight onClick={() => setModal({ open: true, type: 'time' })}>
+              미설정
+            </FormRight>
           </SetForm>
         </Bottom>
       </Container>
@@ -50,8 +68,19 @@ const GoalForm = () => {
       </BottomSheetModal> */}
 
       {/* 날짜 설정 모달 */}
-      <BottomSheetModal isHeader={true} headerTitle='날짜'>
-        <MonthCalendar />
+      <BottomSheetModal
+        isHeader={modal.type === 'day' ? false : true}
+        title={handleModalTitle(modal.type)}
+        handleOkClick={handleOkClick}
+      >
+        {modal.type === 'month' && <MonthCalendar />}
+        {modal.type === 'day' && (
+          <Days>
+            <Day>3일</Day>
+            <Day>7일</Day>
+          </Days>
+        )}
+        {modal.type === 'time' && <div>시간설정 모달</div>}
       </BottomSheetModal>
 
       {/* 시간 설정 모달 */}

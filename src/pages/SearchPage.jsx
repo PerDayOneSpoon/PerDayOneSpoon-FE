@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../layout/Layout';
+// import Search from '../components/Search';
 import Search from '../components/Search';
 
 const SearchPage = () => {

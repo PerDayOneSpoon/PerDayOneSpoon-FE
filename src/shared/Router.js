@@ -7,7 +7,6 @@ import CreatePage from '../pages/CreatePage';
 import FriendsPage from '../pages/FriendsPage';
 import MyPage from '../pages/MyPage';
 import SearchPage from '../pages/SearchPage';
-import GraphPage from '../pages/GraphPage';
 import SettingPage from '../pages/SettingPage';
 import KakaoLogin from '../components/KakaoLogin';
 import GoogleLogin from '../components/GoogleLogin';
@@ -25,7 +24,6 @@ const Router = () => {
         <Route path='/create' element={<CreatePage />} />
         <Route path='/mypage' element={<MyPage />} />
         <Route path='/search' element={<SearchPage />} />
-        <Route path='/graph' element={<GraphPage />} />
         <Route path='/setting' element={<SettingPage />} />
       </Routes>
     </BrowserRouter>
