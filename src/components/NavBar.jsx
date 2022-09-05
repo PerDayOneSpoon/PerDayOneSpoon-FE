@@ -1,7 +1,10 @@
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import { NAV_BAR_HEIGHT } from '../constants/common';
 import NavBarIcon from './NavBarIcon';
+import { ReactComponent as IconHome } from '../assets/icons/icon-home.svg';
+import { ReactComponent as IconMypage } from '../assets/icons/icon-mypage.svg';
+import { ReactComponent as IconBadge } from '../assets/icons/icon-badge.svg';
 
 const NavBar = () => {
   const navigate = useNavigate();
@@ -9,26 +12,22 @@ const NavBar = () => {
   const data = [
     {
       id: 1,
-      imgSrc:
-        'https://upload.wikimedia.org/wikipedia/commons/e/e6/Home_Icon.svg',
+      icon: <IconHome />,
       label: '홈',
     },
     {
       id: 2,
-      imgSrc:
-        'https://upload.wikimedia.org/wikipedia/commons/e/e6/Home_Icon.svg',
+      icon: <IconHome />,
       label: '캘린더',
     },
     {
       id: 3,
-      imgSrc:
-        'https://upload.wikimedia.org/wikipedia/commons/e/e6/Home_Icon.svg',
+      icon: <IconBadge />,
       label: '뱃지',
     },
     {
       id: 4,
-      imgSrc:
-        'https://upload.wikimedia.org/wikipedia/commons/e/e6/Home_Icon.svg',
+      icon: <IconMypage />,
       label: '마이페이지',
     },
   ];
@@ -60,7 +59,7 @@ const NavBar = () => {
         <NavBarIcon
           key={item.id}
           label={item.label}
-          imgSrc={item.imgSrc}
+          icon={item.icon}
           handleNavIconClick={() => handleNavIconClick(item.label)}
         />
       ))}

@@ -56,7 +56,7 @@ const MainPage = () => {
 
   return (
     <Layout hasNavBar={true}>
-      <Header />
+      <Header icon={'create'} />
       <Graph />
       <GoalList isMain={true} />
       <NavBar />

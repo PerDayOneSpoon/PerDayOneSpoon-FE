@@ -3,9 +3,23 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { ReactComponent as IconAdd } from '../assets/icons/icon-add.svg';
 import { ReactComponent as IconLeft } from '../assets/icons/icon-left.svg';
+import { ReactComponent as IconFriend } from '../assets/icons/icon-addfriend.svg';
+import { ReactComponent as IconRight } from '../assets/icons/icon-right.svg';
 
-const Header = ({ isTitle, title }) => {
+const Header = ({ isTitle, title, icon }) => {
   const navigate = useNavigate();
+
+  const handleIcons = (icon) => {
+    if (icon === 'create') {
+      return <IconAdd onClick={() => navigate('/create')} />;
+    }
+    if (icon === 'addFriend') {
+      return <IconFriend onClick={() => navigate('/search')} />;
+    }
+    if (icon === 'setting') {
+      return <IconRight onClick={() => navigate('/setting')} />;
+    }
+  };
 
   useEffect(() => {
     const accessToken = localStorage.getItem('access-token');
@@ -31,9 +45,7 @@ const Header = ({ isTitle, title }) => {
     return (
       <Container>
         <ContainerInner>
-          <IconContainer>
-            <IconAdd onClick={() => navigate('/create')} />
-          </IconContainer>
+          <IconContainer>{handleIcons(icon)}</IconContainer>
         </ContainerInner>
       </Container>
     );

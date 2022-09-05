@@ -20,7 +20,7 @@ const Calendar = () => {
 
   return (
     <Layout hasNavBar={true}>
-      <Header />
+      <Header icon={'addFriend'} />
       <CalendarFriendsList />
       <MonthCalendar isMain={true} />
       <GoalList />

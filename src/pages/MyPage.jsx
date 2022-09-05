@@ -12,7 +12,7 @@ const MyPage = () => {
 
   return (
     <Layout>
-      <Header />
+      <Header icon={'setting'} />
       <UserInfo isMypage={true} user={user} />
       <NavBar />
     </Layout>
