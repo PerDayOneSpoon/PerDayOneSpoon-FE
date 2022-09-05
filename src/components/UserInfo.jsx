@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
-const UserInfo = ({ isCollection, user }) => {
-  if (isCollection) {
+const UserInfo = ({ isMypage, user }) => {
+  if (isMypage) {
     return (
       <Container>
         <ProfileImgContainer>

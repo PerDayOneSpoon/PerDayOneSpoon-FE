@@ -28,7 +28,7 @@ const Container = styled.div`
   padding: 0 16px
     ${({ hasNavBar }) => (hasNavBar ? `${NAV_BAR_HEIGHT}px` : '0')};
   overflow: hidden;
-  border: 1px solid red;
+  border: 1px solid black;
   margin: 0 auto;
   word-break: break-all;
 `;

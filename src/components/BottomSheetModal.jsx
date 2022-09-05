@@ -4,14 +4,15 @@ import { ReactComponent as IconClose } from '../assets/icons/icon-close.svg';
 import { useRecoilState } from 'recoil';
 import { modalState } from '../recoil/modalAtom';
 
-const BottomSheetModal = ({ children, isHeader, headerTitle }) => {
-  const [isOpen, setIsOpen] = useRecoilState(modalState);
+const BottomSheetModal = ({ children, isHeader, title, handleOkClick }) => {
+  const [modal, setModal] = useRecoilState(modalState);
+
   const handleModalClose = () => {
-    setIsOpen(false);
+    setModal({ open: false });
   };
 
   return (
-    isOpen && (
+    modal.open && (
       <ModalContainer isMobile={isMobile} onClick={handleModalClose}>
         <ModalContent onClick={(e) => e.stopPropagation()}>
           {isHeader && (
@@ -19,9 +20,9 @@ const BottomSheetModal = ({ children, isHeader, headerTitle }) => {
               <IconContainer>
                 <IconClose onClick={handleModalClose} />
               </IconContainer>
-              <Title>{headerTitle}</Title>
+              <Title>{title}</Title>
               <ButtonContainer>
-                <button>확인</button>
+                <button onClick={handleOkClick}>확인</button>
               </ButtonContainer>
             </ModalHeader>
           )}

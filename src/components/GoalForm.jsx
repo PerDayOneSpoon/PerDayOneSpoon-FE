@@ -8,7 +8,21 @@ import { useRecoilState } from 'recoil';
 import { modalState } from '../recoil/modalAtom';
 
 const GoalForm = () => {
-  const [isOpen, setIsOpen] = useRecoilState(modalState);
+  const [modal, setModal] = useRecoilState(modalState);
+
+  const handleOkClick = () => {
+    if (modal.type === 'month') {
+      console.log('month ok click');
+    }
+    if (modal.type === 'time') {
+      console.log('time ok click');
+    }
+  };
+
+  // const handleModalTitle = (type) => {
+  //   if (type === 'time') return '시간';
+
+  // };
 
   return (
     <>
@@ -22,13 +36,13 @@ const GoalForm = () => {
         <Bottom>
           <SetForm>
             <FormLeft>목표일</FormLeft>
-            <FormRight>목표일 설정</FormRight>
+            <FormRight onClick={() => setModal({ open: true, type: 'day' })}>
+              목표일 설정
+            </FormRight>
           </SetForm>
           <SetForm>
             <FormLeft>시작 날짜</FormLeft>
-            <FormRight onClick={() => setIsOpen(true)}>
-              2022년 08월 31일
-            </FormRight>
+            <FormRight>2022년 08월 31일</FormRight>
           </SetForm>
           <SetForm>
             <FormLeft>종료 날짜</FormLeft>
@@ -36,26 +50,45 @@ const GoalForm = () => {
           </SetForm>
           <SetForm>
             <FormLeft>시간 설정</FormLeft>
-            <FormRight>미설정</FormRight>
+            <FormRight onClick={() => setModal({ open: true, type: 'time' })}>
+              미설정
+            </FormRight>
           </SetForm>
+          <SetForm>
+            <FormLeft>공개 설정</FormLeft>
+            <FormRight
+              onClick={() => setModal({ open: true, type: 'private' })}
+            >
+              전체 공개
+            </FormRight>
+          </SetForm>
+          <SetForm></SetForm>
         </Bottom>
       </Container>
 
-      {/* 목표일 설정 모달 */}
-      {/* <BottomSheetModal handleModalClose={handleModalClose}>
-        <Days>
-          <Day>3일</Day>
-          <Day>7일</Day>
-        </Days>
-      </BottomSheetModal> */}
-
-      {/* 날짜 설정 모달 */}
-      <BottomSheetModal isHeader={true} headerTitle='날짜'>
-        <MonthCalendar />
+      {/* 모달 */}
+      <BottomSheetModal
+        isHeader={
+          modal.type === 'day' || modal.type === 'private' ? false : true
+        }
+        title={modal.type === 'time' ? '시간' : null}
+        handleOkClick={handleOkClick}
+      >
+        {/* {modal.type === 'month' && <MonthCalendar />} */}
+        {modal.type === 'day' && (
+          <Lists>
+            <List>3일</List>
+            <List>7일</List>
+          </Lists>
+        )}
+        {modal.type === 'time' && <div>시간설정 모달</div>}
+        {modal.type === 'private' && (
+          <Lists>
+            <List>전체 공개</List>
+            <List>나만 보기</List>
+          </Lists>
+        )}
       </BottomSheetModal>
-
-      {/* 시간 설정 모달 */}
-      {/* <BottomSheetModal></BottomSheetModal> */}
     </>
   );
 };
@@ -112,12 +145,12 @@ const FormRight = styled.div`
   cursor: pointer;
 `;
 
-const Days = styled.ul`
+const Lists = styled.ul`
   text-align: center;
   padding-bottom: 24px;
 `;
 
-const Day = styled.li`
+const List = styled.li`
   padding: 16px 0;
   border-bottom: 1px solid ${colors.border};
   cursor: pointer;

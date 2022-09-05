@@ -1,8 +1,8 @@
 import Layout from '../layout/Layout';
 import Header from '../components/Header';
-import MonthCalendar from '../components/MonthCalendar';
 import GoalList from '../components/GoalList';
 import NavBar from '../components/NavBar';
+import Graph from '../components/Graph';
 import axios from 'axios';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -59,8 +59,8 @@ const MainPage = () => {
   return (
     <Layout hasNavBar={true}>
       <Header />
-      <MonthCalendar isMain={true} />
-      <GoalList />
+      <Graph />
+      <GoalList isMain={true} />
       <NavBar />
     </Layout>
   );

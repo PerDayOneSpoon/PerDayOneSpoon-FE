@@ -17,13 +17,13 @@ const NavBar = () => {
       id: 2,
       imgSrc:
         'https://upload.wikimedia.org/wikipedia/commons/e/e6/Home_Icon.svg',
-      label: '달성',
+      label: '캘린더',
     },
     {
       id: 3,
       imgSrc:
         'https://upload.wikimedia.org/wikipedia/commons/e/e6/Home_Icon.svg',
-      label: '친구',
+      label: '뱃지',
     },
     {
       id: 4,
@@ -34,14 +34,21 @@ const NavBar = () => {
   ];
 
   const handleNavIconClick = (val) => {
-    if (val === '홈') {
-      navigate('/');
-    }
-    if (val === '마이페이지') {
-      navigate('/mypage');
-    }
-    if (val === '친구') {
-      navigate('/friends');
+    switch (val) {
+      case '홈':
+        navigate('/');
+        break;
+      case '캘린더':
+        navigate('/calender');
+        break;
+      case '뱃지':
+        navigate('/collection');
+        break;
+      case '마이페이지':
+        navigate('/mypage');
+        break;
+      default:
+        return;
     }
 
     console.log(val);
