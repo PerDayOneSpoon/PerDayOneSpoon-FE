@@ -1,6 +1,6 @@
-import Layout from '../layout/Layout';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Layout from '../layout/Layout';
 
 const FriendsPage = () => {
   const navigate = useNavigate();
