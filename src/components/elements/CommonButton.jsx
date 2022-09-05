@@ -1,5 +1,9 @@
+import styled from 'styled-components';
+
 const CommonButton = () => {
-  return <div>CommonButton</div>;
+  return <Button>CommonButton</Button>;
 };
 
 export default CommonButton;
+
+const Button = styled.button``;
