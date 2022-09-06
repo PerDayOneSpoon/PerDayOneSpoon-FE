@@ -13,7 +13,6 @@ function KakaoLogin() {
   useEffect(() => {
     axios
       .get(`${API.KAKAO_LOGIN}?code=${code}`)
-
       .then((res) => {
         console.log('res!!!!!!', res);
 

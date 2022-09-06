@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { KAKAO_AUTH_URL, GOOGLE_AUTH_URL } from '../api/api';
+import { KAKAO_AUTH_URL, GOOGLE_AUTH_URL } from '../constants/common';
 
 const Login = () => {
   const handleKakaoLogin = () => {
