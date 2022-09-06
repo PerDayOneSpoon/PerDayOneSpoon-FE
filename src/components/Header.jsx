@@ -5,6 +5,7 @@ import { ReactComponent as IconAdd } from '../assets/icons/icon-add.svg';
 import { ReactComponent as IconLeft } from '../assets/icons/icon-left.svg';
 import { ReactComponent as IconFriend } from '../assets/icons/icon-addfriend.svg';
 import { ReactComponent as IconRight } from '../assets/icons/icon-right.svg';
+import { getAccessToken } from '../shared/localStorage';
 
 const Header = ({ isTitle, title, icon, onClickAddHandler }) => {
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ const Header = ({ isTitle, title, icon, onClickAddHandler }) => {
   };
 
   useEffect(() => {
-    const accessToken = localStorage.getItem('access-token');
+    const accessToken = getAccessToken();
 
     if (accessToken == null || accessToken === '') {
       navigate('/login');
