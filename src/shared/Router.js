@@ -1,5 +1,6 @@
-import React from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import MainPage from '../pages/MainPage';
 import LoginPage from '../pages/LoginPage';
 import CollectionPage from '../pages/CollectionPage';
@@ -11,8 +12,24 @@ import SettingPage from '../pages/SettingPage';
 import KakaoLogin from '../components/KakaoLogin';
 import GoogleLogin from '../components/GoogleLogin';
 import GraphPage from '../pages/GraphPage';
+import { useQuery } from 'react-query';
 
 const Router = () => {
+  // const navigate = useNavigate();
+
+  // const getMainAuth = () => {
+  //   const accessToken = localStorage.getItem('access-token');
+
+  //   if (accessToken == null || accessToken === '') {
+  //     navigate('/login');
+  //     return false;
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   getMainAuth();
+  // }, []);
+
   return (
     <BrowserRouter>
       <Routes>
