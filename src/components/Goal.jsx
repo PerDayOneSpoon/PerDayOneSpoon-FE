@@ -88,7 +88,7 @@ const TimerContainer = styled.div`
   align-items: flex-end;
   justify-content: space-between;
   margin-top: 16px;
-  animation: ${slide} 3s 0s;
+  animation: ${slide} 1s 0s;
 `;
 
 const Time = styled.div`
