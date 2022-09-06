@@ -5,7 +5,6 @@ import { colors } from '../theme/theme';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import * as refreshToken from '../shared/common';
 
 const Setting = () => {
   const navigate = useNavigate();
