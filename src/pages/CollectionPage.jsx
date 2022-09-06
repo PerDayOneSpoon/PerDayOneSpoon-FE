@@ -1,8 +1,8 @@
 import Layout from '../layout/Layout';
-import Header from '../components/Header';
-import NavBar from '../components/NavBar';
-import UserInfo from '../components/UserInfo';
-import CollectionList from '../components/CollectionList';
+import Header from '../components/global/Header';
+import NavBar from '../components/global/NavBar';
+import UserInfo from '../components/user/UserInfo';
+import CollectionList from '../components/collection/CollectionList';
 
 const CollectionPage = () => {
   return (

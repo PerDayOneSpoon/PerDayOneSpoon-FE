@@ -1,8 +1,8 @@
 import styled, { css } from 'styled-components';
 import { isMobile } from 'react-device-detect';
-import { ReactComponent as IconClose } from '../assets/icons/icon-close.svg';
+import { ReactComponent as IconClose } from '../../assets/icons/icon-close.svg';
 import { useRecoilState } from 'recoil';
-import { modalState } from '../recoil/modalAtom';
+import { modalState } from '../../recoil/modalAtom';
 
 const BottomSheetModal = ({ children, isHeader, title, handleOkClick }) => {
   const [modal, setModal] = useRecoilState(modalState);

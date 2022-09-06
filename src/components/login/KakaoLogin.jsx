@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { API } from '../api/api';
+import { API } from '../../api/api';
 import axios from 'axios';
-import { setToken } from '../shared/localStorage';
+import { setToken } from '../../shared/localStorage';
 
 function KakaoLogin() {
   const navigate = useNavigate();
@@ -15,7 +15,7 @@ function KakaoLogin() {
     axios
       .get(`${API.KAKAO_LOGIN}?code=${code}`)
       .then((res) => {
-        console.log('res!!!!!!', res);
+        console.log('카카오로그인 성공', res);
 
         if (res.data.code === 200) {
           setToken(res.headers.authorization, res.headers.refreshtoken);

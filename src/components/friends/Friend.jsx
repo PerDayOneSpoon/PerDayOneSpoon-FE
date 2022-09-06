@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const CalendarFriend = ({ friend }) => {
+const Friend = ({ friend }) => {
   return (
     <Container>
       <ProfileContainer>
@@ -11,7 +11,7 @@ const CalendarFriend = ({ friend }) => {
   );
 };
 
-export default CalendarFriend;
+export default Friend;
 
 const Container = styled.div`
   display: flex;

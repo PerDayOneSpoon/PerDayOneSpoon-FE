@@ -5,9 +5,7 @@ import {
   getRefreshToken,
   removeToken,
 } from './localStorage';
-import { apis } from '../api/api';
-import { useNavigate } from 'react-router-dom';
-// import { getNewAccessToken } from '../shared/common';
+import { userApi } from '../api/userApi';
 
 export const instance = axios.create({
   baseURL: process.env.REACT_APP_BASE_URL,
@@ -44,26 +42,26 @@ instance.interceptors.response.use(
       status: statusCode,
     } = error.response;
 
-    const navigate = useNavigate();
-
-    // 토큰이 헤더에 없음  ???????
-    if (responseData === 404) {
+    // message: "토큰이 존재하지 않습니다."
+    if (responseData === '400') {
       window.location.replace('/');
     }
 
     // message: "변조된 토큰입니다."
-    if (responseData.code === 401) {
-      localStorage.removeItem('access-token');
-      localStorage.removeItem('refresh-token');
+    if (responseData.code === '401') {
+      removeToken();
       window.location.replace('/');
     }
 
     // "message": "만료된 토큰입니다."
-    if (responseData.code === 408) {
+    // console.log('responseData : ', responseData);
+    if (responseData.code === '408') {
       const token = getRefreshToken();
       if (token) {
         try {
-          const response = await apis.getRefreshToken({ refreshToken: token });
+          const response = await userApi.getRefreshToken({
+            refreshToken: token,
+          });
           setToken(
             response.headers.authorization,
             response.headers.refreshtoken

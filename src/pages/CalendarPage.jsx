@@ -1,27 +1,15 @@
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Layout from '../layout/Layout';
-import Header from '../components/Header';
-import CalendarFriendsList from '../components/CalendarFriendsList';
+import Header from '../components/global/Header';
+import FriendsList from '../components/friends/FriendsList';
 import MonthCalendar from '../components/MonthCalendar';
-import GoalList from '../components/GoalList';
-import NavBar from '../components/NavBar';
+import GoalList from '../components/goal/GoalList';
+import NavBar from '../components/global/NavBar';
 
 const Calendar = () => {
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const accessToken = localStorage.getItem('access-token');
-
-    if (accessToken == null || accessToken === '') {
-      navigate('/login');
-    }
-  }, []);
-
   return (
     <Layout hasNavBar={true}>
       <Header icon={'addFriend'} />
-      <CalendarFriendsList />
+      <FriendsList />
       <MonthCalendar isMain={true} />
       <GoalList />
       <NavBar />
