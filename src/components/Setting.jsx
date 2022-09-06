@@ -16,7 +16,7 @@ const Setting = () => {
     getProfile();
   }, []);
 
-  function getProfile() {
+  const getProfile = () => {
     const accessToken = localStorage.getItem('access-token');
 
     if (accessToken == null || accessToken === '') {
@@ -43,26 +43,8 @@ const Setting = () => {
 
       .catch(function (error) {
         console.log('error!!!!!!!', error);
-
-        // if (error.message === 'Request failed with status code 400') {
-        //   refreshToken.getNewAccessToken();
-        // } else {
-        //   navigate('/login');
-        // }
-
-        // const temp = {
-        //   id: 1,
-        //   email: 'fdf@naver.com',
-        //   nickname: '바지',
-        //   code: 200,
-        //   socialcode: '142523',
-        //   imgurl: 'sfdjsklf.png',
-        //   status: '배고파',
-        // };
-
-        // setMyInfo(temp);
       });
-  }
+  };
 
   const doLogout = () => {
     const accessToken = localStorage.getItem('access-token');
@@ -75,9 +57,7 @@ const Setting = () => {
       })
       .then(function (res) {
         console.log('res!!!!!!', res);
-        // localStorage.removeItem('access-token')
         if (res.status === 200) {
-          //res.data.code === 200
           localStorage.removeItem('access-token');
           localStorage.removeItem('refresh-token');
           navigate('/login');
