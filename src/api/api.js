@@ -16,11 +16,20 @@ export const apis = {
       }
     );
   },
+
+  addGoal: (data) => {
+    console.log(data);
+    return instance.post('/create', data);
+  },
+
+  getGoal: () => {
+    return instance.get('/confirm/goal');
+  },
 };
 
-export const addGoal = (data) => {
-  return axios.post(`${process.env.REACT_APP_BASE_URL}/create`, data);
-};
+// export const addGoal = (data) => {
+//   return axios.post(`${process.env.REACT_APP_BASE_URL}/create`, data);
+// };
 
 // Read
 // export const getGoal = () => {

@@ -5,16 +5,16 @@ import GoalForm from '../components/GoalForm';
 import axios from 'axios';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
-import { addGoal } from '../api/api';
+import { apis } from '../api/api';
 
 const CreatePage = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const title_input = React.useRef();
 
-  const addGoalMutation = useMutation(addGoal, {
+  const addGoalMutation = useMutation(apis.addGoal, {
     onSuccess: () => {
-      queryClient.invalidateQueries('goal_list');
+      // queryClient.invalidateQueries('goal_list');
       title_input.current.value = '';
     },
   });
@@ -25,6 +25,12 @@ const CreatePage = () => {
     }
     const data = {
       title: title_input.current.value,
+      start_date: '2020-08-07',
+      end_date: '2020-08-07',
+      time: '6시간 30분',
+      category: 3,
+      privateCheck: true,
+      characterId: 1,
     };
     addGoalMutation.mutate(data);
     navigate('/');
