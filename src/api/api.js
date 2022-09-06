@@ -13,7 +13,6 @@ export const apis = {
       }
     );
   },
-};
 
 export const API = {
   KAKAO_LOGIN: `${process.env.REACT_APP_BASE_URL}/login/kakao`,
