@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
+import React from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import MainPage from '../pages/MainPage';
 import LoginPage from '../pages/LoginPage';
 import CollectionPage from '../pages/CollectionPage';
@@ -21,7 +21,7 @@ const Router = () => {
         <Route path='/user/login/callback' element={<KakaoLogin />} />
         <Route path='/user/login/google' element={<GoogleLogin />} />
         <Route path='/collection' element={<CollectionPage />} />
-        <Route path='/calender' element={<Calendar />} />
+        <Route path='/calendar' element={<Calendar />} />
         <Route path='/create' element={<CreatePage />} />
         <Route path='/mypage' element={<MyPage />} />
         <Route path='/search' element={<SearchPage />} />

@@ -38,7 +38,7 @@ const NavBar = () => {
         navigate('/');
         break;
       case '캘린더':
-        navigate('/calender');
+        navigate('/calendar');
         break;
       case '뱃지':
         navigate('/collection');
