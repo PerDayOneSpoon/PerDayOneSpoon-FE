@@ -6,7 +6,7 @@ import { ReactComponent as IconLeft } from '../assets/icons/icon-left.svg';
 import { ReactComponent as IconFriend } from '../assets/icons/icon-addfriend.svg';
 import { ReactComponent as IconRight } from '../assets/icons/icon-right.svg';
 
-const Header = ({ isTitle, title, icon }) => {
+const Header = ({ isTitle, title, icon, onClickAddHandler }) => {
   const navigate = useNavigate();
 
   const handleIcons = (icon) => {
@@ -37,7 +37,7 @@ const Header = ({ isTitle, title, icon }) => {
             <IconLeft onClick={() => navigate(-1)} />
           </IconContainer>
           <TitleText>{title}</TitleText>
-          <button>추가</button>
+          <button onClick={onClickAddHandler}>추가</button>
         </ContainerInner>
       </Container>
     );

@@ -7,7 +7,7 @@ import { colors } from '../theme/theme';
 import { useRecoilState } from 'recoil';
 import { modalState } from '../recoil/modalAtom';
 
-const GoalForm = () => {
+const GoalForm = ({ title_input }) => {
   const [modal, setModal] = useRecoilState(modalState);
 
   const handleOkClick = () => {
@@ -31,7 +31,7 @@ const GoalForm = () => {
           <IconContainer>
             <IconAddCharacter />
           </IconContainer>
-          <InputTitle placeholder='제목' />
+          <InputTitle placeholder='제목' ref={title_input} />
         </Top>
         <Bottom>
           <SetForm>
