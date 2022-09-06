@@ -44,17 +44,14 @@ instance.interceptors.response.use(
       status: statusCode,
     } = error.response;
 
-    const navigate = useNavigate();
-
-    // 토큰이 헤더에 없음  ???????
-    if (responseData === 404) {
+    // message: "토큰이 존재하지 않습니다."
+    if (responseData === 400) {
       window.location.replace('/');
     }
 
     // message: "변조된 토큰입니다."
     if (responseData.code === 401) {
-      localStorage.removeItem('access-token');
-      localStorage.removeItem('refresh-token');
+      removeToken();
       window.location.replace('/');
     }
 

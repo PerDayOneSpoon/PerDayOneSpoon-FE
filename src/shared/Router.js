@@ -11,35 +11,8 @@ import SearchPage from '../pages/SearchPage';
 import SettingPage from '../pages/SettingPage';
 import KakaoLogin from '../components/KakaoLogin';
 import GoogleLogin from '../components/GoogleLogin';
-import GraphPage from '../pages/GraphPage';
-import { useQuery } from 'react-query';
-import { apis } from '../api/api';
-import { useCallback } from 'react';
-import { getNewAccessToken } from './common';
 
 const Router = () => {
-  // const navigate = useNavigate();
-
-  // const refreshLogin = useCallback(async () => {
-  //   const token = getRefreshToken();
-  //   if (token) {
-  //     try {
-  //       const response = await apiUser.refresh({ refreshToken: token });
-  //       setToken(response.data.accessToken, response.data.refreshToken);
-  //       setLogin(true);
-  //     } catch (err) {
-  //       removeToken();
-  //       setLogin(false);
-  //     }
-  //   }
-  // }, [setLogin])
-
-  // useEffect(() => {
-  //   getNewAccessToken();
-  // }, []);
-
-  // useQuery('getUser', apis.getUser);
-
   return (
     <BrowserRouter>
       <Routes>
@@ -53,7 +26,6 @@ const Router = () => {
         <Route path='/mypage' element={<MyPage />} />
         <Route path='/search' element={<SearchPage />} />
         <Route path='/setting' element={<SettingPage />} />
-        <Route path='/graph' element={<GraphPage />} />
       </Routes>
     </BrowserRouter>
   );
