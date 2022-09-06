@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { API } from '../api/api';
 import axios from 'axios';
+import { setToken } from '../shared/localStorage';
 
 function KakaoLogin() {
   const navigate = useNavigate();
@@ -17,9 +18,7 @@ function KakaoLogin() {
         console.log('res!!!!!!', res);
 
         if (res.data.code === 200) {
-          localStorage.setItem('access-token', res.headers.authorization);
-          localStorage.setItem('refresh-token', res.headers.refreshtoken);
-
+          setToken(res.headers.authorization, res.headers.refreshtoken);
           navigate('/');
         } else {
           navigate('/login');

@@ -1,9 +1,21 @@
 import { instance } from '../shared/axios';
 import axios from 'axios';
 
-export const getUser = async () => {
-  const response = await instance.get('/api/main/auth');
-  return response.data;
+export const apis = {
+  getUser: () => {
+    return instance.get('/api/main/auth');
+  },
+  getRefreshToken: ({ refreshToken }) => {
+    return instance.post(
+      '/login/reissue',
+      {},
+      {
+        headers: {
+          refreshToken: refreshToken,
+        },
+      }
+    );
+  },
 };
 
 export const addGoal = (data) => {

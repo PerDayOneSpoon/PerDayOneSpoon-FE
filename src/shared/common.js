@@ -1,44 +1,37 @@
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+// import axios from 'axios';
+// import { useNavigate } from 'react-router-dom';
 
-export const getNewAccessToken = async () => {
-  console.log('getNewAccessToken...');
+// export const getNewAccessToken = async () => {
+//   const navigate = useNavigate;
+//   const refreshToken = localStorage.getItem('refresh-token');
 
-  const navigate = useNavigate;
+//   await axios
+//     .post(
+//       `${process.env.REACT_APP_BASE_URL}/login/reissue`,
+//       {},
+//       {
+//         headers: {
+//           refreshToken: refreshToken,
+//         },
+//       }
+//     )
 
-  const refreshToken = localStorage.getItem('refresh-token');
+//     .then(function (res) {
 
-  await axios
-    .post(
-      `${process.env.REACT_APP_BASE_URL}/login/reissue`,
-      {},
-      {
-        headers: {
-          refreshToken: refreshToken,
-        },
-      }
-    )
+//       if (res.data.code === 200) {
+//         localStorage.setItem('access-token', res.headers.authorization);
+//         localStorage.setItem('refresh-token', res.headers.refreshtoken);
 
-    .then(function (res) {
-      console.log(res.data);
-      console.log('res.headers!!!!!!!', res.headers);
+//         // window.location.reload();
+//         navigate('/');
+//       }
+//     })
 
-      if (res.data.code === 200) {
-        localStorage.setItem('access-token', res.headers.authorization);
-        localStorage.setItem('refresh-token', res.headers.refreshtoken);
+//     .catch(function (error) {
+//       // logout api
+//       localStorage.removeItem('access-token');
+//       localStorage.removeItem('refresh-token');
 
-        window.location.reload();
-        // navigate('/');
-      }
-    })
-
-    .catch(function (error) {
-      console.log('error!!!!!!', error);
-
-      // logout api
-      localStorage.removeItem('access-token');
-      localStorage.removeItem('refresh-token');
-
-      navigate('/login');
-    });
-};
+//       navigate('/login');
+//     });
+// };

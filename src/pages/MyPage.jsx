@@ -29,7 +29,7 @@ const MyPage = () => {
           setMyInfo(res.data);
         } else if (res.data.code === 408) {
           console.log('res.data.code === 408');
-          refreshToken.getNewAccessToken();
+          // refreshToken.getNewAccessToken();
         }
       })
 
