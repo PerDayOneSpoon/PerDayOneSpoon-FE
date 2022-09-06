@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 const Goal = ({ isMain }) => {
-  const [isTimer, seIsTimer] = useState(false);
+  const [isTimer, setIsTimer] = useState(false);
 
   return (
-    <Container onClick={() => seIsTimer(!isTimer)}>
+    <Container onClick={() => setIsTimer(!isTimer)}>
       <Contents>
         <RightContent>
           <Chracter />
@@ -30,6 +30,15 @@ const Goal = ({ isMain }) => {
 };
 
 export default Goal;
+
+const slide = keyframes`
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0%);
+  }
+`;
 
 const Container = styled.div`
   border-radius: 10px;
@@ -59,12 +68,15 @@ const Chracter = styled.div`
   background-color: white;
   margin-right: 6px;
 `;
+
 const Title = styled.p`
   line-height: 24px;
 `;
+
 const Period = styled.p`
   line-height: 20px;
 `;
+
 const Icon = styled.div`
   width: 20px;
   height: 20px;
@@ -76,6 +88,7 @@ const TimerContainer = styled.div`
   align-items: flex-end;
   justify-content: space-between;
   margin-top: 16px;
+  animation: ${slide} 3s 0s;
 `;
 
 const Time = styled.div`
