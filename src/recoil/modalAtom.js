@@ -4,6 +4,6 @@ export const modalState = atom({
   key: 'modalState',
   default: {
     open: false,
-    content: '',
+    type: '',
   },
 });

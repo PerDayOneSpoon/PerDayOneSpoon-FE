@@ -13,22 +13,32 @@ import KakaoLogin from '../components/KakaoLogin';
 import GoogleLogin from '../components/GoogleLogin';
 import GraphPage from '../pages/GraphPage';
 import { useQuery } from 'react-query';
+import { apis } from '../api/api';
+import { useCallback } from 'react';
+import { getNewAccessToken } from './common';
 
 const Router = () => {
   // const navigate = useNavigate();
 
-  // const getMainAuth = () => {
-  //   const accessToken = localStorage.getItem('access-token');
-
-  //   if (accessToken == null || accessToken === '') {
-  //     navigate('/login');
-  //     return false;
+  // const refreshLogin = useCallback(async () => {
+  //   const token = getRefreshToken();
+  //   if (token) {
+  //     try {
+  //       const response = await apiUser.refresh({ refreshToken: token });
+  //       setToken(response.data.accessToken, response.data.refreshToken);
+  //       setLogin(true);
+  //     } catch (err) {
+  //       removeToken();
+  //       setLogin(false);
+  //     }
   //   }
-  // };
+  // }, [setLogin])
 
   // useEffect(() => {
-  //   getMainAuth();
+  //   getNewAccessToken();
   // }, []);
+
+  // useQuery('getUser', apis.getUser);
 
   return (
     <BrowserRouter>
