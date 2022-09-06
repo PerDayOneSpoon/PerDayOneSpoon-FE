@@ -1,26 +1,24 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { API } from '../api/api';
+import { API } from '../../api/api';
 import axios from 'axios';
+import { setToken } from '../../shared/localStorage';
 
-function GoogleLogin() {
+function KakaoLogin() {
   const navigate = useNavigate();
 
   let code = new URL(window.location.href).searchParams.get('code');
 
-  console.log('code!!!!!!', code);
+  console.log('code!!!!', code);
 
   useEffect(() => {
     axios
-      .get(`${API.GOOGLE_LOGIN}?code=${code}`)
-
+      .get(`${API.KAKAO_LOGIN}?code=${code}`)
       .then((res) => {
-        console.log('res!!!!!', res);
+        console.log('카카오로그인 성공', res);
 
         if (res.data.code === 200) {
-          localStorage.setItem('access-token', res.headers.authorization);
-          localStorage.setItem('refresh-token', res.headers.refreshtoken);
-
+          setToken(res.headers.authorization, res.headers.refreshtoken);
           navigate('/');
         } else {
           navigate('/login');
@@ -31,7 +29,7 @@ function GoogleLogin() {
       });
   }, [code, navigate]);
 
-  return <div>구글 로그인</div>;
+  return <div>카카오 로그인</div>;
 }
 
-export default GoogleLogin;
+export default KakaoLogin;

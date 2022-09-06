@@ -1,7 +1,7 @@
 import Layout from '../layout/Layout';
-import Header from '../components/Header';
-import GoalList from '../components/GoalList';
-import NavBar from '../components/NavBar';
+import Header from '../components/global/Header';
+import GoalList from '../components/goal/GoalList';
+import NavBar from '../components/global/NavBar';
 import Graph from '../components/Graph';
 
 const MainPage = () => {

@@ -1,11 +1,10 @@
-import { useState } from 'react';
 import styled from 'styled-components';
-import { ReactComponent as IconAddCharacter } from '../assets/icons/icon-add-character.svg';
-import BottomSheetModal from '../components/BottomSheetModal';
-import MonthCalendar from './MonthCalendar';
-import { colors } from '../theme/theme';
+import { ReactComponent as IconAddCharacter } from '../../assets/icons/icon-add-character.svg';
+import BottomSheetModal from '../global/BottomSheetModal';
+import MonthCalendar from '../MonthCalendar';
+import { colors } from '../../theme/theme';
 import { useRecoilState } from 'recoil';
-import { modalState } from '../recoil/modalAtom';
+import { modalState } from '../../recoil/modalAtom';
 
 const GoalForm = ({ title_input }) => {
   const [modal, setModal] = useRecoilState(modalState);

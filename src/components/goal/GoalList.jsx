@@ -1,15 +1,11 @@
 import styled from 'styled-components';
-import { colors } from '../theme/theme';
+import { colors } from '../../theme/theme';
 import Goal from './Goal';
 import GoalEmpty from './GoalEmpty';
-import { getGoal } from '../api/api.js';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
-import axios from 'axios';
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { goalApi } from '../../api/goalApi';
 
 const GoalList = ({ isMain }) => {
-  // const Goals = useQuery('goal_list', getGoal, {
+  // const Goals = useQuery('goal_list', goalApi.getGoal, {
   //   onSuccess: (data) => {
   //     console.log('성공했어!!!!', data);
   //   },

@@ -1,5 +1,5 @@
 import Layout from '../layout/Layout';
-import Setting from '../components/Setting';
+import Setting from '../components/user/Setting';
 
 const SettingPage = () => {
   return (

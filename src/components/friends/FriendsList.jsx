@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import CalendarFriend from './CalendarFriend';
+import Friend from './Friend';
 
-const CalendarFriendsList = () => {
+const FriendsList = () => {
   const frineds = [
     {
       id: 1,
@@ -38,13 +38,13 @@ const CalendarFriendsList = () => {
   return (
     <Container>
       {frineds.map((friend) => (
-        <CalendarFriend key={friend.id} friend={friend} />
+        <Friend key={friend.id} friend={friend} />
       ))}
     </Container>
   );
 };
 
-export default CalendarFriendsList;
+export default FriendsList;
 
 const Container = styled.div`
   display: flex;

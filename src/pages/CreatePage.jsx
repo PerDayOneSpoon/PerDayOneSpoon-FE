@@ -1,18 +1,17 @@
 import React from 'react';
 import Layout from '../layout/Layout';
-import Header from '../components/Header';
-import GoalForm from '../components/GoalForm';
-import axios from 'axios';
+import Header from '../components/global/Header';
+import GoalForm from '../components/goal/GoalForm';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
-import { apis } from '../api/api';
+import { goalApi } from '../api/goalApi';
 
 const CreatePage = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const title_input = React.useRef();
 
-  const addGoalMutation = useMutation(apis.addGoal, {
+  const addGoalMutation = useMutation(goalApi.addGoal, {
     onSuccess: () => {
       // queryClient.invalidateQueries('goal_list');
       title_input.current.value = '';

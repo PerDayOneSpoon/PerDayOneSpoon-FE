@@ -9,8 +9,8 @@ import Calendar from '../pages/CalendarPage';
 import MyPage from '../pages/MyPage';
 import SearchPage from '../pages/SearchPage';
 import SettingPage from '../pages/SettingPage';
-import KakaoLogin from '../components/KakaoLogin';
-import GoogleLogin from '../components/GoogleLogin';
+import KakaoLogin from '../components/login/KakaoLogin';
+import GoogleLogin from '../components/login/GoogleLogin';
 
 const Router = () => {
   return (
