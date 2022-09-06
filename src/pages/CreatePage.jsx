@@ -5,15 +5,12 @@ import GoalForm from '../components/GoalForm';
 import axios from 'axios';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
+import { addGoal } from '../api/api';
 
 const CreatePage = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const title_input = React.useRef();
-
-  const addGoal = (data) => {
-    return axios.post(`${process.env.REACT_APP_BASE_URL}/create`, data);
-  };
 
   const addGoalMutation = useMutation(addGoal, {
     onSuccess: () => {
