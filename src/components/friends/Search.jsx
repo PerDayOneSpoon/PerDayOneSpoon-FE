@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import FriendsItem from '../components/friends/FriendsItem';
+import FriendsItem from './FriendsItem';
 
 const Search = () => {
   const data = [
