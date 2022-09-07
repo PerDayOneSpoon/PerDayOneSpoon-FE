@@ -54,7 +54,6 @@ instance.interceptors.response.use(
     }
 
     // "message": "만료된 토큰입니다."
-    // console.log('responseData : ', responseData);
     if (responseData.code === '408') {
       const token = getRefreshToken();
       if (token) {
