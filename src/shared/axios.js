@@ -24,7 +24,6 @@ instance.interceptors.request.use(
     }
     return config;
   },
-
   (error) => {
     console.log('axios 파일 request error', error);
     // window.location('/login');
@@ -35,7 +34,6 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   (response) => {
     console.log('RESPONSE INTERCEPTORS SUCCESS', response);
-
     return response;
   },
   async (error) => {
@@ -56,7 +54,7 @@ instance.interceptors.response.use(
       window.location.replace('/');
     }
 
-    // "message": "만료된 토큰입니다."
+    // "message": "만료된 토큰 입니다."
     if (responseData.code === '408') {
       const token = getRefreshToken();
       if (token) {

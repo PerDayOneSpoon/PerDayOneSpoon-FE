@@ -7,7 +7,7 @@ import Graph from '../components/Graph';
 const MainPage = () => {
   return (
     <Layout hasNavBar={true}>
-      <Header icon={'create'} />
+      <Header title='주간 목표 달성률' isBg={true} />
       <Graph />
       <GoalList isMain={true} />
       <NavBar />

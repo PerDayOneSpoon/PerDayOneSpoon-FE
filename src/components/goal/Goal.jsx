@@ -1,25 +1,45 @@
 import { useState } from 'react';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
+import { ReactComponent as IconHeartEmpty } from '../../assets/icons/icon-heart-empty.svg';
+import { ReactComponent as IconHeartFill } from '../../assets/icons/icon-heart-fill.svg';
+import { colors } from '../../theme/theme';
+import CommonText from '../elements/CommonText';
 
-const Goal = ({ isMain }) => {
+const Goal = ({ isMain, item }) => {
   const [isTimer, setIsTimer] = useState(false);
 
   return (
     <Container onClick={() => setIsTimer(!isTimer)}>
       <Contents>
         <RightContent>
-          <Chracter />
+          <ChracterContainer>
+            <Character src={item.charImg} />
+          </ChracterContainer>
+
           <div>
-            <Title>목표이름</Title>
-            <Period>시작날짜 - 끝나는 날짜</Period>
+            <CommonText isSubtitle1={true}>{item.title}</CommonText>
+            <CommonText isCaption={true} fc={colors.text}>
+              {item.startDate} - {item.endDate}
+            </CommonText>
           </div>
         </RightContent>
-        <Icon onClick={(e) => e.stopPropagation()} />
+        <LikeContent>
+          <IconContainer>
+            {isMain ? (
+              <IconHeartFill onClick={(e) => e.stopPropagation()} />
+            ) : (
+              <IconHeartEmpty onClick={(e) => e.stopPropagation()} />
+            )}
+          </IconContainer>
+          <CommonText isCaption={true} fc={colors.text}>
+            {item.likeNum}
+          </CommonText>
+        </LikeContent>
       </Contents>
       {isMain && isTimer && (
         <TimerContainer>
           <Timer>
-            <Time>10:00</Time>
+            <Time>{item.tiem}</Time>
             <ProgressBar />
           </Timer>
           <Button onClick={(e) => e.stopPropagation()}>시작</Button>
@@ -31,19 +51,12 @@ const Goal = ({ isMain }) => {
 
 export default Goal;
 
-const slide = keyframes`
-  from {
-    transform: translateY(-100%);
-  }
-  to {
-    transform: translateY(0%);
-  }
-`;
-
 const Container = styled.div`
-  border-radius: 10px;
   padding: 16px;
-  background-color: orange;
+  background-color: ${colors.white};
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+
   cursor: pointer;
 
   & + & {
@@ -61,26 +74,29 @@ const RightContent = styled.div`
   font-size: 14px;
 `;
 
-const Chracter = styled.div`
+const ChracterContainer = styled.div`
   width: 56px;
   height: 56px;
   border-radius: 50%;
-  background-color: white;
-  margin-right: 6px;
+  overflow: hidden;
+  margin-right: 10px;
 `;
 
-const Title = styled.p`
-  line-height: 24px;
+const Character = styled.img`
+  width: 100%;
+  object-fit: cover;
 `;
 
-const Period = styled.p`
-  line-height: 20px;
+const LikeContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
 `;
 
-const Icon = styled.div`
-  width: 20px;
-  height: 20px;
-  background-color: black;
+const IconContainer = styled.div`
+  width: 24px;
+  height: 24px;
 `;
 
 const TimerContainer = styled.div`
@@ -88,7 +104,6 @@ const TimerContainer = styled.div`
   align-items: flex-end;
   justify-content: space-between;
   margin-top: 16px;
-  animation: ${slide} 1s 0s;
 `;
 
 const Time = styled.div`
@@ -105,7 +120,7 @@ const ProgressBar = styled.div`
   width: 100%;
   height: 16px;
   margin-top: 4px;
-  background-color: white;
+  background-color: ${colors.inputColor};
   border-radius: 4px;
 `;
 

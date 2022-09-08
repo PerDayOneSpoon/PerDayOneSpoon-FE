@@ -7,8 +7,7 @@ import CollectionList from '../components/collection/CollectionList';
 const CollectionPage = () => {
   return (
     <Layout hasNavBar={true}>
-      <Header />
-      {/* <UserInfo isCollection={true} user={user} /> */}
+      <Header title='뱃지 컬렉션' />
       <CollectionList />
       <NavBar />
     </Layout>

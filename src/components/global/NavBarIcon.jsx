@@ -1,10 +1,14 @@
 import styled from 'styled-components';
+import { colors } from '../../theme/theme';
+import CommonText from '../elements/CommonText';
 
-const NavBarIcon = ({ icon, label, handleNavIconClick }) => {
+const NavBarIcon = ({ icon, label, handleNavIconClick, isActive }) => {
   return (
     <Container onClick={handleNavIconClick}>
-      <IconContainer>{icon}</IconContainer>
-      <Label>{label}</Label>
+      <IconContainer isActive={isActive}>{icon}</IconContainer>
+      <CommonText isCaption={true} fc={colors.text}>
+        <Label isActive={isActive}>{label}</Label>
+      </CommonText>
     </Container>
   );
 };
@@ -24,6 +28,6 @@ const IconContainer = styled.div`
   margin-bottom: 2px;
 `;
 
-const Label = styled.div`
-  font-size: 14px;
+const Label = styled.span`
+  color: ${({ isActive }) => isActive && colors.primary};
 `;

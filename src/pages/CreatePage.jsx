@@ -18,7 +18,7 @@ const CreatePage = () => {
     },
   });
 
-  const onClickAddHandler = () => {
+  const handleOkClick = () => {
     if (title_input.current.value === '') {
       return;
     }
@@ -37,11 +37,7 @@ const CreatePage = () => {
 
   return (
     <Layout>
-      <Header
-        isTitle={true}
-        title='목표 추가'
-        onClickAddHandler={onClickAddHandler}
-      />
+      <Header hasBack={true} title='목표 추가' handleOkClick={handleOkClick} />
       <GoalForm title_input={title_input} />
     </Layout>
   );
