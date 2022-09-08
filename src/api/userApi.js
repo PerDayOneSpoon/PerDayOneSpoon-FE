@@ -17,6 +17,13 @@ export const userApi = {
     return instance.get('/confirm/profile');
   },
 
+  updateUserStatus: (data) => {
+    return instance.patch('/change/status', {
+      nickname: data.nickname,
+      status: data.status,
+    });
+  },
+
   logout: () => {
     return instance.delete('/delete/user/logout');
   },
