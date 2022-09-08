@@ -1,14 +1,17 @@
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { NAV_BAR_HEIGHT } from '../../constants/common';
 import NavBarIcon from './NavBarIcon';
 import { ReactComponent as IconHome } from '../../assets/icons/icon-home.svg';
 import { ReactComponent as IconMypage } from '../../assets/icons/icon-mypage.svg';
 import { ReactComponent as IconBadge } from '../../assets/icons/icon-badge.svg';
 import { ReactComponent as IconCalendar } from '../../assets/icons/icon-calendar.svg';
+import { colors } from '../../theme/theme';
+import { useState } from 'react';
 
 const NavBar = () => {
   const navigate = useNavigate();
+  const [active, setActive] = useState(false);
 
   const data = [
     {
@@ -61,6 +64,7 @@ const NavBar = () => {
           key={item.id}
           label={item.label}
           icon={item.icon}
+          isActive={active}
           handleNavIconClick={() => handleNavIconClick(item.label)}
         />
       ))}
@@ -82,5 +86,6 @@ const NavContainer = styled.div`
   max-width: inherit;
   padding: 0 16px;
   height: ${NAV_BAR_HEIGHT}px;
-  background-color: #eee;
+  background-color: ${colors.white};
+  filter: drop-shadow(0px -1px 20px rgba(0, 0, 0, 0.07));
 `;
