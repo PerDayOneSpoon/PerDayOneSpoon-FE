@@ -8,12 +8,10 @@ const UserInfo = ({ isMypage }) => {
   const queryClient = useQueryClient();
 
   const [onlyView, setOnlyView] = useState(true);
-  const profileImg = useRef();
 
-  const [post, setPost] = useState({
-    nickname: '',
-    status: '',
-  });
+  const profileImg = useRef();
+  const nicknameRevised_input = useRef('');
+  const statusRevised_input = useRef('');
 
   const {
     isLoading,
@@ -22,44 +20,16 @@ const UserInfo = ({ isMypage }) => {
     data: userInfo,
   } = useQuery('getUserInfo', userApi.getUserInfo, {
     onSuccess: (data) => {
-      console.log('user정보!!!!!!!!!!', data);
-      setPost({
-        nickname: data.nickname,
-        status: data.status,
-      });
+      console.log('GET USER INFO', data);
     },
   });
 
   const updateUserStatusMutation = useMutation(userApi.updateUserStatus, {
-    onSuccess: () => {
-      setOnlyView(!onlyView);
+    onSuccess: (data) => {
+      console.log('UPDATE USER INFO', data);
+      queryClient.invalidateQueries('getUserInfo');
     },
   });
-
-  // const temp = (e) => {
-  //   console.log('change text...');
-  //   console.log(e);
-  // };
-
-  const onChangeHandler = (e) => {
-    const { value, name } = e.target;
-    setPost({
-      ...post,
-      [name]: value,
-    });
-    console.log(post);
-    console.log(e.target.value);
-  };
-
-  const doModify = (e) => {
-    console.log(onlyView);
-
-    if (onlyView) {
-      setOnlyView(!onlyView);
-    } else {
-      updateUserStatusMutation.mutate(post);
-    }
-  };
 
   const onCickImageUpload = () => {
     profileImg.current.click();
@@ -94,32 +64,50 @@ const UserInfo = ({ isMypage }) => {
         <Middle>
           <SettingForm>
             <FormLeft>이름</FormLeft>
-            <input
+            <InputRight
               type='text'
               defaultValue={userInfo.data.nickname}
               name='nickname'
-              onChange={onChangeHandler}
-              // onChange={temp('nickname')}
               disabled={onlyView}
+              ref={nicknameRevised_input}
             />
           </SettingForm>
           <SettingForm>
             <FormLeft>상태 메세지</FormLeft>
-            <input
+            <InputRight
               type='text'
               defaultValue={userInfo.data.status}
               name='status'
-              onChange={onChangeHandler}
-              // onChange={temp('status')}
+              ref={statusRevised_input}
               disabled={onlyView}
             />
-            {/* <FormRight>{userInfo.data.status}</FormRight> */}
           </SettingForm>
           <SettingForm>
             <FormLeft>검색 코드</FormLeft>
             <FormRight>{userInfo.data.socialCode}</FormRight>
           </SettingForm>
-          <button onClick={doModify}>{onlyView ? '수정' : '저장'}</button>
+          {onlyView ? (
+            <button
+              onClick={() => {
+                setOnlyView(!onlyView);
+              }}
+            >
+              수정
+            </button>
+          ) : (
+            <button
+              onClick={() => {
+                const data = {
+                  nickname: nicknameRevised_input.current.value,
+                  status: statusRevised_input.current.value,
+                };
+                updateUserStatusMutation.mutate(data);
+                setOnlyView(!onlyView);
+              }}
+            >
+              저장
+            </button>
+          )}
         </Middle>
       </Container>
     );
@@ -198,6 +186,14 @@ const FormLeft = styled.div`
 `;
 
 const FormRight = styled.div`
+  width: 100%;
+  margin-left: 16px;
+  opacity: 0.3;
+  border-bottom: 1px solid ${colors.border};
+  padding: 8px 0;
+`;
+
+const InputRight = styled.input`
   width: 100%;
   margin-left: 16px;
   opacity: 0.3;
