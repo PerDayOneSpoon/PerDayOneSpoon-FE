@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import { colors } from '../theme/theme';
+import CommonText from './elements/CommonText';
 
 const Graph = () => {
   const data = [
@@ -41,12 +43,20 @@ const Graph = () => {
 
   return (
     <Container>
-      <Date>2022년 8월 14일 ~ 2022년 8월 20일</Date>
+      <CommonText
+        isCaption={true}
+        mg={'0 0 8px 0'}
+        pd={'0 16px'}
+        bgColor={colors.secondary}
+        fc={colors.text}
+      >
+        2022년 8월 14일 ~ 2022년 8월 20일
+      </CommonText>
       <GraphBox>
         {data.map((list) => (
           <GraphList key={list.id}>
             <GraphBar percentage={list.percentage} />
-            <Day>{list.day}</Day>
+            <CommonText isCaption={true}>{list.day}</CommonText>
           </GraphList>
         ))}
       </GraphBox>
@@ -56,22 +66,30 @@ const Graph = () => {
 
 export default Graph;
 
-const Container = styled.div``;
+const Container = styled.div`
+  margin-left: -16px;
+  margin-right: -16px;
+  margin-top: -26px;
+  background-color: ${colors.secondary};
+  border-radius: 0 0 16px 16px;
+  overflow: hidden;
+
+  box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.06);
+`;
 
 const Date = styled.div`
-  margin-bottom: 8px;
+  /* margin-bottom: 8px; */
 `;
 
 const GraphBox = styled.div`
   display: flex;
   justify-content: space-between;
-  background-color: #aaa;
-  padding: 16px;
-  border-radius: 10px;
+  background-color: ${colors.secondary};
+  padding: 16px 32px;
 `;
 const GraphList = styled.div`
   display: flex;
-  justify-content: space-between;
+  align-items: center;
   flex-direction: column;
 `;
 
@@ -79,7 +97,7 @@ const GraphBar = styled.div`
   position: relative;
   width: 20px;
   height: 80px;
-  background-color: #eee;
+  background-color: ${colors.white};
   margin-bottom: 8px;
   border-radius: 6px;
   overflow: hidden;
@@ -92,7 +110,6 @@ const GraphBar = styled.div`
     display: inline-block;
     width: 100%;
     height: ${({ percentage }) => `${percentage}%`};
-    background-color: #777;
+    background-color: ${colors.primary};
   }
 `;
-const Day = styled.div``;
