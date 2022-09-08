@@ -27,7 +27,7 @@ const UserInfo = ({ isMypage }) => {
             <ProfileImg src={userInfo.data.profileImage} />
           </ProfileImgContainer>
           <ChangingText>프로필사진바꾸기</ChangingText>
-          <Statue>{userInfo.data.status}</Statue>
+          <Status>{userInfo.data.status}</Status>
         </Top>
         <Middle>
           <SettingForm>
@@ -95,7 +95,7 @@ const ChangingText = styled.button`
   cursor: pointer;
 `;
 
-const Statue = styled.div``;
+const Status = styled.div``;
 const Middle = styled.div`
   width: 100%;
   border-top: 1px solid ${colors.border};
