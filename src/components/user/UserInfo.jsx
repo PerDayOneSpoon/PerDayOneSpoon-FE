@@ -89,7 +89,7 @@ const UserInfo = ({ isMypage }) => {
           <ChangingText onClick={onCickImageUpload}>
             프로필사진바꾸기
           </ChangingText>
-          <Statue>{userInfo.data.status}</Statue>
+          <Status>{userInfo.data.status}</Status>
         </Top>
         <Middle>
           <SettingForm>
