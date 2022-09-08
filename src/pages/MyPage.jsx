@@ -7,7 +7,7 @@ import Setting from '../components/user/Setting';
 const MyPage = () => {
   return (
     <Layout>
-      <Header icon={'setting'} />
+      <Header title='마이페이지' />
       <UserInfo isMypage={true} />
       <Setting />
       <NavBar />

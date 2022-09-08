@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components';
 import { NAV_BAR_HEIGHT } from '../constants/common';
 import { isMobile } from 'react-device-detect';
+import { colors } from '../theme/theme';
 
 const Layout = ({ children, hasNavBar }) => {
   return (
@@ -13,6 +14,7 @@ const Layout = ({ children, hasNavBar }) => {
 export default Layout;
 
 const Container = styled.div`
+  background-color: ${colors.bgColor};
   max-width: 390px;
   /* width: 100%; */
   ${({ isMobile }) =>
@@ -28,7 +30,6 @@ const Container = styled.div`
   padding: 0 16px
     ${({ hasNavBar }) => (hasNavBar ? `${NAV_BAR_HEIGHT}px` : '0')};
   overflow: hidden;
-  border: 1px solid black;
   margin: 0 auto;
   word-break: break-all;
 `;

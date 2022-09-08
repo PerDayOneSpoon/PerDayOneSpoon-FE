@@ -3,7 +3,7 @@ import MainPage from '../pages/MainPage';
 import LoginPage from '../pages/LoginPage';
 import CollectionPage from '../pages/CollectionPage';
 import CreatePage from '../pages/CreatePage';
-import Calendar from '../pages/CalendarPage';
+import CalendarPage from '../pages/CalendarPage';
 import MyPage from '../pages/MyPage';
 import SearchPage from '../pages/SearchPage';
 import KakaoLogin from '../components/login/KakaoLogin';
@@ -18,7 +18,7 @@ const Router = () => {
         <Route path='/user/login/callback' element={<KakaoLogin />} />
         <Route path='/user/login/google' element={<GoogleLogin />} />
         <Route path='/collection' element={<CollectionPage />} />
-        <Route path='/calendar' element={<Calendar />} />
+        <Route path='/calendar' element={<CalendarPage />} />
         <Route path='/create' element={<CreatePage />} />
         <Route path='/mypage' element={<MyPage />} />
         <Route path='/search' element={<SearchPage />} />

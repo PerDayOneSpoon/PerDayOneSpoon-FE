@@ -5,10 +5,10 @@ import MonthCalendar from '../components/MonthCalendar';
 import GoalList from '../components/goal/GoalList';
 import NavBar from '../components/global/NavBar';
 
-const Calendar = () => {
+const CalendarPage = () => {
   return (
     <Layout hasNavBar={true}>
-      <Header icon={'addFriend'} />
+      <Header hasIcon={true} icon={'addFriend'} title='캘린더' />
       <FriendsList />
       <MonthCalendar isMain={true} />
       <GoalList />
@@ -17,4 +17,4 @@ const Calendar = () => {
   );
 };
 
-export default Calendar;
+export default CalendarPage;

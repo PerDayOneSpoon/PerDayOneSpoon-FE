@@ -1,24 +1,19 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { ReactComponent as IconAdd } from '../../assets/icons/icon-add.svg';
 import { ReactComponent as IconLeft } from '../../assets/icons/icon-left.svg';
 import { ReactComponent as IconFriend } from '../../assets/icons/icon-addfriend.svg';
+import { colors } from '../../theme/theme';
 import { ReactComponent as IconRight } from '../../assets/icons/icon-right.svg';
 import { getAccessToken } from '../../shared/localStorage';
 
-const Header = ({ isTitle, title, icon, onClickAddHandler }) => {
+const Header = ({ hasBack, hasIcon, isBg, title, icon, handleOkClick }) => {
   const navigate = useNavigate();
 
   const handleIcons = (icon) => {
-    if (icon === 'create') {
-      return <IconAdd onClick={() => navigate('/create')} />;
-    }
     if (icon === 'addFriend') {
       return <IconFriend onClick={() => navigate('/search')} />;
-    }
-    if (icon === 'setting') {
-      return <IconRight onClick={() => navigate('/setting')} />;
     }
   };
 
@@ -30,23 +25,32 @@ const Header = ({ isTitle, title, icon, onClickAddHandler }) => {
     }
   }, []);
 
-  if (isTitle) {
+  if (hasBack) {
     return (
       <Container>
-        <ContainerInner isTitle={isTitle}>
+        <ContainerInner hasBack={hasBack}>
           <IconContainer>
             <IconLeft onClick={() => navigate(-1)} />
           </IconContainer>
           <TitleText>{title}</TitleText>
-          <button onClick={onClickAddHandler}>추가</button>
+          <button onClick={handleOkClick}>추가</button>
+        </ContainerInner>
+      </Container>
+    );
+  } else if (hasIcon) {
+    return (
+      <Container>
+        <ContainerInner hasIcon={hasIcon}>
+          <TitleText>{title}</TitleText>
+          <IconContainer>{handleIcons(icon)}</IconContainer>
         </ContainerInner>
       </Container>
     );
   } else {
     return (
-      <Container>
+      <Container isBg={isBg}>
         <ContainerInner>
-          <IconContainer>{handleIcons(icon)}</IconContainer>
+          <TitleText>{title}</TitleText>
         </ContainerInner>
       </Container>
     );
@@ -56,9 +60,8 @@ const Header = ({ isTitle, title, icon, onClickAddHandler }) => {
 export default Header;
 
 const Container = styled.div`
-  background-color: #eee;
+  background-color: ${({ isBg }) => (isBg ? colors.secondary : colors.white)};
   width: calc(100% + 32px);
-  height: 56px;
   padding: 16px;
   box-sizing: border-box;
   margin-left: -16px;
@@ -70,7 +73,8 @@ const ContainerInner = styled.div`
   height: 100%;
   display: flex;
   align-items: center;
-  justify-content: ${({ isTitle }) => (isTitle ? 'space-between' : 'flex-end')};
+  justify-content: ${({ hasBack, hasIcon }) =>
+    (hasBack || hasIcon) && 'space-between'};
 `;
 
 const IconContainer = styled.div`
@@ -79,4 +83,8 @@ const IconContainer = styled.div`
   cursor: pointer;
 `;
 
-const TitleText = styled.h2``;
+const TitleText = styled.h2`
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 24px;
+`;
