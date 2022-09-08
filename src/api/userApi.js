@@ -18,6 +18,7 @@ export const userApi = {
   },
 
   updateUserStatus: (data) => {
+    console.log('UPDATE USER INFO API', data);
     return instance.patch('/change/status', {
       nickname: data.nickname,
       status: data.status,
