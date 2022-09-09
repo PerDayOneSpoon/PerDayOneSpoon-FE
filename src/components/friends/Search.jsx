@@ -1,5 +1,8 @@
 import { useState } from 'react';
+import styled from 'styled-components';
 import FriendsItem from './FriendsItem';
+import { colors } from '../../theme/theme';
+import CommonText from '../elements/CommonText';
 
 const Search = () => {
   const data = [
@@ -43,33 +46,53 @@ const Search = () => {
   const [searchTerm, setSearchTerm] = useState('');
 
   return (
-    <div className='App'>
-      <input
-        type='text'
-        placeholder='Search...'
-        onChange={(event) => {
-          setSearchTerm(event.target.value);
-        }}
-      />
-      <div className='container'>
-        {data
-          .filter((val) => {
-            if (searchTerm === null || searchTerm === '') {
-              return false;
-            } else if (
-              val.userId.toLowerCase().includes(searchTerm.toLowerCase())
-              // ||
-              // val.user_code.toLowerCase().includes(searchTerm.toLowerCase())
-            ) {
-              return val;
-            }
-          })
-          .map((val, key) => {
-            return <FriendsItem val={val} key={key} />;
-          })}
-      </div>
-    </div>
+    <Container>
+      <InputBox>
+        <SearchInput
+          type='text'
+          placeholder='검색'
+          onChange={(event) => {
+            setSearchTerm(event.target.value);
+          }}
+        />
+        <CommonText isSubtitle1={true}>취소</CommonText>
+      </InputBox>
+      {data
+        .filter((val) => {
+          if (searchTerm === null || searchTerm === '') {
+            return false;
+          } else if (
+            val.userId.toLowerCase().includes(searchTerm.toLowerCase())
+            // ||
+            // val.user_code.toLowerCase().includes(searchTerm.toLowerCase())
+          ) {
+            return val;
+          }
+        })
+        .map((val, key) => {
+          return <FriendsItem val={val} key={key} />;
+        })}
+    </Container>
   );
 };
 
 export default Search;
+
+const Container = styled.div``;
+
+const InputBox = styled.div`
+  height: 56px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const SearchInput = styled.input`
+  width: 314px;
+  height: 40px;
+  background-color: ${colors.inputColor};
+  border-radius: 10px;
+  border: none;
+`;

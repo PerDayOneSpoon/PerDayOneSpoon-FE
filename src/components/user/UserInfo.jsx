@@ -1,18 +1,10 @@
 import styled from 'styled-components';
-import { useQuery, useMutation, useQueryClient } from 'react-query';
+import { useQuery } from 'react-query';
 import { userApi } from '../../api/userApi';
 import { colors } from '../../theme/theme';
-import { useState, useRef } from 'react';
+import CommonText from '../elements/CommonText';
 
 const UserInfo = ({ isMypage }) => {
-  const queryClient = useQueryClient();
-
-  const [onlyView, setOnlyView] = useState(true);
-
-  const profileImg = useRef();
-  const nicknameRevised_input = useRef('');
-  const statusRevised_input = useRef('');
-
   const {
     isLoading,
     isError,
@@ -23,21 +15,6 @@ const UserInfo = ({ isMypage }) => {
       console.log('GET USER INFO', data);
     },
   });
-
-  const updateUserStatusMutation = useMutation(userApi.updateUserStatus, {
-    onSuccess: (data) => {
-      console.log('UPDATE USER INFO', data);
-      queryClient.invalidateQueries('getUserInfo');
-    },
-  });
-
-  const onCickImageUpload = () => {
-    profileImg.current.click();
-  };
-
-  const updateProfile = (e) => {
-    console.log(e.target.files);
-  };
 
   if (isLoading) {
     return <div>로딩 중..</div>;
@@ -50,65 +27,12 @@ const UserInfo = ({ isMypage }) => {
           <ProfileImgContainer>
             <ProfileImg src={userInfo.data.profileImage} />
           </ProfileImgContainer>
-          <input
-            type='file'
-            ref={profileImg}
-            onChange={updateProfile}
-            style={{ display: 'none' }}
-          />
-          <ChangingText onClick={onCickImageUpload}>
-            프로필사진바꾸기
-          </ChangingText>
-          <Status>{userInfo.data.status}</Status>
+          <div>
+            <CommonText isSubtitle1={true}>{userInfo.data.nickname}</CommonText>
+            <CommonText isBody2={true}>{userInfo.data.status}</CommonText>
+            <EditProfileButton>프로필 편집</EditProfileButton>
+          </div>
         </Top>
-        <Middle>
-          <SettingForm>
-            <FormLeft>이름</FormLeft>
-            <InputRight
-              type='text'
-              defaultValue={userInfo.data.nickname}
-              name='nickname'
-              disabled={onlyView}
-              ref={nicknameRevised_input}
-            />
-          </SettingForm>
-          <SettingForm>
-            <FormLeft>상태 메세지</FormLeft>
-            <InputRight
-              type='text'
-              defaultValue={userInfo.data.status}
-              name='status'
-              ref={statusRevised_input}
-              disabled={onlyView}
-            />
-          </SettingForm>
-          <SettingForm>
-            <FormLeft>검색 코드</FormLeft>
-            <FormRight>{userInfo.data.socialCode}</FormRight>
-          </SettingForm>
-          {onlyView ? (
-            <button
-              onClick={() => {
-                setOnlyView(!onlyView);
-              }}
-            >
-              수정
-            </button>
-          ) : (
-            <button
-              onClick={() => {
-                const data = {
-                  nickname: nicknameRevised_input.current.value,
-                  status: statusRevised_input.current.value,
-                };
-                updateUserStatusMutation.mutate(data);
-                setOnlyView(!onlyView);
-              }}
-            >
-              저장
-            </button>
-          )}
-        </Middle>
       </Container>
     );
   }
@@ -125,78 +49,48 @@ const UserInfo = ({ isMypage }) => {
 export default UserInfo;
 
 const Container = styled.div`
+  margin: 11px -16px 0;
+  /* margin-left: -16px;
+  margin-right: -16px;
+  margin-top: 11px; */
+
   display: flex;
-  align-items: center;
-  justify-content: center;
+  /* align-items: center;
+  justify-content: center; */
   flex-direction: column;
+  background-color: ${colors.white};
+  border-radius: 0 0 16px 16px;
+  overflow: hidden;
+
+  box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.06);
 `;
+
 const Top = styled.div`
   display: flex;
-  align-items: center;
-  flex-direction: column;
   margin-bottom: 24px;
 `;
+
 const ProfileImgContainer = styled.div`
   width: 96px;
   height: 96px;
-  margin-bottom: 16px;
+
+  margin: 0 26px 16px 16px;
   border-radius: 50%;
   overflow: hidden;
   background-color: #eee;
 `;
+
 const ProfileImg = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
 `;
 
-const ChangingText = styled.button`
-  width: 100%;
+const EditProfileButton = styled.button`
+  color: ${colors.white};
+  width: 202px;
+  height: 30px;
   border: none;
-  outline: none;
-  padding: 4px;
-  font-size: 16px;
-  background-color: transparent;
-  text-align: center;
-  cursor: pointer;
-`;
-
-const Status = styled.div``;
-const Middle = styled.div`
-  width: 100%;
-  border-top: 1px solid ${colors.border};
-  padding-top: 24px;
-`;
-
-const SettingForm = styled.div`
-  display: flex;
-  align-items: center;
-
-  & + & {
-    margin-top: 24px;
-  }
-`;
-
-const FormLeft = styled.div`
-  min-width: 90px;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
-  letter-spacing: 0.15px;
-`;
-
-const FormRight = styled.div`
-  width: 100%;
-  margin-left: 16px;
-  opacity: 0.3;
-  border-bottom: 1px solid ${colors.border};
-  padding: 8px 0;
-`;
-
-const InputRight = styled.input`
-  width: 100%;
-  margin-left: 16px;
-  opacity: 0.3;
-  border-bottom: 1px solid ${colors.border};
-  padding: 8px 0;
+  border-radius: 6px;
+  background-color: ${colors.primary};
 `;

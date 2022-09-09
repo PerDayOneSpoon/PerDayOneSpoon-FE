@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { withTheme } from 'styled-components';
 import { colors } from '../../theme/theme';
 import { useMutation, useQueryClient } from 'react-query';
 import { userApi } from '../../api/userApi';
@@ -30,7 +30,7 @@ const Container = styled.div`
 
 const AccountButton = styled.button`
   width: 100%;
-  background-color: transparent;
+  background-color: ${colors.white};
   border: none;
   outline: none;
   text-align: left;
@@ -38,6 +38,7 @@ const AccountButton = styled.button`
   font-size: 16px;
   padding: 8px 0;
   border-bottom: 1px solid ${colors.border};
+  border-radius: 10px;
   cursor: pointer;
 
   & + & {
