@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 import { KAKAO_AUTH_URL, GOOGLE_AUTH_URL } from '../../constants/common';
+import char1 from '../../assets/imgs/character1.png';
+import { colors } from '../../theme/theme';
 
 const Login = () => {
   const handleKakaoLogin = () => {
@@ -14,7 +16,11 @@ const Login = () => {
     <>
       <StTop />
       <StMainLogoBox>
-        <StMainDiv />
+        <StMainDiv>
+          <ChracterContainer>
+            <Character src={char1} />
+          </ChracterContainer>
+        </StMainDiv>
       </StMainLogoBox>
       <StMainText>
         <div>
@@ -72,9 +78,25 @@ const StMainLogoBox = styled.div`
 `;
 
 const StMainDiv = styled.div`
-  width: 171px;
-  height: 200px;
+  width: 136px;
+  height: 136px;
   background-color: #eee;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
+  background-color: ${colors.primary};
+`;
+
+const ChracterContainer = styled.div`
+  width: 88px;
+  height: 82px;
+  border-radius: 50%;
+`;
+
+const Character = styled.img`
+  width: 100%;
+  object-fit: cover;
 `;
 
 const StMainText = styled.div`
