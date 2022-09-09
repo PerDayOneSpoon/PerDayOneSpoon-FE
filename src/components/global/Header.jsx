@@ -1,11 +1,9 @@
+import styled from 'styled-components';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styled, { css } from 'styled-components';
-import { ReactComponent as IconAdd } from '../../assets/icons/icon-add.svg';
 import { ReactComponent as IconLeft } from '../../assets/icons/icon-left.svg';
 import { ReactComponent as IconFriend } from '../../assets/icons/icon-addfriend.svg';
 import { colors } from '../../theme/theme';
-import { ReactComponent as IconRight } from '../../assets/icons/icon-right.svg';
 import { getAccessToken } from '../../shared/localStorage';
 
 const Header = ({ hasBack, hasIcon, isBg, title, icon, handleOkClick }) => {
@@ -60,7 +58,7 @@ const Header = ({ hasBack, hasIcon, isBg, title, icon, handleOkClick }) => {
 export default Header;
 
 const Container = styled.div`
-  background-color: ${({ isBg }) => (isBg ? colors.secondary : colors.white)};
+  background-color: ${({ isBg }) => (isBg ? colors.secondary : colors.bgColor)};
   width: calc(100% + 32px);
   padding: 16px;
   box-sizing: border-box;

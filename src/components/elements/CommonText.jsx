@@ -8,10 +8,12 @@ const CommonText = ({
   mg,
   pd,
   lh,
+  wd,
   isCaption,
   isSubtitle1,
   isSubtitle2,
   isBody2,
+  className,
 }) => {
   return (
     <Text
@@ -21,10 +23,12 @@ const CommonText = ({
       mg={mg}
       lh={lh}
       pd={pd}
+      wd={wd}
       isCaption={isCaption}
       isSubtitle1={isSubtitle1}
       isSubtitle2={isSubtitle2}
       isBody2={isBody2}
+      className={className}
     >
       {children}
     </Text>
@@ -70,7 +74,7 @@ const Text = styled.div`
       font-weight: 400;
     `}
 
-
+  width: ${({ wd }) => wd};
   color: ${({ fc }) => fc};
   font-size: ${({ fz }) => fz};
   font-weight: ${({ fw }) => fw};

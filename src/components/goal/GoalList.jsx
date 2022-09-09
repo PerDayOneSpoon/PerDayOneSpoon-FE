@@ -78,6 +78,5 @@ const GoalList = ({ isMain }) => {
 export default GoalList;
 
 const Container = styled.div`
-  padding-top: 16px;
-  border-top: 1px solid ${colors.border};
+  padding: 16px 0 64px;
 `;

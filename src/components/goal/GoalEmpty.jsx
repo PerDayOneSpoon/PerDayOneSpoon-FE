@@ -1,12 +1,17 @@
 import styled from 'styled-components';
+import { colors } from '../../theme/theme';
+import emptyImg from '../../assets/imgs/character-gray.png';
+import CommonText from '../elements/CommonText';
 
 const GoalEmpty = () => {
   return (
     <Container>
       <ImgContainer>
-        <EmptyImg />
+        <EmptyImg src={emptyImg} />
       </ImgContainer>
-      <EmptyText>추가하신 목표가 없습니다 목표를 추가해 주세요!</EmptyText>
+      <CommonText isSubtitle1={true} fc={colors.text} wd='200px'>
+        추가하신 습관이 없습니다 습관을 추가해 주세요!
+      </CommonText>
     </Container>
   );
 };
@@ -20,13 +25,13 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  text-align: center;
 `;
 
 const ImgContainer = styled.div`
-  width: 170px;
-  height: 122px;
+  width: 124px;
+  height: 114px;
   margin-bottom: 30px;
-  background-color: #eee;
 `;
 
 const EmptyImg = styled.img`
