@@ -81,6 +81,9 @@ export default Search;
 const Container = styled.div``;
 
 const InputBox = styled.div`
+  height: 56px;
+  margin-top: 8px;
+  margin-bottom: 8px;
   display: flex;
   justify-content: space-between;
   align-items: center;

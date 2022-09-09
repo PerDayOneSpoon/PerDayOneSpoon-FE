@@ -59,7 +59,10 @@ const SetUserInfo = ({ isSettingPage }) => {
       <Container>
         <Top>
           <ProfileImgContainer>
-            <ProfileImg src={userInfo.data.profileImage} />
+            <ProfileImg
+              src={userInfo.data.profileImage}
+              onClick={onCickImageUpload}
+            />
           </ProfileImgContainer>
           <input
             type='file'
@@ -67,9 +70,6 @@ const SetUserInfo = ({ isSettingPage }) => {
             onChange={updateProfile}
             style={{ display: 'none' }}
           />
-          <ChangingText onClick={onCickImageUpload}>
-            프로필사진바꾸기
-          </ChangingText>
           <Status>{userInfo.data.status}</Status>
         </Top>
         <Middle>

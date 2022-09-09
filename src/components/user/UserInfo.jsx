@@ -49,13 +49,14 @@ const UserInfo = ({ isMypage }) => {
 export default UserInfo;
 
 const Container = styled.div`
-  margin-left: -16px;
+  margin: 11px -16px 0;
+  /* margin-left: -16px;
   margin-right: -16px;
-  margin-top: -26px;
+  margin-top: 11px; */
 
   display: flex;
-  align-items: center;
-  justify-content: center;
+  /* align-items: center;
+  justify-content: center; */
   flex-direction: column;
   background-color: ${colors.white};
   border-radius: 0 0 16px 16px;
@@ -72,7 +73,8 @@ const Top = styled.div`
 const ProfileImgContainer = styled.div`
   width: 96px;
   height: 96px;
-  margin-bottom: 16px;
+
+  margin: 0 26px 16px 16px;
   border-radius: 50%;
   overflow: hidden;
   background-color: #eee;
