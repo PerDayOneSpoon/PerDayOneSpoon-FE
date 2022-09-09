@@ -8,6 +8,7 @@ import MyPage from '../pages/MyPage';
 import SearchPage from '../pages/SearchPage';
 import KakaoLogin from '../components/login/KakaoLogin';
 import GoogleLogin from '../components/login/GoogleLogin';
+import SettingPage from '../pages/SettingPage';
 
 const Router = () => {
   return (
@@ -22,6 +23,7 @@ const Router = () => {
         <Route path='/create' element={<CreatePage />} />
         <Route path='/mypage' element={<MyPage />} />
         <Route path='/search' element={<SearchPage />} />
+        <Route path='/setting' element={<SettingPage />} />
       </Routes>
     </BrowserRouter>
   );
