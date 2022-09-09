@@ -9,36 +9,36 @@ import { goalApi } from '../api/goalApi';
 const CreatePage = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const title_input = React.useRef();
+  // const title_input = React.useRef();
 
   const addGoalMutation = useMutation(goalApi.addGoal, {
     onSuccess: () => {
       // queryClient.invalidateQueries('goal_list');
-      title_input.current.value = '';
+      // title_input.current.value = '';
+      navigate('/');
     },
   });
 
   const handleOkClick = () => {
-    if (title_input.current.value === '') {
-      return;
-    }
-    const data = {
-      title: title_input.current.value,
-      start_date: '2020-08-07',
-      end_date: '2020-08-07',
-      time: '6시간 30분',
-      category: 3,
-      privateCheck: true,
-      characterId: 1,
-    };
-    addGoalMutation.mutate(data);
-    navigate('/');
+    // if (title_input.current.value === '') {
+    //   return;
+    // }
+    // const data = {
+    //   title: title_input.current.value,
+    //   start_date: '2020-08-07',
+    //   end_date: '2020-08-07',
+    //   time: '6시간 30분',
+    //   category: 3,
+    //   privateCheck: true,
+    //   characterId: 1,
+    // };
+    // addGoalMutation.mutate(data);
   };
 
   return (
     <Layout>
       <Header hasBack={true} title='목표 추가' handleOkClick={handleOkClick} />
-      <GoalForm title_input={title_input} />
+      <GoalForm />
     </Layout>
   );
 };

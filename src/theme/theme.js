@@ -1,7 +1,7 @@
 export const colors = {
   primary: '#ffb55f',
   secondary: '#ffe8cd',
-  bgColor: '#f6f6f6',
+  bgColor: '#fafafa',
   inputColor: '#e9e9e9',
   char1: '#fbe5a5',
   char2: '#f29bca',
@@ -10,7 +10,8 @@ export const colors = {
   char5: '#b4d7fc',
   border: '#dbdbdb',
   text: '#999999',
-  placeholder: '#cccccc',
+  valueBox: '#e9e9e9',
+  placeholder: '#b7b7b7',
   white: '#ffffff',
   black: '#000000',
   danger: '#E44949',

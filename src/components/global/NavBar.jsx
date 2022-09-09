@@ -78,6 +78,7 @@ const NavContainer = styled.div`
   position: fixed;
   bottom: 0;
   left: 50%;
+  z-index: 9;
   transform: translateX(-50%);
   display: flex;
   align-items: center;

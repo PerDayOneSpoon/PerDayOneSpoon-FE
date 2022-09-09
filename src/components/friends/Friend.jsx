@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import CommonText from '../elements/CommonText';
 
 const Friend = ({ friend }) => {
   return (
@@ -6,7 +7,7 @@ const Friend = ({ friend }) => {
       <ProfileContainer>
         <ProfileImg />
       </ProfileContainer>
-      <ProfileName>{friend.name}</ProfileName>
+      <CommonText isCaption={true}>{friend.name}</CommonText>
     </Container>
   );
 };
@@ -33,4 +34,3 @@ const ProfileContainer = styled.div`
   margin-bottom: 8px;
 `;
 const ProfileImg = styled.div``;
-const ProfileName = styled.div``;

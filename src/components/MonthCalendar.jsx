@@ -5,8 +5,9 @@ import Calendar from 'react-calendar';
 import moment from 'moment';
 import styled, { css } from 'styled-components';
 import 'react-calendar/dist/Calendar.css';
+import { colors } from '../theme/theme';
 
-const MonthCalendar = ({ isMain }) => {
+const MonthCalendar = () => {
   const [value, setValue] = useState(new Date());
   const data = ['1', '2', '3', '4', '5'];
 
@@ -26,14 +27,13 @@ const MonthCalendar = ({ isMain }) => {
     <Container>
       <CutomCalendar
         value={value}
-        tileContent={isMain ? tileContent : null}
+        tileContent={tileContent}
         view={'month'}
         calendarType={'Hebrew'}
         nextLabel={<IconRight />}
         prevLabel={<IconLeft />}
         showFixedNumberOfWeeks={true}
         formatDay={(locale, date) => moment(date).format('DD')}
-        isMain={isMain}
       />
     </Container>
   );
@@ -49,7 +49,9 @@ const CutomCalendar = styled(Calendar)`
   &.react-calendar {
     width: 100%;
     border: none;
-    margin-bottom: ${({ isMain }) => (isMain ? '16px' : null)};
+    background-color: ${colors.bgColor};
+    padding-bottom: 16px;
+    border-bottom: 1px solid ${colors.border};
   }
 
   .react-calendar__tile:enabled:hover,
@@ -61,7 +63,6 @@ const CutomCalendar = styled(Calendar)`
 
     abbr {
       /* display: inline-block; */
-      background-color: #eee;
       border-radius: 50%;
       width: 30px;
       height: 30px;
@@ -83,7 +84,7 @@ const CutomCalendar = styled(Calendar)`
       display: inline-block;
       width: 30px;
       height: 30px;
-      background-color: red;
+      background-color: ${colors.primary};
       color: white;
       border-radius: 50%;
       vertical-align: middle;
@@ -101,7 +102,7 @@ const CutomCalendar = styled(Calendar)`
   .react-calendar__navigation {
     position: relative;
     align-items: center;
-    justify-content: ${({ isMain }) => (isMain ? 'flex-start' : 'center')};
+    justify-content: flex-start;
 
     button:hover,
     button:focus {
@@ -110,33 +111,24 @@ const CutomCalendar = styled(Calendar)`
   }
   .react-calendar__navigation__label {
     flex-grow: initial !important;
-    font-size: 20px;
+    font-size: 18px;
+    line-height: 24px;
+    letter-spacing: 0.15px;
+    font-weight: 500;
     padding-top: 0;
-    padding: 0 ${({ isMain }) => (!isMain ? '24px' : null)};
   }
-
-  ${({ isMain }) =>
-    isMain &&
-    css`
-      .react-calendar__navigation__prev-button,
-      .react-calendar__navigation__next-button {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-      }
-      .react-calendar__navigation__prev-button {
-        right: 32px;
-      }
-      .react-calendar__navigation__next-button {
-        right: 0;
-      }
-    `}
 
   .react-calendar__navigation__prev-button,
   .react-calendar__navigation__next-button {
-    min-width: 24px;
-    height: 24px;
-    padding: 0;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .react-calendar__navigation__prev-button {
+    right: 32px;
+  }
+  .react-calendar__navigation__next-button {
+    right: 0;
   }
 
   .react-calendar__navigation__prev2-button,

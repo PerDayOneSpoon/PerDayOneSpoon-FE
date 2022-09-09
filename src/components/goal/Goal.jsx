@@ -39,7 +39,9 @@ const Goal = ({ isMain, item }) => {
       {isMain && isTimer && (
         <TimerContainer>
           <Timer>
-            <Time>{item.tiem}</Time>
+            <Time isCaption={true} fc={colors.text}>
+              {item.time}
+            </Time>
             <ProgressBar />
           </Timer>
           <Button onClick={(e) => e.stopPropagation()}>시작</Button>
@@ -106,7 +108,7 @@ const TimerContainer = styled.div`
   margin-top: 16px;
 `;
 
-const Time = styled.div`
+const Time = styled(CommonText)`
   display: flex;
   justify-content: flex-end;
   margin-bottom: 10px;
