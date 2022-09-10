@@ -3,8 +3,11 @@ import styled from 'styled-components';
 import FriendsItem from './FriendsItem';
 import { colors } from '../../theme/theme';
 import CommonText from '../elements/CommonText';
+import { useNavigate } from 'react-router-dom';
 
 const Search = () => {
+  const navigate = useNavigate();
+
   const data = [
     {
       freindsid: '1',
@@ -55,7 +58,13 @@ const Search = () => {
             setSearchTerm(event.target.value);
           }}
         />
-        <CommonText isSubtitle1={true}>취소</CommonText>
+        <div
+          onClick={() => {
+            navigate('/calendar');
+          }}
+        >
+          <CommonText isSubtitle1={true}>취소</CommonText>
+        </div>
       </InputBox>
       {data
         .filter((val) => {

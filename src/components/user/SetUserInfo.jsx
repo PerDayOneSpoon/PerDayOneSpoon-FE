@@ -32,12 +32,12 @@ const SetUserInfo = ({ isSettingPage }) => {
     },
   });
 
-  // const updateUserImgMutation = useMutation(userApi.updateUserImg, {
-  //   onSuccess: (data) => {
-  //     console.log('UPDATE USER IMG', data);
-  //     queryClient.invalidateQueries('getUserInfo');
-  //   },
-  // });
+  const updateUserImgMutation = useMutation(userApi.updateUserImg, {
+    onSuccess: (data) => {
+      console.log('UPDATE USER IMG', data);
+      queryClient.invalidateQueries('getUserInfo');
+    },
+  });
 
   const onCickImageUpload = () => {
     profileImg.current.click();
@@ -47,7 +47,11 @@ const SetUserInfo = ({ isSettingPage }) => {
     console.log(e.target.files);
     console.log(e.target.files[0]);
     console.log(profileImg.current.files[0]);
-    updateUserStatusMutation.mutate(e);
+
+    const formData = new FormData();
+    formData.append('multipartFile', e.target.files[0]);
+
+    updateUserImgMutation.mutate(formData);
   };
 
   if (isLoading) {
@@ -70,7 +74,8 @@ const SetUserInfo = ({ isSettingPage }) => {
             onChange={updateProfile}
             style={{ display: 'none' }}
           />
-          <Status>{userInfo.data.status}</Status>
+          <CommonText isSubtitle1={true}>{userInfo.data.nickname}</CommonText>
+          <CommonText isBody2={true}>{userInfo.data.status}</CommonText>
         </Top>
         <Middle>
           <SettingForm>
@@ -100,15 +105,15 @@ const SetUserInfo = ({ isSettingPage }) => {
             <FormRight>{userInfo.data.socialCode}</FormRight>
           </SettingForm>
           {onlyView ? (
-            <button
+            <EditButton
               onClick={() => {
                 setOnlyView(!onlyView);
               }}
             >
               수정
-            </button>
+            </EditButton>
           ) : (
-            <button
+            <EditButton
               onClick={() => {
                 const data = {
                   nickname: nicknameRevised_input.current.value,
@@ -119,7 +124,7 @@ const SetUserInfo = ({ isSettingPage }) => {
               }}
             >
               저장
-            </button>
+            </EditButton>
           )}
         </Middle>
       </Container>
@@ -143,12 +148,14 @@ const Container = styled.div`
   justify-content: center;
   flex-direction: column;
 `;
+
 const Top = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
   margin-bottom: 24px;
 `;
+
 const ProfileImgContainer = styled.div`
   width: 96px;
   height: 96px;
@@ -175,6 +182,7 @@ const ChangingText = styled.button`
 `;
 
 const Status = styled.div``;
+
 const Middle = styled.div`
   width: 100%;
   border-top: 1px solid ${colors.border};
@@ -188,6 +196,17 @@ const SettingForm = styled.div`
   & + & {
     margin-top: 24px;
   }
+`;
+
+const EditButton = styled.div`
+  margin-top: 20px;
+  width: 68px;
+  height: 28px;
+  color: ${colors.white};
+  background-color: ${colors.primary};
+  border-radius: 14px;
+  text-align: center;
+  line-height: 28px;
 `;
 
 const FormLeft = styled.div`
@@ -210,6 +229,7 @@ const InputRight = styled.input`
   width: 100%;
   margin-left: 16px;
   opacity: 0.3;
+  border: none;
   border-bottom: 1px solid ${colors.border};
   padding: 8px 0;
 `;
