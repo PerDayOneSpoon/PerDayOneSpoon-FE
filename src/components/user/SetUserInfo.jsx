@@ -101,7 +101,7 @@ const SetUserInfo = ({ isSettingPage }) => {
             />
           </SettingForm>
           <SettingForm>
-            <FormLeft>개인 코드</FormLeft>
+            <FormLeft>검색 코드</FormLeft>
             <FormRight>{userInfo.data.socialCode}</FormRight>
           </SettingForm>
           {onlyView ? (
@@ -162,6 +162,7 @@ const ProfileImgContainer = styled.div`
   margin-bottom: 16px;
   border-radius: 50%;
   overflow: hidden;
+  cursor: pointer;
 `;
 
 const ProfileImg = styled.img`
@@ -207,6 +208,7 @@ const EditButton = styled.div`
   border-radius: 14px;
   text-align: center;
   line-height: 28px;
+  cursor: pointer;
 `;
 
 const FormLeft = styled.div`
@@ -228,8 +230,12 @@ const FormRight = styled.div`
 const InputRight = styled.input`
   width: 100%;
   margin-left: 16px;
-  opacity: 0.3;
   border: none;
+  outline: none;
   border-bottom: 1px solid ${colors.border};
-  padding: 8px 0;
+  padding: 8px;
+
+  &:disabled {
+    color: ${colors.text};
+  }
 `;

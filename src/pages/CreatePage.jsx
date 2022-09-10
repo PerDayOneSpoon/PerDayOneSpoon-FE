@@ -49,7 +49,7 @@ const CreatePage = () => {
     },
   });
 
-  const handleAddClick = () => {
+  const handleRightButtonClick = () => {
     if (form.title === '') {
       return alert('제목을 입력해 주세요');
     } else if (form.characterId === 0) {
@@ -128,11 +128,12 @@ const CreatePage = () => {
   console.log('form 전송 데이터', form);
 
   return (
-    <Layout>
+    <Layout bgColor={colors.bgColor}>
       <Header
         hasBack={true}
         title='목표 추가'
-        handleAddClick={handleAddClick}
+        handleRightButtonClick={handleRightButtonClick}
+        rightButton='추가'
       />
       <GoalForm
         form={form}

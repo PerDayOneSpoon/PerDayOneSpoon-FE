@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import styled, { css } from 'styled-components';
 import BottomSheetModal from '../global/BottomSheetModal';
 import CommonText from '../elements/CommonText';

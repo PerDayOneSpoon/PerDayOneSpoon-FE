@@ -1,11 +1,11 @@
-import styled, { withTheme } from 'styled-components';
+import styled from 'styled-components';
 import { colors } from '../../theme/theme';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation } from 'react-query';
 import { userApi } from '../../api/userApi';
 import { removeToken } from '../../shared/localStorage';
 import { useNavigate } from 'react-router-dom';
 
-const Setting = () => {
+const AccountButton = () => {
   const navigate = useNavigate();
   const { mutate: logoutMutation } = useMutation(userApi.logout, {
     onSuccess: () => {
@@ -16,32 +16,32 @@ const Setting = () => {
 
   return (
     <Container>
-      <AccountButton onClick={() => logoutMutation()}>로그아웃</AccountButton>
-      <AccountButton>회원탈퇴</AccountButton>
+      <Button onClick={() => logoutMutation()}>로그아웃</Button>
+      <Button>회원탈퇴</Button>
     </Container>
   );
 };
 
-export default Setting;
+export default AccountButton;
 
 const Container = styled.div`
   margin-top: 56px;
 `;
 
-const AccountButton = styled.button`
+const Button = styled.button`
   width: 100%;
   background-color: ${colors.white};
   border: none;
   outline: none;
   text-align: left;
-  color: red;
+  color: ${colors.danger};
   font-size: 16px;
-  padding: 8px 0;
-  border-bottom: 1px solid ${colors.border};
+  padding: 16px;
   border-radius: 10px;
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
   cursor: pointer;
 
   & + & {
-    margin-top: 10px;
+    margin-top: 16px;
   }
 `;

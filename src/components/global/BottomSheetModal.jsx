@@ -4,6 +4,7 @@ import { isMobile } from 'react-device-detect';
 import { ReactComponent as IconClose } from '../../assets/icons/icon-close.svg';
 import { useRecoilState } from 'recoil';
 import { modalState } from '../../recoil/modalAtom';
+import { colors } from '../../theme/theme';
 
 const BottomSheetModal = ({ children, isHeader, title, handleOkClick }) => {
   const [modal, setModal] = useRecoilState(modalState);
@@ -82,7 +83,7 @@ const ModalContent = styled.div`
   width: 100%;
   height: fit-content;
   padding: 16px;
-  background-color: white;
+  background-color: ${colors.white};
   box-sizing: border-box;
   border-radius: 10px 10px 0px 0px;
 `;

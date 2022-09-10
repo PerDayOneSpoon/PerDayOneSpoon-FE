@@ -3,10 +3,17 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ReactComponent as IconLeft } from '../../assets/icons/icon-left.svg';
 import { ReactComponent as IconFriend } from '../../assets/icons/icon-addfriend.svg';
-import { colors } from '../../theme/theme';
 import { getAccessToken } from '../../shared/localStorage';
 
-const Header = ({ hasBack, hasIcon, isBg, title, icon, handleAddClick }) => {
+const Header = ({
+  hasBack,
+  hasIcon,
+  bgColor,
+  title,
+  icon,
+  handleRightButtonClick,
+  rightButton,
+}) => {
   const navigate = useNavigate();
 
   const handleIcons = (icon) => {
@@ -25,19 +32,21 @@ const Header = ({ hasBack, hasIcon, isBg, title, icon, handleAddClick }) => {
 
   if (hasBack) {
     return (
-      <Container>
+      <Container bgColor={bgColor}>
         <ContainerInner hasBack={hasBack}>
           <IconContainer>
             <IconLeft onClick={() => navigate(-1)} />
           </IconContainer>
           <TitleText>{title}</TitleText>
-          <button onClick={handleAddClick}>추가</button>
+          <RightButton onClick={handleRightButtonClick}>
+            {rightButton}
+          </RightButton>
         </ContainerInner>
       </Container>
     );
   } else if (hasIcon) {
     return (
-      <Container>
+      <Container bgColor={bgColor}>
         <ContainerInner hasIcon={hasIcon}>
           <TitleText>{title}</TitleText>
           <IconContainer>{handleIcons(icon)}</IconContainer>
@@ -46,7 +55,7 @@ const Header = ({ hasBack, hasIcon, isBg, title, icon, handleAddClick }) => {
     );
   } else {
     return (
-      <Container isBg={isBg}>
+      <Container bgColor={bgColor}>
         <ContainerInner>
           <TitleText>{title}</TitleText>
         </ContainerInner>
@@ -58,7 +67,7 @@ const Header = ({ hasBack, hasIcon, isBg, title, icon, handleAddClick }) => {
 export default Header;
 
 const Container = styled.div`
-  background-color: ${({ isBg }) => (isBg ? colors.secondary : colors.bgColor)};
+  background-color: ${({ bgColor }) => bgColor};
   width: calc(100% + 32px);
   padding: 16px;
   box-sizing: border-box;
@@ -85,4 +94,15 @@ const TitleText = styled.h2`
   font-size: 18px;
   font-weight: 500;
   line-height: 24px;
+`;
+
+const RightButton = styled.button`
+  border: none;
+  outline: none;
+  background-color: transparent;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.25px;
+
+  cursor: pointer;
 `;

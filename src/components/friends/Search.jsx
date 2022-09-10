@@ -58,13 +58,13 @@ const Search = () => {
             setSearchTerm(event.target.value);
           }}
         />
-        <div
+        <CancelButton
           onClick={() => {
-            navigate('/calendar');
+            navigate(-1);
           }}
         >
-          <CommonText isSubtitle1={true}>취소</CommonText>
-        </div>
+          취소
+        </CancelButton>
       </InputBox>
       {data
         .filter((val) => {
@@ -99,9 +99,22 @@ const InputBox = styled.div`
 `;
 
 const SearchInput = styled.input`
-  width: 314px;
+  width: 100%;
   height: 40px;
   background-color: ${colors.inputColor};
   border-radius: 10px;
   border: none;
+`;
+
+const CancelButton = styled.button`
+  flex-grow: 1;
+  width: 40px;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.15px;
+  margin-left: 16px;
+  cursor: pointer;
 `;
