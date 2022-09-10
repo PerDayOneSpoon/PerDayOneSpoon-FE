@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import { isMobile } from 'react-device-detect';
 import { ReactComponent as IconClose } from '../../assets/icons/icon-close.svg';
@@ -10,6 +11,21 @@ const BottomSheetModal = ({ children, isHeader, title, handleOkClick }) => {
   const handleModalClose = () => {
     setModal({ open: false });
   };
+
+  useEffect(() => {
+    if (modal.open) {
+      document.body.style.cssText = `
+      position: fixed;
+      top: -${window.scrollY}px;
+      overflow-y: scroll;
+      width: 100%;`;
+      return () => {
+        const scrollY = document.body.style.top;
+        document.body.style.cssText = '';
+        window.scrollTo(0, parseInt(scrollY || '0', 10) * -1);
+      };
+    }
+  }, [modal]);
 
   return (
     modal.open && (

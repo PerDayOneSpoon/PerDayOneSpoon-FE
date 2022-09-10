@@ -5,34 +5,43 @@ import GoalForm from '../components/goal/GoalForm';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { goalApi } from '../api/goalApi';
+import { useRecoilState } from 'recoil';
+import { goalState } from '../recoil/common';
 
 const CreatePage = () => {
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
-  // const title_input = React.useRef();
+  const [formData, setFormData] = useRecoilState(goalState);
 
   const addGoalMutation = useMutation(goalApi.addGoal, {
     onSuccess: () => {
       // queryClient.invalidateQueries('goal_list');
-      // title_input.current.value = '';
+      setFormData({
+        ...formData,
+        title: '',
+        category: 3,
+        characterId: 0,
+        privateCheck: false,
+      });
       navigate('/');
+    },
+    onError: ({ response }) => {
+      alert(response.data.errorMessage);
+      setFormData({
+        ...formData,
+        title: '',
+        category: 3,
+        characterId: 0,
+        privateCheck: false,
+      });
     },
   });
 
   const handleOkClick = () => {
-    // if (title_input.current.value === '') {
-    //   return;
-    // }
-    // const data = {
-    //   title: title_input.current.value,
-    //   start_date: '2020-08-07',
-    //   end_date: '2020-08-07',
-    //   time: '6시간 30분',
-    //   category: 3,
-    //   privateCheck: true,
-    //   characterId: 1,
-    // };
-    // addGoalMutation.mutate(data);
+    if (formData.title === '' || formData.characterId === 0) {
+      return alert('내용을 채워주세요');
+    } else {
+      addGoalMutation.mutate([formData]);
+    }
   };
 
   return (
