@@ -3,18 +3,26 @@ import { NAV_BAR_HEIGHT } from '../constants/common';
 import { isMobile } from 'react-device-detect';
 import { colors } from '../theme/theme';
 
-const Layout = ({ children, hasNavBar }) => {
+const Layout = ({ children, hasNavBar, bgColor = colors.white }) => {
   return (
-    <Container hasNavBar={hasNavBar} isMobile={isMobile}>
-      {children}
-    </Container>
+    <Background>
+      <Container hasNavBar={hasNavBar} isMobile={isMobile} bgColor={bgColor}>
+        {children}
+      </Container>
+    </Background>
   );
 };
 
 export default Layout;
 
+const Background = styled.div`
+  width: 100%;
+  height: 100%;
+  background-color: ${colors.black};
+`;
+
 const Container = styled.div`
-  background-color: ${colors.bgColor};
+  background-color: ${({ bgColor }) => bgColor};
   max-width: 390px;
   /* width: 100%; */
   ${({ isMobile }) =>

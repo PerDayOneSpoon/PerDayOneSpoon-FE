@@ -1,8 +1,10 @@
+import { useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import { isMobile } from 'react-device-detect';
 import { ReactComponent as IconClose } from '../../assets/icons/icon-close.svg';
 import { useRecoilState } from 'recoil';
 import { modalState } from '../../recoil/modalAtom';
+import { colors } from '../../theme/theme';
 
 const BottomSheetModal = ({ children, isHeader, title, handleOkClick }) => {
   const [modal, setModal] = useRecoilState(modalState);
@@ -10,6 +12,21 @@ const BottomSheetModal = ({ children, isHeader, title, handleOkClick }) => {
   const handleModalClose = () => {
     setModal({ open: false });
   };
+
+  useEffect(() => {
+    if (modal.open) {
+      document.body.style.cssText = `
+      position: fixed;
+      top: -${window.scrollY}px;
+      overflow-y: scroll;
+      width: 100%;`;
+      return () => {
+        const scrollY = document.body.style.top;
+        document.body.style.cssText = '';
+        window.scrollTo(0, parseInt(scrollY || '0', 10) * -1);
+      };
+    }
+  }, [modal]);
 
   return (
     modal.open && (
@@ -66,7 +83,7 @@ const ModalContent = styled.div`
   width: 100%;
   height: fit-content;
   padding: 16px;
-  background-color: white;
+  background-color: ${colors.white};
   box-sizing: border-box;
   border-radius: 10px 10px 0px 0px;
 `;

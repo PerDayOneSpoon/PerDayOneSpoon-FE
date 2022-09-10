@@ -11,8 +11,8 @@ import { useNavigate } from 'react-router-dom';
 const MainPage = () => {
   const navigate = useNavigate();
   return (
-    <Layout hasNavBar={true}>
-      <Header title='주간 목표 달성률' isBg={true} />
+    <Layout hasNavBar={true} bgColor={colors.bgColor}>
+      <Header title='주간 목표 달성률' bgColor={colors.secondary} />
       <Graph />
       <CommonText isSubtitle1={true} mg='16px 0 4px 0'>
         오늘의 습관
