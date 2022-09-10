@@ -4,7 +4,7 @@ import { API } from '../../api/api';
 import axios from 'axios';
 import { setToken } from '../../shared/localStorage';
 
-function GoogleLogin() {
+const GoogleLogin = () => {
   const navigate = useNavigate();
 
   let code = new URL(window.location.href).searchParams.get('code');
@@ -30,6 +30,6 @@ function GoogleLogin() {
   }, [code, navigate]);
 
   return <div>구글 로그인</div>;
-}
+};
 
 export default GoogleLogin;

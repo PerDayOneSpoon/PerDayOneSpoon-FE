@@ -9,6 +9,7 @@ import SearchPage from '../pages/SearchPage';
 import KakaoLogin from '../components/login/KakaoLogin';
 import GoogleLogin from '../components/login/GoogleLogin';
 import SettingPage from '../pages/SettingPage';
+import NaverLogin from '../components/login/NaverLogin';
 
 const Router = () => {
   return (
@@ -18,6 +19,7 @@ const Router = () => {
         <Route path='/login' element={<LoginPage />} />
         <Route path='/user/login/callback' element={<KakaoLogin />} />
         <Route path='/user/login/google' element={<GoogleLogin />} />
+        <Route path='/user/login/naver' element={<NaverLogin />} />
         <Route path='/collection' element={<CollectionPage />} />
         <Route path='/calendar' element={<CalendarPage />} />
         <Route path='/create' element={<CreatePage />} />
