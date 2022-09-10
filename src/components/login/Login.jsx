@@ -1,5 +1,9 @@
 import styled from 'styled-components';
-import { KAKAO_AUTH_URL, GOOGLE_AUTH_URL } from '../../constants/common';
+import {
+  KAKAO_AUTH_URL,
+  GOOGLE_AUTH_URL,
+  NAVER_AUTH_URL,
+} from '../../constants/common';
 import char1 from '../../assets/imgs/character1.png';
 import { colors } from '../../theme/theme';
 import CommonText from '../elements/CommonText';
@@ -11,6 +15,10 @@ const Login = () => {
 
   const handleGoogleLogin = () => {
     window.location.href = GOOGLE_AUTH_URL;
+  };
+
+  const handleNaverLogin = () => {
+    window.location.href = NAVER_AUTH_URL;
   };
 
   return (
@@ -57,7 +65,7 @@ const Login = () => {
         </div>
 
         <div>
-          <StLoginButton />
+          <StLoginButton onClick={handleNaverLogin} />
           <CommonText isCaption={true}>
             네이버로
             <br />

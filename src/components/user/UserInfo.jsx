@@ -3,8 +3,12 @@ import { useQuery } from 'react-query';
 import { userApi } from '../../api/userApi';
 import { colors } from '../../theme/theme';
 import CommonText from '../elements/CommonText';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const UserInfo = ({ isMypage }) => {
+  const navigate = useNavigate();
+
   const {
     isLoading,
     isError,
@@ -30,7 +34,13 @@ const UserInfo = ({ isMypage }) => {
           <div>
             <CommonText isSubtitle1={true}>{userInfo.data.nickname}</CommonText>
             <CommonText isBody2={true}>{userInfo.data.status}</CommonText>
-            <EditProfileButton>프로필 편집</EditProfileButton>
+            <EditProfileButton
+              onClick={() => {
+                navigate('/setting');
+              }}
+            >
+              프로필 편집
+            </EditProfileButton>
           </div>
         </Top>
       </Container>

@@ -32,12 +32,12 @@ const SetUserInfo = ({ isSettingPage }) => {
     },
   });
 
-  // const updateUserImgMutation = useMutation(userApi.updateUserImg, {
-  //   onSuccess: (data) => {
-  //     console.log('UPDATE USER IMG', data);
-  //     queryClient.invalidateQueries('getUserInfo');
-  //   },
-  // });
+  const updateUserImgMutation = useMutation(userApi.updateUserImg, {
+    onSuccess: (data) => {
+      console.log('UPDATE USER IMG', data);
+      queryClient.invalidateQueries('getUserInfo');
+    },
+  });
 
   const onCickImageUpload = () => {
     profileImg.current.click();
@@ -47,7 +47,11 @@ const SetUserInfo = ({ isSettingPage }) => {
     console.log(e.target.files);
     console.log(e.target.files[0]);
     console.log(profileImg.current.files[0]);
-    updateUserStatusMutation.mutate(e);
+
+    const formData = new FormData();
+    formData.append('multipartFile', e.target.files[0]);
+
+    updateUserImgMutation.mutate(formData);
   };
 
   if (isLoading) {

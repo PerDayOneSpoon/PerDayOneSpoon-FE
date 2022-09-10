@@ -25,6 +25,15 @@ export const userApi = {
     });
   },
 
+  updateUserImg: (formData) => {
+    console.log('프사바꾸자!!!!', formData);
+    return instance.patch('/change/image', formData, {
+      headers: {
+        'Content-type': 'multipart/form-data',
+      },
+    });
+  },
+
   logout: () => {
     return instance.delete('/delete/user/logout');
   },
