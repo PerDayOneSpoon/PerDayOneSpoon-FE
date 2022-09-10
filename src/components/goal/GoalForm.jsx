@@ -1,25 +1,29 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import styled, { css } from 'styled-components';
-import moment from 'moment/moment';
 import BottomSheetModal from '../global/BottomSheetModal';
 import CommonText from '../elements/CommonText';
-import characterQuestion from '../../assets/imgs/character-question-mark.png';
-import character1 from '../../assets/imgs/character1.png';
-import character2 from '../../assets/imgs/character2.png';
-import character3 from '../../assets/imgs/character3.png';
-import character4 from '../../assets/imgs/character4.png';
-import character5 from '../../assets/imgs/character5.png';
 import { colors } from '../../theme/theme';
 import { useRecoilState } from 'recoil';
 import { modalState } from '../../recoil/modalAtom';
-import { goalState } from '../../recoil/common';
 
-const GoalForm = () => {
+const GoalForm = ({
+  form,
+  selectTime,
+  handleHourClick,
+  handleMinuteClick,
+  handleTimeOkClick,
+  handleDayClick,
+  handleTitleChange,
+  handlePrivateClick,
+  handleColorClick,
+  endDate,
+  startDate,
+  character,
+}) => {
   const [modal, setModal] = useRecoilState(modalState);
-  const [form, setForm] = useRecoilState(goalState);
 
-  const [character, setCharacter] = useState(characterQuestion);
-
+  const dayArr = [3, 7];
+  const privateArr = ['친구 공개', '나만 보기'];
   const colorsArr = [
     colors.char1,
     colors.char2,
@@ -27,72 +31,12 @@ const GoalForm = () => {
     colors.char4,
     colors.char5,
   ];
-  const dayArr = [3, 7];
-  const privateArr = ['친구 공개', '나만 보기'];
-
-  const startDate = moment().format('YYYY년 MM월 DD일');
-  const [endDate, setEndDate] = useState(
-    moment().add(2, 'days').format('YYYY년 MM월 DD일')
+  const hours = Array.from({ length: 13 }).map((el, index) =>
+    String(index).padStart(2, '0')
   );
-
-  const handleColorClick = (color) => {
-    switch (color) {
-      case colors.char1:
-        setCharacter(character1);
-        setForm({ ...form, characterId: 1 });
-        break;
-      case colors.char2:
-        setCharacter(character2);
-        setForm({ ...form, characterId: 2 });
-        break;
-      case colors.char3:
-        setCharacter(character3);
-        setForm({ ...form, characterId: 3 });
-        break;
-      case colors.char4:
-        setCharacter(character4);
-        setForm({ ...form, characterId: 4 });
-        break;
-      case colors.char5:
-        setCharacter(character5);
-        setForm({ ...form, characterId: 5 });
-        break;
-      default:
-        return characterQuestion;
-    }
-  };
-
-  const handlePrivateClick = (pri) => {
-    if (pri === '친구 공개') setForm({ ...form, privateCheck: false });
-    if (pri === '나만 보기') setForm({ ...form, privateCheck: true });
-    setModal({ open: false, type: 'private' });
-  };
-
-  const handleTitleChange = (e) => {
-    setForm({ ...form, title: e.target.value });
-  };
-
-  const handleDayClick = (day) => {
-    if (day === 3) {
-      setForm({ ...form, category: day });
-      setEndDate(moment().add(2, 'days').format('YYYY년 MM월 DD일'));
-    }
-    if (day === 7) {
-      setForm({ ...form, category: day });
-      setEndDate(moment().add(6, 'days').format('YYYY년 MM월 DD일'));
-    }
-  };
-
-  const handleOkClick = () => {
-    if (modal.type === 'time') {
-      console.log('time ok click');
-      setModal({ open: false, type: 'time' });
-    }
-  };
-
-  // console.log('form', form);
-  // console.log('form.title', form.title);
-  // console.log('form.category', form.category);
+  const minutes = Array.from({ length: 60 }).map((el, index) =>
+    String(index).padStart(2, '0')
+  );
 
   return (
     <>
@@ -185,11 +129,51 @@ const GoalForm = () => {
           modal.type === 'private' || modal.type === 'character' ? false : true
         }
         title={modal.type === 'time' ? '시간' : null}
-        handleOkClick={handleOkClick}
+        handleOkClick={handleTimeOkClick}
       >
-        {/* {modal.type === 'month' && <MonthCalendar />} */}
-
-        {modal.type === 'time' && <div>시간설정 모달</div>}
+        {modal.type === 'time' && (
+          <TimeContainer>
+            <TimeDiv>
+              {hours.map((hour, i) => (
+                <TimeButton
+                  key={i}
+                  id='hour'
+                  fc={
+                    selectTime.hour === hour ? colors.black : colors.placeholder
+                  }
+                  bgc={
+                    selectTime.hour === hour ? colors.secondary : 'transparent'
+                  }
+                  onClick={() => handleHourClick(hour)}
+                >
+                  {hour}
+                </TimeButton>
+              ))}
+            </TimeDiv>
+            <div>:</div>
+            <TimeDiv>
+              {minutes.map((minute, i) => (
+                <TimeButton
+                  key={i}
+                  id='minute'
+                  fc={
+                    selectTime.minute === minute
+                      ? colors.black
+                      : colors.placeholder
+                  }
+                  bgc={
+                    selectTime.minute === minute
+                      ? colors.secondary
+                      : 'transparent'
+                  }
+                  onClick={() => handleMinuteClick(minute)}
+                >
+                  {minute}
+                </TimeButton>
+              ))}
+            </TimeDiv>
+          </TimeContainer>
+        )}
         {modal.type === 'private' && (
           <PrivateUl>
             {privateArr.map((pri, i) => (
@@ -294,6 +278,39 @@ const DayLi = styled.li`
   }
 `;
 
+const TimeContainer = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const TimeDiv = styled.div`
+  padding: 0 10px;
+  margin: 0;
+  list-style: none;
+  width: 50%;
+  height: 100px;
+  overflow: scroll;
+  text-align: center;
+
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;
+const TimeButton = styled.button`
+  width: 100%;
+  display: block;
+  border: none;
+  outline: none;
+  padding: 6px 0;
+  border-radius: 4px;
+  background-color: ${({ bgc }) => bgc};
+  color: ${({ fc }) => fc};
+  box-sizing: border-box;
+`;
+
 const PrivateUl = styled.ul`
   text-align: center;
 `;
@@ -321,23 +338,23 @@ const CharacterLi = styled.li`
   cursor: pointer;
 
   &.fbe5a5 {
-    border: 2px solid #ffd24c;
+    box-shadow: 0 0 0 3px #ffd24c inset;
   }
 
   &.f29bca {
-    border: 2px solid #ff4bab;
+    box-shadow: 0 0 0 3px #ff5cb3 inset;
   }
 
   &.dbB4f4 {
-    border: 2px solid #c56bfd;
+    box-shadow: 0 0 0 3px #c56bfd inset;
   }
 
   &.bbdcad {
-    border: 2px solid #5fd42d;
+    box-shadow: 0 0 0 3px #5fd42d inset;
   }
 
   &.b4d7fc {
-    border: 2px solid #479ffc;
+    box-shadow: 0 0 0 3px #479ffc inset;
   }
 
   & + & {

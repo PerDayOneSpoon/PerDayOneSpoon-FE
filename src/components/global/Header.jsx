@@ -6,7 +6,7 @@ import { ReactComponent as IconFriend } from '../../assets/icons/icon-addfriend.
 import { colors } from '../../theme/theme';
 import { getAccessToken } from '../../shared/localStorage';
 
-const Header = ({ hasBack, hasIcon, isBg, title, icon, handleOkClick }) => {
+const Header = ({ hasBack, hasIcon, isBg, title, icon, handleAddClick }) => {
   const navigate = useNavigate();
 
   const handleIcons = (icon) => {
@@ -31,7 +31,7 @@ const Header = ({ hasBack, hasIcon, isBg, title, icon, handleOkClick }) => {
             <IconLeft onClick={() => navigate(-1)} />
           </IconContainer>
           <TitleText>{title}</TitleText>
-          <button onClick={handleOkClick}>추가</button>
+          <button onClick={handleAddClick}>추가</button>
         </ContainerInner>
       </Container>
     );
