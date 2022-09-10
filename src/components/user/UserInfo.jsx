@@ -50,10 +50,6 @@ export default UserInfo;
 
 const Container = styled.div`
   margin: 11px -16px 0;
-  /* margin-left: -16px;
-  margin-right: -16px;
-  margin-top: 11px; */
-
   display: flex;
   /* align-items: center;
   justify-content: center; */
