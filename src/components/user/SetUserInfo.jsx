@@ -52,7 +52,7 @@ const SetUserInfo = ({
           </FormLeft>
           <InputRight
             type='text'
-            value={editUserInfo.nickname}
+            value={editUserInfo.nickname || ''}
             name='nickname'
             onChange={handleInputChange}
             disabled={onlyView}
@@ -62,7 +62,7 @@ const SetUserInfo = ({
           <FormLeft>상태 메세지</FormLeft>
           <InputRight
             type='text'
-            value={editUserInfo.status}
+            value={editUserInfo.status || ''}
             name='status'
             onChange={handleInputChange}
             disabled={onlyView}
