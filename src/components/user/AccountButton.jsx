@@ -14,10 +14,17 @@ const AccountButton = () => {
     },
   });
 
+  const { mutate: unregisterMutation } = useMutation(userApi.unregister, {
+    onSuccess: () => {
+      removeToken();
+      navigate('/login');
+    },
+  });
+
   return (
     <Container>
       <Button onClick={() => logoutMutation()}>로그아웃</Button>
-      <Button>회원탈퇴</Button>
+      <Button onClick={() => unregisterMutation()}>회원탈퇴</Button>
     </Container>
   );
 };

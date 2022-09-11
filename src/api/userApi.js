@@ -37,4 +37,8 @@ export const userApi = {
   logout: () => {
     return instance.delete('/delete/user/logout');
   },
+
+  unregister: () => {
+    return instance.delete('/delete/user/register');
+  },
 };
