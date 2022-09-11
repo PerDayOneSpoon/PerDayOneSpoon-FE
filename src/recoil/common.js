@@ -4,3 +4,11 @@ import { atom } from 'recoil';
 //   key: 'goalState',
 //   default: ''
 // });
+
+export const userInfoState = atom({
+  key: 'userInfoState',
+  default: {
+    nickname: '',
+    status: '',
+  },
+});
