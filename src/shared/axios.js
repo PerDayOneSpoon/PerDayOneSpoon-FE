@@ -44,7 +44,7 @@ instance.interceptors.response.use(
     } = error.response;
 
     // message: "토큰이 존재하지 않습니다."
-    if (responseData === '400') {
+    if (responseData.code === '400') {
       window.location.replace('/');
     }
 

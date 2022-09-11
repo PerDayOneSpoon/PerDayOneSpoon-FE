@@ -125,7 +125,7 @@ const CreatePage = () => {
     }
   };
 
-  console.log('form 전송 데이터', form);
+  // console.log('form 전송 데이터', form);
 
   return (
     <Layout bgColor={colors.bgColor}>

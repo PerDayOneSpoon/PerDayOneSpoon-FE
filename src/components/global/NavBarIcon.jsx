@@ -1,13 +1,16 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 import { colors } from '../../theme/theme';
 import CommonText from '../elements/CommonText';
 
-const NavBarIcon = ({ icon, label, handleNavIconClick, isActive }) => {
+const NavBarIcon = ({ icon, label, handleNavIconClick, className }) => {
   return (
     <Container onClick={handleNavIconClick}>
-      <IconContainer isActive={isActive}>{icon}</IconContainer>
+      <IconContainer className={className === label && 'active'}>
+        {icon}
+      </IconContainer>
       <CommonText isCaption={true} fc={colors.text}>
-        <Label isActive={isActive}>{label}</Label>
+        <Label className={className === label && 'active'}>{label}</Label>
       </CommonText>
     </Container>
   );
@@ -26,8 +29,17 @@ const Container = styled.div`
 
 const IconContainer = styled.div`
   margin-bottom: 2px;
+  color: ${colors.navIcon};
+
+  &.active {
+    color: ${colors.primary};
+  }
 `;
 
 const Label = styled.span`
-  color: ${({ isActive }) => isActive && colors.primary};
+  color: ${colors.text};
+
+  &.active {
+    color: ${colors.primary};
+  }
 `;

@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 
 const MainPage = () => {
   const navigate = useNavigate();
+
   return (
     <Layout hasNavBar={true} bgColor={colors.bgColor}>
       <Header title='주간 목표 달성률' bgColor={colors.secondary} />

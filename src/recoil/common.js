@@ -12,3 +12,8 @@ export const userInfoState = atom({
     status: '',
   },
 });
+
+export const navBarState = atom({
+  key: 'navBarState',
+  default: '홈',
+});

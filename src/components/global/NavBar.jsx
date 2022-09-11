@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { NAV_BAR_HEIGHT } from '../../constants/common';
 import NavBarIcon from './NavBarIcon';
@@ -7,11 +8,12 @@ import { ReactComponent as IconMypage } from '../../assets/icons/icon-mypage.svg
 import { ReactComponent as IconBadge } from '../../assets/icons/icon-badge.svg';
 import { ReactComponent as IconCalendar } from '../../assets/icons/icon-calendar.svg';
 import { colors } from '../../theme/theme';
-import { useState } from 'react';
+import { useRecoilState } from 'recoil';
+import { navBarState } from '../../recoil/common';
 
 const NavBar = () => {
   const navigate = useNavigate();
-  const [active, setActive] = useState(false);
+  const [classActive, setClassActive] = useRecoilState(navBarState);
 
   const data = [
     {
@@ -37,6 +39,8 @@ const NavBar = () => {
   ];
 
   const handleNavIconClick = (val) => {
+    setClassActive(val);
+
     switch (val) {
       case '홈':
         navigate('/');
@@ -53,19 +57,19 @@ const NavBar = () => {
       default:
         return;
     }
-
-    console.log(val);
   };
 
   return (
     <NavContainer>
-      {data.map((item) => (
+      {data.map((item, i) => (
         <NavBarIcon
           key={item.id}
           label={item.label}
           icon={item.icon}
-          isActive={active}
-          handleNavIconClick={() => handleNavIconClick(item.label)}
+          className={classActive}
+          handleNavIconClick={() => {
+            handleNavIconClick(item.label);
+          }}
         />
       ))}
     </NavContainer>
