@@ -9,7 +9,7 @@ import character4 from '../assets/imgs/character4.png';
 import character5 from '../assets/imgs/character5.png';
 import characterQuestion from '../assets/imgs/character-question-mark.png';
 import { colors } from '../theme/theme';
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { goalApi } from '../api/goalApi';
@@ -18,6 +18,7 @@ import { modalState } from '../recoil/modalAtom';
 import moment from 'moment/moment';
 
 const CreatePage = () => {
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
   const [modal, setModal] = useRecoilState(modalState);
 
@@ -41,7 +42,7 @@ const CreatePage = () => {
 
   const addGoalMutation = useMutation(goalApi.addGoal, {
     onSuccess: () => {
-      // queryClient.invalidateQueries('goal_list');
+      queryClient.invalidateQueries('getGoalInfo');
       navigate('/');
     },
     onError: ({ response }) => {
@@ -138,7 +139,7 @@ const CreatePage = () => {
     <Layout bgColor={colors.bgColor}>
       <Header
         hasBack={true}
-        title='목표 추가'
+        title='습관 추가'
         handleRightButtonClick={handleRightButtonClick}
         rightButton='추가'
       />

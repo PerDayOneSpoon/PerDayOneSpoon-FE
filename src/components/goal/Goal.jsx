@@ -9,8 +9,17 @@ import useInterval from '../../hooks/useInterval';
 const Goal = ({ isMain, item }) => {
   const [isTimer, setIsTimer] = useState(false);
 
-  const { id, title, charImg, startDate, endDate, time, likeNum, completion } =
-    item;
+  const {
+    id,
+    title,
+    characterId,
+    start_date,
+    end_date,
+    time, //"00:10:00"
+    likeNum,
+    achievementCheck,
+    privateCheck,
+  } = item;
 
   let totalTime = 0;
 
@@ -83,17 +92,20 @@ const Goal = ({ isMain, item }) => {
   }, [isPlay]);
 
   return (
-    <Container onClick={() => setIsTimer(!isTimer)} isCompletion={completion}>
+    <Container
+      onClick={() => setIsTimer(!isTimer)}
+      isAchievementCheck={achievementCheck}
+    >
       <Contents>
         <RightContent>
           <ChracterContainer>
-            <Character src={charImg} />
+            {/* <Character src={charImg} /> */}
           </ChracterContainer>
 
           <div>
             <CommonText isSubtitle1={true}>{title}</CommonText>
             <CommonText isCaption={true} fc={colors.text}>
-              {startDate} - {endDate}
+              {start_date} - {end_date}
             </CommonText>
           </div>
         </RightContent>
@@ -119,7 +131,7 @@ const Goal = ({ isMain, item }) => {
             <ProgressBar>
               <ProgressPercentage
                 percentage={percentage}
-                isCompletion={completion}
+                isAchievementCheck={achievementCheck}
               />
             </ProgressBar>
           </Timer>
@@ -128,8 +140,8 @@ const Goal = ({ isMain, item }) => {
               e.stopPropagation();
               handleStartCilck();
             }}
-            isCompletion={completion}
-            disabled={completion}
+            isAchievementCheck={achievementCheck}
+            disabled={achievementCheck}
           >
             시작
           </Button>
@@ -143,8 +155,8 @@ export default Goal;
 
 const Container = styled.div`
   padding: 16px;
-  background-color: ${({ isCompletion }) =>
-    isCompletion ? '#dfdfdf' : colors.white};
+  background-color: ${({ isAchievementCheck }) =>
+    isAchievementCheck ? '#dfdfdf' : colors.white};
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
 
@@ -226,8 +238,8 @@ const ProgressPercentage = styled.div.attrs((props) => ({
   left: 0;
   top: 0;
   height: 100%;
-  background-color: ${({ isCompletion }) =>
-    isCompletion ? '#bbb' : colors.primary};
+  background-color: ${({ isAchievementCheck }) =>
+    isAchievementCheck ? '#bbb' : colors.primary};
   transition: all 0.2s linear;
 `;
 
@@ -240,8 +252,8 @@ const Button = styled.button`
   padding: 2px 4px;
   border-radius: 4px;
   color: ${colors.white};
-  background-color: ${({ isCompletion }) =>
-    isCompletion ? '#bbb' : colors.primary};
+  background-color: ${({ isAchievementCheck }) =>
+    isAchievementCheck ? '#bbb' : colors.primary};
   font-size: 12px;
 
   cursor: pointer;

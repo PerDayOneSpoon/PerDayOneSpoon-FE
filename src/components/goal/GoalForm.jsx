@@ -48,9 +48,9 @@ const GoalForm = ({
           </FlexContainer>
         </SetForm>
         <SetForm>
-          <CommonText isSubtitle1={true}>목표 이름</CommonText>
+          <CommonText isSubtitle1={true}>지킬 습관</CommonText>
           <TitleInput
-            placeholder='목표 이름을 입력해 주세요'
+            placeholder='습관을 입력해 주세요'
             value={form.title}
             onChange={handleTitleChange}
           />

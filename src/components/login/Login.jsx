@@ -34,11 +34,11 @@ const Login = () => {
       <StMainText>
         <h6>
           지금 하루 한 줌과 <br />
-          목표를 달성해 보아요!
+          습관을 만들어 보아요!
         </h6>
       </StMainText>
       <StSubText>
-        <div>빠른 목표 설정과 목표 달성까지</div>
+        <div>빠른 습관 설정과 달성까지</div>
       </StSubText>
 
       <StLoginStart>
