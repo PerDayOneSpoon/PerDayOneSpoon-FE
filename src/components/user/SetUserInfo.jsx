@@ -3,7 +3,6 @@ import { useRef } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { userApi } from '../../api/userApi';
 import { colors } from '../../theme/theme';
-
 import CommonText from '../elements/CommonText';
 
 const SetUserInfo = ({

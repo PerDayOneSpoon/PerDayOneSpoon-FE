@@ -34,7 +34,19 @@ export const userApi = {
     });
   },
 
+  getSearchFriends: (data) => {
+    if (data.queryKey[0] === null || data.queryKey[0] === '') {
+      return false;
+    } else {
+      return instance.get(`/search/friends/${data.queryKey[0]}`);
+    }
+  },
+
   logout: () => {
     return instance.delete('/delete/user/logout');
+  },
+
+  unregister: () => {
+    return instance.delete('/delete/user/register');
   },
 };
