@@ -4,49 +4,23 @@ import FriendsItem from './FriendsItem';
 import { colors } from '../../theme/theme';
 import CommonText from '../elements/CommonText';
 import { useNavigate } from 'react-router-dom';
+import { userApi } from '../../api/userApi.js';
+import { useQuery } from 'react-query';
 
 const Search = () => {
   const navigate = useNavigate();
 
-  const data = [
-    {
-      freindsid: '1',
-      email: 'dsfjsd@naver.com',
-      userId: '배지공주',
-      user_code: '012621',
-      socialid: 'qweqwjk123',
-    },
-    {
-      freindsid: '2',
-      email: 'dsfjsd@naver.com',
-      userId: '소연',
-      user_code: '012621',
-      socialid: 'qweqwjk123',
-    },
-    {
-      freindsid: '2',
-      email: 'dsfjsd@naver.com',
-      userId: '단비',
-      user_code: '012621',
-      socialid: 'qweqwjk123',
-    },
-    {
-      freindsid: '2',
-      email: 'dsfjsd@naver.com',
-      userId: '김단비',
-      user_code: '012621',
-      socialid: 'qweqwjk123',
-    },
-    {
-      freindsid: '2',
-      email: 'dsfjsd@naver.com',
-      userId: '눈사람단비',
-      user_code: '012621',
-      socialid: 'qweqwjk123',
-    },
-  ];
-
   const [searchTerm, setSearchTerm] = useState('');
+
+  const { data: searchFriends } = useQuery(
+    searchTerm,
+    userApi.getSearchFriends,
+    {
+      onSuccess: (data) => {
+        console.log('searchFriends!!!!!!!!!', data);
+      },
+    }
+  );
 
   return (
     <Container>
@@ -54,8 +28,8 @@ const Search = () => {
         <SearchInput
           type='text'
           placeholder='검색'
-          onChange={(event) => {
-            setSearchTerm(event.target.value);
+          onChange={(e) => {
+            setSearchTerm(e.target.value.trim());
           }}
         />
         <CancelButton
@@ -66,19 +40,8 @@ const Search = () => {
           취소
         </CancelButton>
       </InputBox>
-      {data
-        .filter((val) => {
-          if (searchTerm === null || searchTerm === '') {
-            return false;
-          } else if (
-            val.userId.toLowerCase().includes(searchTerm.toLowerCase())
-            // ||
-            // val.user_code.toLowerCase().includes(searchTerm.toLowerCase())
-          ) {
-            return val;
-          }
-        })
-        .map((val, key) => {
+      {searchFriends &&
+        searchFriends.data.map((val, key) => {
           return <FriendsItem val={val} key={key} />;
         })}
     </Container>
