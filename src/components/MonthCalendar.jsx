@@ -11,8 +11,14 @@ const MonthCalendar = () => {
   const [value, setValue] = useState(new Date());
   const data = ['1', '2', '3', '4', '5'];
 
+  // const response = {
+  //   date: '2022년 09월 22일',
+  //   characterId: 1 -> color: '#ffeeee'
+  // }
+
   const tileContent = ({ date, view }) => {
-    if (view === 'month' && date.getDay() === 1) {
+    // date === response.date
+    if (date.getDay() === 6) {
       return (
         <MarkContainer>
           {data.map((item) => (

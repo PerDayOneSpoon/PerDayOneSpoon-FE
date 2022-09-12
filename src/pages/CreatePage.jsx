@@ -9,7 +9,7 @@ import character4 from '../assets/imgs/character4.png';
 import character5 from '../assets/imgs/character5.png';
 import characterQuestion from '../assets/imgs/character-question-mark.png';
 import { colors } from '../theme/theme';
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { goalApi } from '../api/goalApi';
@@ -18,6 +18,7 @@ import { modalState } from '../recoil/modalAtom';
 import moment from 'moment/moment';
 
 const CreatePage = () => {
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
   const [modal, setModal] = useRecoilState(modalState);
 
@@ -41,7 +42,7 @@ const CreatePage = () => {
 
   const addGoalMutation = useMutation(goalApi.addGoal, {
     onSuccess: () => {
-      // queryClient.invalidateQueries('goal_list');
+      queryClient.invalidateQueries('getGoalInfo');
       navigate('/');
     },
     onError: ({ response }) => {
@@ -57,8 +58,15 @@ const CreatePage = () => {
     } else if (form.time === '00:00') {
       return alert('설정한 습관의 타이머를 유효한 값으로 수정해주세요');
     } else {
-      // 배열 처리 ?
-      addGoalMutation.mutate([form]);
+      if (
+        window.confirm(
+          '한 번 추가하신 습관은 수정이나 삭제가 불가능합니다. 추가하시겠습니까?'
+        )
+      ) {
+        addGoalMutation.mutate(form);
+      } else {
+        return;
+      }
     }
   };
 
@@ -125,13 +133,13 @@ const CreatePage = () => {
     }
   };
 
-  console.log('form 전송 데이터', form);
+  // console.log('form 전송 데이터', form);
 
   return (
     <Layout bgColor={colors.bgColor}>
       <Header
         hasBack={true}
-        title='목표 추가'
+        title='습관 추가'
         handleRightButtonClick={handleRightButtonClick}
         rightButton='추가'
       />

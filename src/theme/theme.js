@@ -15,4 +15,5 @@ export const colors = {
   white: '#ffffff',
   black: '#000000',
   danger: '#E44949',
+  navIcon: '#989898',
 };

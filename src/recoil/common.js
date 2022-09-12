@@ -1,9 +1,7 @@
 import { atom } from 'recoil';
+import { recoilPersist } from 'recoil-persist';
 
-// export const goalState = atom({
-//   key: 'goalState',
-//   default: ''
-// });
+const { persistAtom } = recoilPersist();
 
 export const userInfoState = atom({
   key: 'userInfoState',
@@ -11,4 +9,10 @@ export const userInfoState = atom({
     nickname: '',
     status: '',
   },
+});
+
+export const navBarState = atom({
+  key: 'navBarState',
+  default: '홈',
+  effects_UNSTABLE: [persistAtom],
 });
