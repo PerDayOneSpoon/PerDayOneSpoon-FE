@@ -57,8 +57,15 @@ const CreatePage = () => {
     } else if (form.time === '00:00') {
       return alert('설정한 습관의 타이머를 유효한 값으로 수정해주세요');
     } else {
-      // 배열 처리 ?
-      addGoalMutation.mutate([form]);
+      if (
+        window.confirm(
+          '한 번 추가하신 습관은 수정이나 삭제가 불가능합니다. 추가하시겠습니까?'
+        )
+      ) {
+        addGoalMutation.mutate(form);
+      } else {
+        return;
+      }
     }
   };
 
