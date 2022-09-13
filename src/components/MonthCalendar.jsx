@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { ReactComponent as IconLeft } from '../assets/icons/icon-left.svg';
 import { ReactComponent as IconRight } from '../assets/icons/icon-right.svg';
 import Calendar from 'react-calendar';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import styled, { css } from 'styled-components';
 import 'react-calendar/dist/Calendar.css';
 import { colors } from '../theme/theme';
@@ -39,7 +39,7 @@ const MonthCalendar = () => {
         nextLabel={<IconRight />}
         prevLabel={<IconLeft />}
         showFixedNumberOfWeeks={true}
-        formatDay={(locale, date) => moment(date).format('DD')}
+        formatDay={(locale, date) => dayjs(date).format('DD')}
       />
     </Container>
   );

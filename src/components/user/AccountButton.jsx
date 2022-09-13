@@ -10,6 +10,7 @@ const AccountButton = () => {
   const { mutate: logoutMutation } = useMutation(userApi.logout, {
     onSuccess: () => {
       removeToken();
+      localStorage.removeItem('recoil-persist');
       navigate('/login');
     },
   });

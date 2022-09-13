@@ -2,44 +2,8 @@ import styled from 'styled-components';
 import { colors } from '../theme/theme';
 import CommonText from './elements/CommonText';
 
-const Graph = () => {
-  const data = [
-    {
-      id: 1,
-      percentage: '70',
-      day: '일',
-    },
-    {
-      id: 2,
-      percentage: '100',
-      day: '월',
-    },
-    {
-      id: 3,
-      percentage: '50',
-      day: '화',
-    },
-    {
-      id: 4,
-      percentage: '0',
-      day: '수',
-    },
-    {
-      id: 5,
-      percentage: '100',
-      day: '목',
-    },
-    {
-      id: 6,
-      percentage: '70',
-      day: '금',
-    },
-    {
-      id: 7,
-      percentage: '33',
-      day: '토',
-    },
-  ];
+const Graph = ({ weekRateDtoList, weekStartDate, weekEndDate }) => {
+  console.log('주간 그래프', weekRateDtoList);
 
   return (
     <Container>
@@ -50,13 +14,13 @@ const Graph = () => {
         bgColor={colors.secondary}
         fc={colors.text}
       >
-        2022년 8월 14일 ~ 2022년 8월 20일
+        {weekStartDate} ~ {weekEndDate}
       </CommonText>
       <GraphBox>
-        {data.map((list) => (
-          <GraphList key={list.id}>
-            <GraphBar percentage={list.percentage} />
-            <CommonText isCaption={true}>{list.day}</CommonText>
+        {weekRateDtoList.map((day) => (
+          <GraphList key={day.id}>
+            <GraphBar percentage={day.rate} />
+            <CommonText isCaption={true}>{day.dayString}</CommonText>
           </GraphList>
         ))}
       </GraphBox>

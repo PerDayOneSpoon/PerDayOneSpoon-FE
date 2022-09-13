@@ -9,20 +9,20 @@ export const goalTimeState = atom({
   default: '',
 });
 
-export const getGoalListSelector = selector({
-  key: 'getGoalListSelector',
-  get: async ({ get }) => {
-    try {
-      const goalTime = get(goalTimeState);
-      const { data } = await goalApi.getGoal();
-      console.log(data.goalResponseDtoList.map((item) => item.time));
-      // data.goalResponseDtoList.map((item) => goalTime.push(item.time))
-      return goalTime;
-    } catch (error) {
-      return error.response;
-    }
-  },
-});
+// export const getGoalListSelector = selector({
+//   key: 'getGoalListSelector',
+//   get: async ({ get }) => {
+//     try {
+//       const goalTime = get(goalTimeState);
+//       const { data } = await goalApi.getGoal();
+//       console.log(data.goalResponseDtoList.map((item) => item.time));
+//       // data.goalResponseDtoList.map((item) => goalTime.push(item.time))
+//       return goalTime;
+//     } catch (error) {
+//       return error.response;
+//     }
+//   },
+// });
 
 // export const goalListState = atom({
 //   key: 'goalListState',

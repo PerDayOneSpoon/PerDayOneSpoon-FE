@@ -13,8 +13,8 @@ const Goal = ({ isMain, item }) => {
     id,
     title,
     characterId,
-    start_date,
-    end_date,
+    startDate,
+    endDate,
     time, //"00:10:00"
     likeNum,
     achievementCheck,
@@ -105,7 +105,7 @@ const Goal = ({ isMain, item }) => {
           <div>
             <CommonText isSubtitle1={true}>{title}</CommonText>
             <CommonText isCaption={true} fc={colors.text}>
-              {start_date} - {end_date}
+              {startDate} - {endDate}
             </CommonText>
           </div>
         </RightContent>

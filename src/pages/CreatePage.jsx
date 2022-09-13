@@ -15,16 +15,16 @@ import { useNavigate } from 'react-router-dom';
 import { goalApi } from '../api/goalApi';
 import { useRecoilState } from 'recoil';
 import { modalState } from '../recoil/modalAtom';
-import moment from 'moment/moment';
+import dayjs from 'dayjs';
 
 const CreatePage = () => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const [modal, setModal] = useRecoilState(modalState);
 
-  const startDate = moment().format('YYYY년 MM월 DD일');
+  const startDate = dayjs().format('YYYY년 MM월 DD일');
   const [endDate, setEndDate] = useState(
-    moment().add(2, 'days').format('YYYY년 MM월 DD일')
+    dayjs().add(2, 'days').format('YYYY년 MM월 DD일')
   );
   const [character, setCharacter] = useState(characterQuestion);
   const [selectTime, setSelectTime] = useState({
@@ -77,11 +77,11 @@ const CreatePage = () => {
   const handleDayClick = (day) => {
     if (day === 3) {
       setForm({ ...form, category: day });
-      setEndDate(moment().add(2, 'days').format('YYYY년 MM월 DD일'));
+      setEndDate(dayjs().add(2, 'days').format('YYYY년 MM월 DD일'));
     }
     if (day === 7) {
       setForm({ ...form, category: day });
-      setEndDate(moment().add(6, 'days').format('YYYY년 MM월 DD일'));
+      setEndDate(dayjs().add(6, 'days').format('YYYY년 MM월 DD일'));
     }
   };
 
