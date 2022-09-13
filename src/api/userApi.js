@@ -26,7 +26,6 @@ export const userApi = {
   },
 
   updateUserImg: (formData) => {
-    console.log('프사바꾸자!!!!', formData);
     return instance.patch('/change/image', formData, {
       headers: {
         'Content-type': 'multipart/form-data',
@@ -35,11 +34,7 @@ export const userApi = {
   },
 
   getSearchFriends: (data) => {
-    if (data.queryKey[0] === null || data.queryKey[0] === '') {
-      return false;
-    } else {
-      return instance.get(`/search/friends/${data.queryKey[0]}`);
-    }
+    return instance.get(`/search/friends/${data}`);
   },
 
   logout: () => {
