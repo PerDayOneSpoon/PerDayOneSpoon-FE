@@ -24,6 +24,7 @@ const Header = ({
 
   useEffect(() => {
     const accessToken = getAccessToken();
+    console.log('헤더 실행!!!!!!!!!!!');
 
     if (accessToken == null || accessToken === '') {
       navigate('/login');

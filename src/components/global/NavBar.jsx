@@ -10,6 +10,7 @@ import { ReactComponent as IconCalendar } from '../../assets/icons/icon-calendar
 import { colors } from '../../theme/theme';
 import { useRecoilState } from 'recoil';
 import { navBarState } from '../../recoil/common';
+import { getAccessToken } from '../../shared/localStorage';
 
 const NavBar = () => {
   const navigate = useNavigate();

@@ -45,7 +45,7 @@ instance.interceptors.response.use(
 
     // message: "토큰이 존재하지 않습니다."
     if (responseData.code === '400') {
-      window.location.replace('/');
+      window.location.replace('/login');
     }
 
     // message: "변조된 토큰입니다."
