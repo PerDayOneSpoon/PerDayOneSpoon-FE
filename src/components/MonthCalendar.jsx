@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ReactComponent as IconLeft } from '../assets/icons/icon-left.svg';
 import { ReactComponent as IconRight } from '../assets/icons/icon-right.svg';
 import Calendar from 'react-calendar';
@@ -6,18 +6,77 @@ import dayjs from 'dayjs';
 import styled, { css } from 'styled-components';
 import 'react-calendar/dist/Calendar.css';
 import { colors } from '../theme/theme';
+import { useRef } from 'react';
 
-const MonthCalendar = () => {
-  const [value, setValue] = useState(new Date());
+const MonthCalendar = ({ dateValue, handleChangeDate }) => {
   const data = ['1', '2', '3', '4', '5'];
 
-  // const response = {
-  //   date: '2022년 09월 22일',
-  //   characterId: 1 -> color: '#ffeeee'
-  // }
+  const [month, setMonth] = useState('');
+
+  const response = [
+    {
+      friendsData: [
+        {
+          id: 1,
+          name: 'aaa',
+          profileImg: '',
+        },
+        {
+          id: 2,
+          name: 'bbb',
+          profileImg: '',
+        },
+        {
+          id: 3,
+          name: 'ccc',
+          profileImg: '',
+        },
+        {
+          id: 4,
+          name: 'ddd',
+          profileImg: '',
+        },
+      ],
+    },
+    {
+      calendarData: [
+        {
+          id: 1,
+          date: '2022년 09월 22일',
+          goalColor: ['#fbe5a5', '#f29bca', '#bbdcad'],
+        },
+        {
+          id: 2,
+          date: '2022년 09월 25일',
+          goalColor: ['#dbb4f4', '#b4d7fc'],
+        },
+        {
+          id: 3,
+          date: '2022년 09월 26일',
+          goalColor: ['#dbb4f4', '#b4d7fc'],
+        },
+        {
+          id: 4,
+          date: '2022년 09월 27일',
+          goalColor: ['#dbb4f4', '#b4d7fc', '#fbe5a5'],
+        },
+      ],
+    },
+    {
+      todayGoalData: [
+        {
+          id: 1,
+          title: '9.13 습관 추가',
+          startDate: '2022년 09월 13일',
+          endDate: '2022년 09월 16일',
+          characterImg: '',
+          achievementCheck: false,
+        },
+      ],
+    },
+  ];
 
   const tileContent = ({ date, view }) => {
-    // date === response.date
     if (date.getDay() === 6) {
       return (
         <MarkContainer>
@@ -29,16 +88,22 @@ const MonthCalendar = () => {
     }
   };
 
+  console.log('달!!!', month);
+
   return (
     <Container>
       <CutomCalendar
-        value={value}
+        value={dateValue}
         tileContent={tileContent}
+        onChange={handleChangeDate}
         view={'month'}
         calendarType={'Hebrew'}
         nextLabel={<IconRight />}
         prevLabel={<IconLeft />}
-        showFixedNumberOfWeeks={true}
+        onActiveStartDateChange={({ action, activeStartDate, value, view }) => {
+          setMonth(dayjs(activeStartDate).format('MM'));
+        }}
+        // formatMonthYear={formatMonthYear}
         formatDay={(locale, date) => dayjs(date).format('DD')}
       />
     </Container>
@@ -58,6 +123,10 @@ const CutomCalendar = styled(Calendar)`
     background-color: ${colors.bgColor};
     padding-bottom: 16px;
     border-bottom: 1px solid ${colors.border};
+  }
+
+  .react-calendar__tile--now {
+    background-color: transparent;
   }
 
   .react-calendar__tile:enabled:hover,

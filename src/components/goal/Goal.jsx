@@ -2,17 +2,31 @@ import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as IconHeartEmpty } from '../../assets/icons/icon-heart-empty.svg';
 import { ReactComponent as IconHeartFill } from '../../assets/icons/icon-heart-fill.svg';
+import { useMutation, useQueryClient } from 'react-query';
+import { goalApi } from '../../api/goalApi';
 import { colors } from '../../theme/theme';
 import CommonText from '../elements/CommonText';
 import useInterval from '../../hooks/useInterval';
 
 const Goal = ({ isMain, item }) => {
+  const queryClient = useQueryClient();
+
   const [isTimer, setIsTimer] = useState(false);
+
+  const achieveGoalMutation = useMutation(goalApi.achieveGoal, {
+    onSuccess: (data) => {
+      queryClient.invalidateQueries('getGoalInfo');
+      console.log('achieveGoalMutation 성공 데이터', data);
+    },
+    onError: (error) => {
+      console.log('achieveGoalMutation 에러 데이터', error);
+    },
+  });
 
   const {
     id,
     title,
-    characterId,
+    characterUrl,
     startDate,
     endDate,
     time, //"00:10:00"
@@ -82,6 +96,11 @@ const Goal = ({ isMain, item }) => {
     if (hh === 0 && mm === 0 && ss === 0) {
       clearInterval(startProgress);
       console.log(id, '타이머 종료!');
+      const data = {
+        goalId: id,
+        achivement: true,
+      };
+      achieveGoalMutation.mutate(data);
     }
   }, [hh, mm, ss]);
 
@@ -99,7 +118,7 @@ const Goal = ({ isMain, item }) => {
       <Contents>
         <RightContent>
           <ChracterContainer>
-            {/* <Character src={charImg} /> */}
+            <Character src={characterUrl} alt='캐릭터 이미지' />
           </ChracterContainer>
 
           <div>
@@ -156,7 +175,7 @@ export default Goal;
 const Container = styled.div`
   padding: 16px;
   background-color: ${({ isAchievementCheck }) =>
-    isAchievementCheck ? '#dfdfdf' : colors.white};
+    isAchievementCheck ? '#efefef' : colors.white};
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
 
@@ -233,13 +252,16 @@ const ProgressPercentage = styled.div.attrs((props) => ({
   style: {
     width: props.percentage <= 100 ? `${props.percentage}%` : '100%',
   },
+  style: {
+    width: props.isAchievementCheck ? '100%' : `${props.percentage}%`,
+  },
 }))`
   position: absolute;
   left: 0;
   top: 0;
   height: 100%;
   background-color: ${({ isAchievementCheck }) =>
-    isAchievementCheck ? '#bbb' : colors.primary};
+    isAchievementCheck ? '#ccc' : colors.primary};
   transition: all 0.2s linear;
 `;
 
@@ -253,7 +275,7 @@ const Button = styled.button`
   border-radius: 4px;
   color: ${colors.white};
   background-color: ${({ isAchievementCheck }) =>
-    isAchievementCheck ? '#bbb' : colors.primary};
+    isAchievementCheck ? '#ccc' : colors.primary};
   font-size: 12px;
 
   cursor: pointer;

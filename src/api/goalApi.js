@@ -9,4 +9,10 @@ export const goalApi = {
   getGoal: () => {
     return instance.get('/confirm/goal');
   },
+
+  achieveGoal: ({ goalId, achivement }) => {
+    return instance.patch(`/change/${goalId}`, {
+      achivement: achivement,
+    });
+  },
 };

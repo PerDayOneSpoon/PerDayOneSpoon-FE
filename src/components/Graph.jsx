@@ -3,8 +3,6 @@ import { colors } from '../theme/theme';
 import CommonText from './elements/CommonText';
 
 const Graph = ({ weekRateDtoList, weekStartDate, weekEndDate }) => {
-  console.log('주간 그래프', weekRateDtoList);
-
   return (
     <Container>
       <CommonText
