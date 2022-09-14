@@ -2,7 +2,6 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import FriendsItem from './FriendsItem';
 import { colors } from '../../theme/theme';
-import CommonText from '../elements/CommonText';
 import { useNavigate } from 'react-router-dom';
 import { userApi } from '../../api/userApi.js';
 import { useQuery } from 'react-query';
@@ -14,8 +13,9 @@ const Search = () => {
 
   const { data: searchFriends } = useQuery(
     searchTerm,
-    userApi.getSearchFriends,
+    () => userApi.getSearchFriends(searchTerm),
     {
+      enabled: !!searchTerm,
       onSuccess: (data) => {
         console.log('searchFriends!!!!!!!!!', data);
       },
