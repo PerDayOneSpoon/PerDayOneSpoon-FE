@@ -8,6 +8,11 @@ import { colors } from '../../theme/theme';
 import CommonText from '../elements/CommonText';
 import useInterval from '../../hooks/useInterval';
 
+import { useRecoilState, useRecoilValue } from 'recoil';
+
+import { asyncGetGoal } from '../../recoil/goal';
+import { goalTimeFamily } from '../../recoil/goal';
+
 const Goal = ({ isMain, item }) => {
   const queryClient = useQueryClient();
 
@@ -35,6 +40,9 @@ const Goal = ({ isMain, item }) => {
     privateCheck,
   } = item;
 
+  // const getGoalTest = useRecoilValue(asyncGetGoal);
+  // console.log('getGoalTest', getGoalTest);
+
   let totalTime = 0;
 
   time.split(':').forEach((time, i) => {
@@ -43,39 +51,39 @@ const Goal = ({ isMain, item }) => {
     if (i === 2) totalTime += parseInt(time);
   });
 
-  const [hh, setHh] = useState(parseInt(time.split(':')[0]));
-  const [mm, setMm] = useState(parseInt(time.split(':')[1]));
-  const [ss, setSs] = useState(parseInt(time.split(':')[2]));
-  const [currentTime, setCurrentTime] = useState(0);
-  const [isPlay, setIsPlay] = useState(false);
+  const [testTime, setTestTime] = useRecoilState(goalTimeFamily(id));
   const [timerInterval, setTimerInterval] = useState(0);
 
-  const percentage = Math.floor((currentTime / totalTime) * 10000) / 100;
+  const percentage =
+    Math.floor((testTime.currentTime / totalTime) * 10000) / 100;
 
   // 화면에 보여질 부분
-  const HH = String(hh).padStart(2, '0');
-  const MM = String(mm).padStart(2, '0');
-  const SS = String(ss).padStart(2, '0');
+  const HH = String(testTime.hh).padStart(2, '0');
+  const MM = String(testTime.mm).padStart(2, '0');
+  const SS = String(testTime.ss).padStart(2, '0');
 
   const startProgress = () => {
-    isPlay && setCurrentTime((s) => s + 1);
+    // testTime.isPlay && setCurrentTime((s) => s + 1);
+    testTime.isPlay &&
+      setTestTime((prev) => ({ ...prev, currentTime: prev.currentTime + 1 }));
 
-    if (ss > 0) {
-      setSs((s) => s - 1);
+    if (testTime.ss > 0) {
+      setTestTime((prev) => ({ ...prev, ss: prev.ss - 1 }));
     }
 
-    if (ss === 0) {
-      if (mm === 0) {
-        if (hh === 0) {
-          setIsPlay(false);
+    if (testTime.ss === 0) {
+      if (testTime.mm === 0) {
+        if (testTime.hh === 0) {
+          // setIsPlay(false);
+          setTestTime((prev) => ({ ...prev, isPlay: false }));
         } else {
-          setHh((h) => h - 1);
-          setMm(59);
-          setSs(59);
+          setTestTime((prev) => ({ ...prev, hh: prev.hh - 1 }));
+          setTestTime((prev) => ({ ...prev, mm: 59 }));
+          setTestTime((prev) => ({ ...prev, ss: 59 }));
         }
       } else {
-        setMm((m) => m - 1);
-        setSs(59);
+        setTestTime((prev) => ({ ...prev, mm: prev.mm - 1 }));
+        setTestTime((prev) => ({ ...prev, ss: 59 }));
       }
     }
   };
@@ -84,16 +92,17 @@ const Goal = ({ isMain, item }) => {
     () => {
       startProgress();
     },
-    isPlay ? 1000 : null
+    testTime.isPlay ? 1000 : null
   );
 
   const handleStartCilck = () => {
     console.log(id, '시작 버튼 클릭!');
-    setIsPlay(true);
+    setTestTime((prev) => ({ ...prev, isPlay: true }));
+    // setIsPlay(true);
   };
 
   useEffect(() => {
-    if (hh === 0 && mm === 0 && ss === 0) {
+    if (testTime.hh === 0 && testTime.mm === 0 && testTime.ss === 0) {
       clearInterval(startProgress);
       console.log(id, '타이머 종료!');
       const data = {
@@ -102,13 +111,25 @@ const Goal = ({ isMain, item }) => {
       };
       achieveGoalMutation.mutate(data);
     }
-  }, [hh, mm, ss]);
+  }, [testTime.hh, testTime.mm, testTime.ss]);
 
   useEffect(() => {
-    if (isPlay) {
+    if (testTime.isPlay) {
       setTimerInterval(customInterval);
     }
-  }, [isPlay]);
+  }, [testTime.isPlay]);
+
+  // console.log('testTime', testTime);
+
+  // useEffect 시에 담아주면 컴포넌트 이동할 때마다 초기화 됨. 수정 필요..
+  // useEffect(() => {
+  //   setTestTime({
+  //     ...testTime,
+  //     hh: parseInt(time.split(':')[0]),
+  //     mm: parseInt(time.split(':')[1]),
+  //     ss: parseInt(time.split(':')[2]),
+  //   });
+  // }, []);
 
   return (
     <Container

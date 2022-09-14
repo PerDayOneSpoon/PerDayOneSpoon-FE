@@ -1,31 +1,31 @@
-import { atom, selector } from 'recoil';
+import { atom, atomFamily, selector, selectorFamily } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
 import { goalApi } from '../api/goalApi';
+import { DefaultValue } from 'recoil';
 
 const { persistAtom } = recoilPersist();
+let i = 0;
 
-export const goalTimeState = atom({
-  key: 'goalTimeState',
-  default: '',
+export const goalTimeFamily = atomFamily({
+  key: 'goalTimeFamily',
+  default: selectorFamily({
+    key: 'asyncGetGoalTime',
+    get:
+      (id) =>
+      async ({ get }) => {
+        const { data } = await goalApi.getGoal();
+        const getTime = data.todayGoalsDtoList.map((item) => item.time);
+        const timeValue = {
+          id: id,
+          hh: Number(getTime[i].split(':')[0]),
+          mm: Number(getTime[i].split(':')[1]),
+          ss: Number(getTime[i].split(':')[2]),
+          isPlay: false,
+          currentTime: 0,
+        };
+        i++;
+        return timeValue;
+      },
+  }),
+  // effects_UNSTABLE: [persistAtom],
 });
-
-// export const getGoalListSelector = selector({
-//   key: 'getGoalListSelector',
-//   get: async ({ get }) => {
-//     try {
-//       const goalTime = get(goalTimeState);
-//       const { data } = await goalApi.getGoal();
-//       console.log(data.goalResponseDtoList.map((item) => item.time));
-//       // data.goalResponseDtoList.map((item) => goalTime.push(item.time))
-//       return goalTime;
-//     } catch (error) {
-//       return error.response;
-//     }
-//   },
-// });
-
-// export const goalListState = atom({
-//   key: 'goalListState',
-//   default: {},
-//   effects_UNSTABLE: [persistAtom],
-// });

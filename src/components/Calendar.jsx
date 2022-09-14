@@ -14,6 +14,8 @@ const Calendar = () => {
   const [startDateOfMonth, setStartDateOfMonth] = useState('');
   const [endDateOfMonth, setEndtDateOfMonth] = useState('');
 
+  const [month, setMonth] = useState('');
+
   // console.log('성공????', monthData);
 
   // const { data: monthData } = useQuery(
@@ -51,12 +53,12 @@ const Calendar = () => {
     return dayjs(date).format('YYYY년 MM월');
   };
 
-  const onViewChange = ({ action, activeStartDate, value, view }) => {
-    console.log('action', action);
-    console.log('activeStartDate', activeStartDate);
-    console.log('value', value);
-    console.log('view', view);
+  const handleGetStartEndDate = ({ action, activeStartDate, value, view }) => {
+    if (view === 'month') {
+      setMonth(dayjs(activeStartDate).format('MM'));
+    }
   };
+  console.log('달!!!', month);
 
   return (
     <>
@@ -64,8 +66,7 @@ const Calendar = () => {
       <MonthCalendar
         dateValue={dateValue}
         handleChangeDate={handleChangeDate}
-        // formatMonthYear={getMonthStartEndDate}
-        // onViewChange={onViewChange}
+        handleGetStartEndDate={handleGetStartEndDate}
       />
       <CommonText isSubtitle1={true} mg={'16px 0 0 0'}>
         {dayjs(dateValue).format('MM월 DD일')}의 습관

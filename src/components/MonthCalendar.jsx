@@ -8,10 +8,12 @@ import 'react-calendar/dist/Calendar.css';
 import { colors } from '../theme/theme';
 import { useRef } from 'react';
 
-const MonthCalendar = ({ dateValue, handleChangeDate }) => {
+const MonthCalendar = ({
+  dateValue,
+  handleChangeDate,
+  handleGetStartEndDate,
+}) => {
   const data = ['1', '2', '3', '4', '5'];
-
-  const [month, setMonth] = useState('');
 
   const response = [
     {
@@ -88,8 +90,6 @@ const MonthCalendar = ({ dateValue, handleChangeDate }) => {
     }
   };
 
-  console.log('달!!!', month);
-
   return (
     <Container>
       <CutomCalendar
@@ -100,10 +100,7 @@ const MonthCalendar = ({ dateValue, handleChangeDate }) => {
         calendarType={'Hebrew'}
         nextLabel={<IconRight />}
         prevLabel={<IconLeft />}
-        onActiveStartDateChange={({ action, activeStartDate, value, view }) => {
-          setMonth(dayjs(activeStartDate).format('MM'));
-        }}
-        // formatMonthYear={formatMonthYear}
+        onActiveStartDateChange={handleGetStartEndDate}
         formatDay={(locale, date) => dayjs(date).format('DD')}
       />
     </Container>
