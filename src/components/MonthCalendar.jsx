@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ReactComponent as IconLeft } from '../assets/icons/icon-left.svg';
 import { ReactComponent as IconRight } from '../assets/icons/icon-right.svg';
 import Calendar from 'react-calendar';
@@ -6,39 +6,73 @@ import dayjs from 'dayjs';
 import styled, { css } from 'styled-components';
 import 'react-calendar/dist/Calendar.css';
 import { colors } from '../theme/theme';
+import { useRef } from 'react';
 
-const MonthCalendar = () => {
-  const [value, setValue] = useState(new Date());
+const MonthCalendar = ({
+  dateValue,
+  handleChangeDate,
+  handleGetStartEndDate,
+  monthCalenderDtoList,
+}) => {
   const data = ['1', '2', '3', '4', '5'];
+  const [mark, setMark] = useState([]);
+  const days = monthCalenderDtoList.map((item) => item.currentDate);
 
-  // const response = {
-  //   date: '2022년 09월 22일',
-  //   characterId: 1 -> color: '#ffeeee'
-  // }
+  // console.log('monthCalenderDtoList', monthCalenderDtoList);
 
-  const tileContent = ({ date, view }) => {
-    // date === response.date
-    if (date.getDay() === 6) {
-      return (
-        <MarkContainer>
-          {data.map((item) => (
-            <Mark key={item} />
-          ))}
-        </MarkContainer>
-      );
-    }
-  };
+  // const day = monthCalenderDtoList.map((item) => item.currentDate);
+  // const colors = monthCalenderDtoList.map((item) => item.charactorColorlist);
+
+  // console.log(colors);
+
+  // const tileContent = ({ date, view }) => {
+  //   if (day.find((x) => x === dayjs(date).format('YYYY년 MM월 DD일'))) {
+  //     return (
+  //       <MarkContainer>
+  //         {monthCalenderDtoList.map((item) => (
+  //           <Mark key={item.id} markColor={item.charactorColorlist} />
+  //         ))}
+  //       </MarkContainer>
+  //     );
+  //   }
+  // };
+
+  // const tileContent = ({ date, view }) => {
+  //   // let html = [];
+
+  //   if (day.find((x) => x === dayjs(date).format('YYYY년 MM월 DD일'))) {
+  //     // html.push(<Mark key={day} />);
+  //     return (
+  //       // <MarkContainer>
+  //       //   <Mark />
+  //       // </MarkContainer>
+
+  //       colors.map((color, i) => (
+  //         <MarkContainer>
+  //           <Mark key={i} />
+  //         </MarkContainer>
+  //       ))
+  //     );
+  //   }
+
+  //   // return (
+  //   //   <>
+  //   //     <MarkContainer>{html}</MarkContainer>
+  //   //   </>
+  //   // );
+  // };
 
   return (
     <Container>
       <CutomCalendar
-        value={value}
-        tileContent={tileContent}
+        value={dateValue}
+        // tileContent={tileContent}
+        onChange={handleChangeDate}
         view={'month'}
         calendarType={'Hebrew'}
         nextLabel={<IconRight />}
         prevLabel={<IconLeft />}
-        showFixedNumberOfWeeks={true}
+        onActiveStartDateChange={handleGetStartEndDate}
         formatDay={(locale, date) => dayjs(date).format('DD')}
       />
     </Container>
@@ -58,6 +92,10 @@ const CutomCalendar = styled(Calendar)`
     background-color: ${colors.bgColor};
     padding-bottom: 16px;
     border-bottom: 1px solid ${colors.border};
+  }
+
+  .react-calendar__tile--now {
+    background-color: transparent;
   }
 
   .react-calendar__tile:enabled:hover,
@@ -166,6 +204,7 @@ const Mark = styled.span`
   height: 4px;
   border-radius: 50%;
   background-color: orange;
+  /* background-color: ${({ bg }) => bg}; */
 
   & + & {
     margin-left: 3px;
