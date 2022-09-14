@@ -12,89 +12,61 @@ const MonthCalendar = ({
   dateValue,
   handleChangeDate,
   handleGetStartEndDate,
+  monthCalenderDtoList,
 }) => {
   const data = ['1', '2', '3', '4', '5'];
+  const [mark, setMark] = useState([]);
+  const days = monthCalenderDtoList.map((item) => item.currentDate);
 
-  const response = [
-    {
-      friendsData: [
-        {
-          id: 1,
-          name: 'aaa',
-          profileImg: '',
-        },
-        {
-          id: 2,
-          name: 'bbb',
-          profileImg: '',
-        },
-        {
-          id: 3,
-          name: 'ccc',
-          profileImg: '',
-        },
-        {
-          id: 4,
-          name: 'ddd',
-          profileImg: '',
-        },
-      ],
-    },
-    {
-      calendarData: [
-        {
-          id: 1,
-          date: '2022년 09월 22일',
-          goalColor: ['#fbe5a5', '#f29bca', '#bbdcad'],
-        },
-        {
-          id: 2,
-          date: '2022년 09월 25일',
-          goalColor: ['#dbb4f4', '#b4d7fc'],
-        },
-        {
-          id: 3,
-          date: '2022년 09월 26일',
-          goalColor: ['#dbb4f4', '#b4d7fc'],
-        },
-        {
-          id: 4,
-          date: '2022년 09월 27일',
-          goalColor: ['#dbb4f4', '#b4d7fc', '#fbe5a5'],
-        },
-      ],
-    },
-    {
-      todayGoalData: [
-        {
-          id: 1,
-          title: '9.13 습관 추가',
-          startDate: '2022년 09월 13일',
-          endDate: '2022년 09월 16일',
-          characterImg: '',
-          achievementCheck: false,
-        },
-      ],
-    },
-  ];
+  // console.log('monthCalenderDtoList', monthCalenderDtoList);
 
-  const tileContent = ({ date, view }) => {
-    if (date.getDay() === 6) {
-      return (
-        <MarkContainer>
-          {data.map((item) => (
-            <Mark key={item} />
-          ))}
-        </MarkContainer>
-      );
-    }
-  };
+  // const day = monthCalenderDtoList.map((item) => item.currentDate);
+  // const colors = monthCalenderDtoList.map((item) => item.charactorColorlist);
+
+  // console.log(colors);
+
+  // const tileContent = ({ date, view }) => {
+  //   if (day.find((x) => x === dayjs(date).format('YYYY년 MM월 DD일'))) {
+  //     return (
+  //       <MarkContainer>
+  //         {monthCalenderDtoList.map((item) => (
+  //           <Mark key={item.id} markColor={item.charactorColorlist} />
+  //         ))}
+  //       </MarkContainer>
+  //     );
+  //   }
+  // };
+
+  // const tileContent = ({ date, view }) => {
+  //   // let html = [];
+
+  //   if (day.find((x) => x === dayjs(date).format('YYYY년 MM월 DD일'))) {
+  //     // html.push(<Mark key={day} />);
+  //     return (
+  //       // <MarkContainer>
+  //       //   <Mark />
+  //       // </MarkContainer>
+
+  //       colors.map((color, i) => (
+  //         <MarkContainer>
+  //           <Mark key={i} />
+  //         </MarkContainer>
+  //       ))
+  //     );
+  //   }
+
+  //   // return (
+  //   //   <>
+  //   //     <MarkContainer>{html}</MarkContainer>
+  //   //   </>
+  //   // );
+  // };
 
   return (
     <Container>
       <CutomCalendar
         value={dateValue}
-        tileContent={tileContent}
+        // tileContent={tileContent}
         onChange={handleChangeDate}
         view={'month'}
         calendarType={'Hebrew'}
@@ -232,6 +204,7 @@ const Mark = styled.span`
   height: 4px;
   border-radius: 50%;
   background-color: orange;
+  /* background-color: ${({ bg }) => bg}; */
 
   & + & {
     margin-left: 3px;

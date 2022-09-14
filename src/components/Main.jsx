@@ -68,20 +68,29 @@ const Main = () => {
   if (isLoading) {
     return <div>로딩중...</div>;
   }
+
+  const {
+    weekRateDtoList,
+    currentDate,
+    weekStartDate,
+    weekEndDate,
+    todayGoalsDtoList,
+  } = mainGoalData.data;
+
   return (
     <>
       <Graph
-        weekRateDtoList={mainGoalData.data.weekRateDtoList}
-        weekStartDate={mainGoalData.data.weekStartDate}
-        weekEndDate={mainGoalData.data.weekEndDate}
+        weekRateDtoList={weekRateDtoList}
+        weekStartDate={weekStartDate}
+        weekEndDate={weekEndDate}
       />
       <CommonText isSubtitle1={true} mg='16px 0 4px 0'>
         오늘의 습관
       </CommonText>
       <CommonText isCaption={true} fc={colors.text}>
-        {mainGoalData.data.currentDate}
+        {currentDate}
       </CommonText>
-      <GoalList isMain={true} data={mainGoalData.data.todayGoalsDtoList} />
+      <GoalList isMain={true} data={todayGoalsDtoList} />
     </>
   );
 };
