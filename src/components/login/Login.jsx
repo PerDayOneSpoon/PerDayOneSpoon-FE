@@ -76,7 +76,11 @@ const Login = () => {
 
         <StLoginButton>
           <ImgContainer onClick={handleGoogleLogin}>
-            <ButtonImg src={loginGoogle} alt='구글로그인' />
+            <ButtonImg
+              src={loginGoogle}
+              alt='구글로그인'
+              className='google-icon'
+            />
           </ImgContainer>
           <CommonText isCaption={true}>
             구글로
@@ -173,8 +177,8 @@ const StLoginButton = styled.div`
 `;
 
 const ImgContainer = styled.div`
-  width: 68px;
-  height: 68px;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
   background-color: ${colors.inputColor};
   margin-bottom: 8px;
@@ -184,4 +188,10 @@ const ImgContainer = styled.div`
   cursor: pointer;
 `;
 
-const ButtonImg = styled.img``;
+const ButtonImg = styled.img`
+  width: 100%;
+
+  &.google-icon {
+    width: 70% !important;
+  }
+`;
