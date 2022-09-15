@@ -33,7 +33,7 @@ instance.interceptors.request.use(
 
 instance.interceptors.response.use(
   (response) => {
-    console.log('RESPONSE INTERCEPTORS SUCCESS', response);
+    // console.log('RESPONSE INTERCEPTORS SUCCESS', response);
     return response;
   },
   async (error) => {
