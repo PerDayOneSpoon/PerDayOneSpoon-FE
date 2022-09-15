@@ -14,15 +14,7 @@ const MonthCalendar = ({
   handleGetStartEndDate,
   monthCalenderDtoList,
 }) => {
-  const data = ['1', '2', '3', '4', '5'];
-  const [mark, setMark] = useState([]);
-
-  console.log('monthCalenderDtoList', monthCalenderDtoList);
-
   const dates = monthCalenderDtoList.map((item) => item.currentDate);
-  const color = monthCalenderDtoList.map((item) => item.charactorColorlist);
-
-  console.log(color);
 
   const tileContent = ({ date, view }) => {
     if (dates.find((x) => x === dayjs(date).format('YYYY년 MM월 DD일'))) {
@@ -33,7 +25,7 @@ const MonthCalendar = ({
       return (
         <MarkContainer>
           {findDate.charactorColorlist.map((color, i) => (
-            <Mark bg={color} />
+            <Mark bg={color} key={i} />
           ))}
         </MarkContainer>
       );
