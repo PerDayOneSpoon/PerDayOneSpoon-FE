@@ -7,8 +7,12 @@ import SetUserInfo from '../components/user/SetUserInfo';
 import { userApi } from '../api/userApi';
 import { useRecoilState } from 'recoil';
 import { userInfoState } from '../recoil/common';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { getAccessToken } from '../shared/localStorage';
 
 const SettingPage = () => {
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
   const [editUserInfo, setEditUserInfo] = useRecoilState(userInfoState);
 
@@ -49,6 +53,14 @@ const SettingPage = () => {
       queryClient.invalidateQueries('getUserInfo');
     },
   });
+
+  useEffect(() => {
+    const accessToken = getAccessToken();
+
+    if (accessToken == null || accessToken === '') {
+      navigate('/login');
+    }
+  }, []);
 
   if (isLoading) {
     return <div>로딩 중..</div>;
