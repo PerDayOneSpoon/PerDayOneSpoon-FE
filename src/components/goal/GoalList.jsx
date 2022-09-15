@@ -7,6 +7,16 @@ const GoalList = ({ isMain, data }) => {
     return <GoalEmpty />;
   }
 
+  if (isMain) {
+    return (
+      <Container>
+        {data.map((item) => (
+          <Goal key={item.id} item={item} isMain={isMain} />
+        ))}
+      </Container>
+    );
+  }
+
   return (
     <Container>
       {data.map((item) => (

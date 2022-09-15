@@ -173,7 +173,8 @@ const Mark = styled.span`
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background-color: ${({ bg }) => bg};
+  /* background-color: orange; */
+  background-color: ${({ bg }) => (bg === '#fbe5a5' ? 'orange' : bg)};
 
   & + & {
     margin-left: 3px;

@@ -37,7 +37,7 @@ const Calendar = () => {
     return <div>로딩중...</div>;
   }
 
-  const { monthCalenderDtoList } = calendarData.data;
+  const { monthCalenderDtoList, todayGoalsDtoList } = calendarData.data;
 
   return (
     <>
@@ -51,7 +51,7 @@ const Calendar = () => {
       <CommonText isSubtitle1={true} mg={'16px 0 0 0'}>
         {dayjs(dateValue).format('MM월 DD일')}의 습관
       </CommonText>
-      <GoalList data={data} />
+      <GoalList data={todayGoalsDtoList} isMain={false} />
     </>
   );
 };
