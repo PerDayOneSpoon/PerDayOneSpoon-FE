@@ -76,6 +76,7 @@ export default CollectionList;
 
 const Container = styled.div`
   margin-top: 16px;
+  padding-bottom: 50px;
 `;
 
 const Title = styled.h2`

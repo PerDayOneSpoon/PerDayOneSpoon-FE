@@ -2,6 +2,7 @@ import FriendsList from '../components/friends/FriendsList';
 import MonthCalendar from '../components/MonthCalendar';
 import GoalList from '../components/goal/GoalList';
 import CommonText from '../components/elements/CommonText';
+import Loading from './global/Loading';
 import dayjs from 'dayjs';
 import { useQuery } from 'react-query';
 import { calendarApi } from '../api/calendarApi';
@@ -34,7 +35,7 @@ const Calendar = () => {
   console.log('달!!!', month);
 
   if (isLoading) {
-    return <div>로딩중...</div>;
+    return <Loading />;
   }
 
   const { monthCalenderDtoList, todayGoalsDtoList } = calendarData.data;
