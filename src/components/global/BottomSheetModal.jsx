@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
-import styled, { css } from 'styled-components';
+import { useEffect, useState } from 'react';
+import styled, { css, keyframes } from 'styled-components';
 import { isMobile } from 'react-device-detect';
 import { ReactComponent as IconClose } from '../../assets/icons/icon-close.svg';
 import { useRecoilState } from 'recoil';
@@ -8,13 +8,20 @@ import { colors } from '../../theme/theme';
 
 const BottomSheetModal = ({ children, isHeader, title, handleOkClick }) => {
   const [modal, setModal] = useRecoilState(modalState);
+  const [isOpen, setIsOpen] = useState('openModal');
 
   const handleModalClose = () => {
-    setModal({ open: false });
+    // setModal({ open: false });
+
+    setIsOpen('closeModal');
+    setTimeout(() => setModal({ ...modal, open: false }), 500);
   };
 
   useEffect(() => {
     if (modal.open) {
+      setTimeout(() => {
+        setIsOpen('');
+      }, 500);
       document.body.style.cssText = `
       position: fixed;
       top: -${window.scrollY}px;
@@ -25,28 +32,40 @@ const BottomSheetModal = ({ children, isHeader, title, handleOkClick }) => {
         document.body.style.cssText = '';
         window.scrollTo(0, parseInt(scrollY || '0', 10) * -1);
       };
+    } else {
+      setIsOpen('openModal');
     }
-  }, [modal]);
+  }, [modal.open]);
+
+  useEffect(() => {
+    console.log('modal.open', modal.open, 'isOpen', isOpen);
+  }, [isOpen]);
+
+  if (!modal.open) return null;
 
   return (
-    modal.open && (
-      <ModalContainer isMobile={isMobile} onClick={handleModalClose}>
-        <ModalContent onClick={(e) => e.stopPropagation()}>
-          {isHeader && (
-            <ModalHeader>
-              <IconContainer>
-                <IconClose onClick={handleModalClose} />
-              </IconContainer>
-              <Title>{title}</Title>
-              <ButtonContainer>
-                <button onClick={handleOkClick}>확인</button>
-              </ButtonContainer>
-            </ModalHeader>
-          )}
-          {children}
-        </ModalContent>
-      </ModalContainer>
-    )
+    // modal.open && (
+    <ModalContainer
+      isOpen={isOpen}
+      isMobile={isMobile}
+      onClick={handleModalClose}
+    >
+      <ModalContent isOpen={isOpen} onClick={(e) => e.stopPropagation()}>
+        {isHeader && (
+          <ModalHeader>
+            <IconContainer>
+              <IconClose onClick={handleModalClose} />
+            </IconContainer>
+            <Title>{title}</Title>
+            <ButtonContainer>
+              <button onClick={handleOkClick}>확인</button>
+            </ButtonContainer>
+          </ModalHeader>
+        )}
+        {children}
+      </ModalContent>
+    </ModalContainer>
+    // )
   );
 };
 
@@ -73,6 +92,24 @@ const ModalContainer = styled.div`
   height: -webkit-fill-available;
   height: fill-available;
   margin-right: -16px;
+  ${({ isOpen }) =>
+    isOpen === 'openModal'
+      ? css`
+          animation: ${opacity} 0.5s ease-in 0s 1 normal;
+        `
+      : isOpen === 'closeModal'
+      ? css`
+          animation: ${opacity} 0.5s ease-in 0s 1 reverse;
+        `
+      : css``};
+`;
+const opacity = keyframes`
+  from {
+      opacity: 0;
+  }
+  to {
+      opacity: 1;
+  }
 `;
 
 const ModalContent = styled.div`
@@ -86,6 +123,25 @@ const ModalContent = styled.div`
   background-color: ${colors.white};
   box-sizing: border-box;
   border-radius: 10px 10px 0px 0px;
+  ${({ isOpen }) =>
+    isOpen === 'openModal'
+      ? css`
+          animation: ${slide} 0.5s ease-in 0s 1 normal;
+        `
+      : isOpen === ''
+      ? css``
+      : css`
+          animation: ${slide} 0.5s ease-in 0s 1 reverse;
+        `};
+`;
+
+const slide = keyframes`
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0%);
+  }
 `;
 
 const ModalHeader = styled.div`
