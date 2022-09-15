@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import FriendsItem from './FriendsItem';
+import { ReactComponent as IconSearch } from '../../assets/icons/icon-search.svg';
+import iconSearch from '../../assets/icons/icon-search.svg';
 import { colors } from '../../theme/theme';
 import { useNavigate } from 'react-router-dom';
 import { userApi } from '../../api/userApi.js';
@@ -16,9 +18,7 @@ const Search = () => {
     () => userApi.getSearchFriends(searchTerm),
     {
       enabled: !!searchTerm,
-      onSuccess: (data) => {
-        console.log('searchFriends!!!!!!!!!', data);
-      },
+      onSuccess: (data) => {},
     }
   );
 
@@ -64,14 +64,28 @@ const InputBox = styled.div`
 const SearchInput = styled.input`
   width: 100%;
   height: 40px;
+  padding: 0 16px;
   background-color: ${colors.inputColor};
   border-radius: 10px;
   border: none;
+  outline: none;
+
+  ::placeholder {
+    padding-left: 24px;
+  }
+
+  ::-webkit-input-placeholder {
+    background-image: url(${iconSearch});
+    background-size: contain;
+    background-position: 1px center;
+    background-repeat: no-repeat;
+    text-indent: 0;
+  }
 `;
 
 const CancelButton = styled.button`
   flex-grow: 1;
-  width: 40px;
+  width: 60px;
   padding: 0;
   border: none;
   background-color: transparent;
