@@ -16,57 +16,35 @@ const MonthCalendar = ({
 }) => {
   const data = ['1', '2', '3', '4', '5'];
   const [mark, setMark] = useState([]);
-  const days = monthCalenderDtoList.map((item) => item.currentDate);
 
-  // console.log('monthCalenderDtoList', monthCalenderDtoList);
+  console.log('monthCalenderDtoList', monthCalenderDtoList);
 
-  // const day = monthCalenderDtoList.map((item) => item.currentDate);
-  // const colors = monthCalenderDtoList.map((item) => item.charactorColorlist);
+  const dates = monthCalenderDtoList.map((item) => item.currentDate);
+  const color = monthCalenderDtoList.map((item) => item.charactorColorlist);
 
-  // console.log(colors);
+  console.log(color);
 
-  // const tileContent = ({ date, view }) => {
-  //   if (day.find((x) => x === dayjs(date).format('YYYY년 MM월 DD일'))) {
-  //     return (
-  //       <MarkContainer>
-  //         {monthCalenderDtoList.map((item) => (
-  //           <Mark key={item.id} markColor={item.charactorColorlist} />
-  //         ))}
-  //       </MarkContainer>
-  //     );
-  //   }
-  // };
+  const tileContent = ({ date, view }) => {
+    if (dates.find((x) => x === dayjs(date).format('YYYY년 MM월 DD일'))) {
+      const findDate = monthCalenderDtoList.find(
+        (val) => val.currentDate === dayjs(date).format('YYYY년 MM월 DD일')
+      );
 
-  // const tileContent = ({ date, view }) => {
-  //   // let html = [];
-
-  //   if (day.find((x) => x === dayjs(date).format('YYYY년 MM월 DD일'))) {
-  //     // html.push(<Mark key={day} />);
-  //     return (
-  //       // <MarkContainer>
-  //       //   <Mark />
-  //       // </MarkContainer>
-
-  //       colors.map((color, i) => (
-  //         <MarkContainer>
-  //           <Mark key={i} />
-  //         </MarkContainer>
-  //       ))
-  //     );
-  //   }
-
-  //   // return (
-  //   //   <>
-  //   //     <MarkContainer>{html}</MarkContainer>
-  //   //   </>
-  //   // );
-  // };
+      return (
+        <MarkContainer>
+          {findDate.charactorColorlist.map((color, i) => (
+            <Mark bg={color} />
+          ))}
+        </MarkContainer>
+      );
+    }
+  };
 
   return (
     <Container>
       <CutomCalendar
         value={dateValue}
-        // tileContent={tileContent}
+        tileContent={tileContent}
         onChange={handleChangeDate}
         view={'month'}
         calendarType={'Hebrew'}
@@ -203,8 +181,7 @@ const Mark = styled.span`
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background-color: orange;
-  /* background-color: ${({ bg }) => bg}; */
+  background-color: ${({ bg }) => bg};
 
   & + & {
     margin-left: 3px;
