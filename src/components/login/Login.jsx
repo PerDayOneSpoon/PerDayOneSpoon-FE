@@ -64,7 +64,7 @@ const Login = () => {
         </StLoginButton>
 
         <StLoginButton>
-          <ImgContainer onClick={handleGoogleLogin}>
+          <ImgContainer onClick={handleNaverLogin}>
             <ButtonImg src={loginNaver} alt='네이버로그인' />
           </ImgContainer>
           <CommonText isCaption={true}>
@@ -75,7 +75,7 @@ const Login = () => {
         </StLoginButton>
 
         <StLoginButton>
-          <ImgContainer onClick={handleNaverLogin}>
+          <ImgContainer onClick={handleGoogleLogin}>
             <ButtonImg src={loginGoogle} alt='구글로그인' />
           </ImgContainer>
           <CommonText isCaption={true}>
