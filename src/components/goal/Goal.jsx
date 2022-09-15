@@ -218,7 +218,8 @@ const RightContent = styled.div`
 `;
 
 const ChracterContainer = styled.div`
-  width: 56px;
+  min-width: 56px;
+  max-width: 56px;
   height: 56px;
   border-radius: 50%;
   overflow: hidden;
