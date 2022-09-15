@@ -2,9 +2,9 @@ import styled from 'styled-components';
 import { useQuery } from 'react-query';
 import { userApi } from '../../api/userApi';
 import { colors } from '../../theme/theme';
-import CommonText from '../elements/CommonText';
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import CommonText from '../elements/CommonText';
+import Loading from '../global/Loading';
 
 const UserInfo = ({ isMypage }) => {
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ const UserInfo = ({ isMypage }) => {
   });
 
   if (isLoading) {
-    return <div>로딩 중..</div>;
+    return <Loading />;
   }
 
   return (

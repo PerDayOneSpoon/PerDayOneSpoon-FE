@@ -2,6 +2,7 @@ import FriendsList from '../components/friends/FriendsList';
 import MonthCalendar from '../components/MonthCalendar';
 import GoalList from '../components/goal/GoalList';
 import CommonText from '../components/elements/CommonText';
+import Loading from './global/Loading';
 import dayjs from 'dayjs';
 import { useQuery } from 'react-query';
 import { calendarApi } from '../api/calendarApi';
@@ -34,10 +35,10 @@ const Calendar = () => {
   console.log('달!!!', month);
 
   if (isLoading) {
-    return <div>로딩중...</div>;
+    return <Loading />;
   }
 
-  const { monthCalenderDtoList } = calendarData.data;
+  const { monthCalenderDtoList, todayGoalsDtoList } = calendarData.data;
 
   return (
     <>
@@ -51,7 +52,7 @@ const Calendar = () => {
       <CommonText isSubtitle1={true} mg={'16px 0 0 0'}>
         {dayjs(dateValue).format('MM월 DD일')}의 습관
       </CommonText>
-      <GoalList data={data} />
+      <GoalList data={todayGoalsDtoList} isMain={false} />
     </>
   );
 };
