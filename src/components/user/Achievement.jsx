@@ -8,11 +8,13 @@ const Achievement = ({ title, num, totalNum, isBadge }) => {
       <CommonText fc={colors.text}>{title}</CommonText>
 
       {isBadge ? (
-        <GetAchievement>
+        <CommonText isH6={true} fc={colors.primary} mg='8px 0 0 0'>
           {num}/{totalNum}
-        </GetAchievement>
+        </CommonText>
       ) : (
-        <GetAchievement>{num}</GetAchievement>
+        <CommonText isH6={true} fc={colors.primary} mg='8px 0 0 0'>
+          {num}
+        </CommonText>
       )}
     </Container>
   );
@@ -34,13 +36,4 @@ const Container = styled.div`
   & + & {
     margin-left: 16px;
   }
-`;
-
-const GetAchievement = styled.div`
-  font-size: 18px;
-  line-height: 24px;
-  letter-spacing: 0.15px;
-  font-weight: 500;
-  color: ${colors.primary};
-  margin-top: 8px;
 `;

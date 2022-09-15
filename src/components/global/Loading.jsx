@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { colors } from '../../theme/theme';
 
 const Loading = () => {
   return (
@@ -12,6 +13,7 @@ export default Loading;
 
 const LoadingContainer = styled.div`
   position: fixed;
+  /* border: 1px solid red; */
   left: 50%;
   top: 50%;
   transform: translate(-50%, 0);

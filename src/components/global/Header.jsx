@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { ReactComponent as IconLeft } from '../../assets/icons/icon-left.svg';
 import { ReactComponent as IconFriend } from '../../assets/icons/icon-addfriend.svg';
 import { getAccessToken } from '../../shared/localStorage';
+import CommonText from '../elements/CommonText';
 
 const Header = ({
   hasBack,
@@ -37,7 +38,7 @@ const Header = ({
           <IconContainer>
             <IconLeft onClick={() => navigate(-1)} />
           </IconContainer>
-          <TitleText>{title}</TitleText>
+          <CommonText isH6={true}>{title}</CommonText>
           <RightButton onClick={handleRightButtonClick}>
             {rightButton}
           </RightButton>
@@ -48,7 +49,7 @@ const Header = ({
     return (
       <Container bgColor={bgColor}>
         <ContainerInner hasIcon={hasIcon}>
-          <TitleText>{title}</TitleText>
+          <CommonText>{title}</CommonText>
           <IconContainer>{handleIcons(icon)}</IconContainer>
         </ContainerInner>
       </Container>
@@ -57,7 +58,7 @@ const Header = ({
     return (
       <Container bgColor={bgColor}>
         <ContainerInner>
-          <TitleText>{title}</TitleText>
+          <CommonText>{title}</CommonText>
         </ContainerInner>
       </Container>
     );
@@ -88,12 +89,6 @@ const IconContainer = styled.div`
   width: 24px;
   height: 24px;
   cursor: pointer;
-`;
-
-const TitleText = styled.h2`
-  font-size: 18px;
-  font-weight: 500;
-  line-height: 24px;
 `;
 
 const RightButton = styled.button`

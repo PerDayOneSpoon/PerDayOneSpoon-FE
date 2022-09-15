@@ -24,7 +24,7 @@ const Calendar = () => {
 
   const handleChangeDate = (date) => {
     setDateValue(date);
-    console.log('체인지 date!!', date);
+    console.log('체인지 date!!', dayjs(date).format('YYYY-MM-DD'));
   };
 
   const handleGetStartEndDate = ({ action, activeStartDate, value, view }) => {

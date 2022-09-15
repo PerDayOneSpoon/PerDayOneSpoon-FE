@@ -13,6 +13,7 @@ const CommonText = ({
   isSubtitle1,
   isSubtitle2,
   isBody2,
+  isH6,
   className,
 }) => {
   return (
@@ -28,6 +29,7 @@ const CommonText = ({
       isSubtitle1={isSubtitle1}
       isSubtitle2={isSubtitle2}
       isBody2={isBody2}
+      isH6={isH6}
       className={className}
     >
       {children}
@@ -72,6 +74,15 @@ const Text = styled.div`
       letter-spacing: 0.25px;
       line-height: 20px;
       font-weight: 400;
+    `}
+
+    ${({ isH6 }) =>
+    isH6 &&
+    css`
+      font-size: 18px;
+      letter-spacing: 0.15px;
+      line-height: 24px;
+      font-weight: 500;
     `}
 
   width: ${({ wd }) => wd};

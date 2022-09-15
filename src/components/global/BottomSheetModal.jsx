@@ -5,6 +5,7 @@ import { ReactComponent as IconClose } from '../../assets/icons/icon-close.svg';
 import { useRecoilState } from 'recoil';
 import { modalState } from '../../recoil/modalAtom';
 import { colors } from '../../theme/theme';
+import CommonText from '../elements/CommonText';
 
 const BottomSheetModal = ({ children, isHeader, title, handleOkClick }) => {
   const [modal, setModal] = useRecoilState(modalState);
@@ -56,9 +57,9 @@ const BottomSheetModal = ({ children, isHeader, title, handleOkClick }) => {
             <IconContainer>
               <IconClose onClick={handleModalClose} />
             </IconContainer>
-            <Title>{title}</Title>
+            <CommonText isH6={true}>{title}</CommonText>
             <ButtonContainer>
-              <button onClick={handleOkClick}>확인</button>
+              <ModalButton onClick={handleOkClick}>확인</ModalButton>
             </ButtonContainer>
           </ModalHeader>
         )}
@@ -156,3 +157,12 @@ const IconContainer = styled.div`
 `;
 const Title = styled.div``;
 const ButtonContainer = styled.div``;
+const ModalButton = styled.button`
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.25px;
+  cursor: pointer;
+`;
