@@ -5,58 +5,69 @@ const CollectionList = () => {
   const data = [
     {
       id: 1,
-      badge: 'badge1',
+      badge: '웰컴 뱃지',
       hasBadge: false,
+      date: '2022. 08. 31',
     },
     {
       id: 2,
-      badge: 'badge2',
+      badge: '인싸 뱃지',
       hasBadge: false,
+      date: '2022. 08. 31',
     },
     {
       id: 3,
-      badge: 'badge3',
+      badge: '퐁당퐁당 뱃지',
       hasBadge: false,
+      date: '2022. 08. 31',
     },
     {
       id: 4,
-      badge: 'badge4',
+      badge: '얼리버드 뱃지',
       hasBadge: false,
+      date: '2022. 08. 31',
     },
     {
       id: 5,
-      badge: 'badge5',
+      badge: '올빼미 뱃지',
       hasBadge: false,
+      date: '2022. 08. 31',
     },
     {
       id: 6,
-      badge: 'badge6',
+      badge: '단타 뱃지',
       hasBadge: false,
+      date: '2022. 08. 31',
     },
     {
       id: 7,
-      badge: 'badge7',
+      badge: '장타 뱃지',
       hasBadge: false,
+      date: '2022. 08. 31',
     },
     {
       id: 8,
-      badge: 'badge8',
+      badge: '뱃지 이름',
       hasBadge: false,
+      date: '2022. 08. 31',
     },
     {
       id: 9,
-      badge: 'badge9',
+      badge: '뱃지 이름',
       hasBadge: false,
+      date: '2022. 08. 31',
     },
     {
       id: 10,
-      badge: 'badge10',
+      badge: '뱃지 이름',
       hasBadge: false,
+      date: '2022. 08. 31',
     },
     {
       id: 11,
-      badge: 'badge11',
+      badge: '뱃지 이름',
       hasBadge: false,
+      date: '2022. 08. 31',
     },
   ];
 
@@ -90,5 +101,5 @@ const Title = styled.h2`
 const BadgeContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-  gap: 16px;
+  gap: 10px;
 `;
