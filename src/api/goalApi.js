@@ -14,4 +14,10 @@ export const goalApi = {
       achivement: achivement,
     });
   },
+
+  changePrivateGoal: ({ goalId, privateCheck }) => {
+    return instance.patch(`/change/goal/${goalId}`, {
+      privateCheck: privateCheck,
+    });
+  },
 };
