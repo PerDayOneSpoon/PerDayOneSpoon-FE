@@ -9,23 +9,23 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 import { RecoilRoot } from 'recoil';
 
 const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      suspense: true,
-    },
-  },
+  // defaultOptions: {
+  //   queries: {
+  //     suspense: true,
+  //   },
+  // },
 });
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.Suspense fallback={<Loading />}>
-    <QueryClientProvider client={queryClient}>
-      <RecoilRoot>
-        <ReactQueryDevtools initialIsOpen={true} />
-        <App />
-      </RecoilRoot>
-    </QueryClientProvider>
-  </React.Suspense>
+  // <React.Suspense fallback={<Loading />}>
+  <QueryClientProvider client={queryClient}>
+    <RecoilRoot>
+      <ReactQueryDevtools initialIsOpen={true} />
+      <App />
+    </RecoilRoot>
+  </QueryClientProvider>
+  //</React.Suspense>
 );
 
 // If you want your app to work offline and load faster, you can change
