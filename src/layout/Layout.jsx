@@ -18,7 +18,7 @@ export default Layout;
 const Background = styled.div`
   width: 100%;
   height: 100%;
-  background-color: ${colors.black};
+  /* background-color: ${colors.black}; */
 `;
 
 const Container = styled.div`
