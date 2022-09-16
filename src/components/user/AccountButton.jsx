@@ -43,7 +43,8 @@ const Button = styled.button`
   outline: none;
   text-align: left;
   color: ${colors.danger};
-  font-size: 16px;
+  font-size: 14px;
+  font-weight: 400;
   padding: 16px;
   border-radius: 10px;
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
