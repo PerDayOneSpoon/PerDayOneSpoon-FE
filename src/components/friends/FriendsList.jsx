@@ -5,33 +5,33 @@ const FriendsList = () => {
   const frineds = [
     {
       id: 1,
-      profile: '이미지',
-      name: '나',
+      profileImage: '이미지',
+      nickname: '나',
     },
     {
       id: 2,
-      profile: '이미지',
-      name: '친구1',
+      profileImage: '이미지',
+      nickname: '친구1',
     },
     {
       id: 3,
-      profile: '이미지',
-      name: '친구2',
+      profileImage: '이미지',
+      nickname: '친구2',
     },
     {
       id: 4,
-      profile: '이미지',
-      name: '친구3',
+      profileImage: '이미지',
+      nickname: '친구3',
     },
     {
       id: 5,
-      profile: '이미지',
-      name: '친구4',
+      profileImage: '이미지',
+      nickname: '친구4',
     },
     {
       id: 6,
-      profile: '이미지',
-      name: '친구5',
+      profileImage: '이미지',
+      nickname: '친구5',
     },
   ];
 

@@ -40,7 +40,7 @@ const GoalForm = ({
   return (
     <>
       <Container>
-        <SetForm>
+        <SetForm className='character-box'>
           <FlexContainer isIcon={true}>
             <IconContainer>
               <Icon src={character} />
@@ -241,6 +241,10 @@ const SetForm = styled.div`
 
   & + & {
     margin-top: 16px;
+  }
+
+  &.character-box {
+    padding: 30px 16px;
   }
 `;
 

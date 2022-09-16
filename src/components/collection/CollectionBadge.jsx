@@ -1,11 +1,18 @@
 import styled from 'styled-components';
+import { colors } from '../../theme/theme';
+import badgeTestImg from '../../assets/imgs/character-question-mark.png';
+import CommonText from '../elements/CommonText';
 
-const CollectionBadge = () => {
+const CollectionBadge = ({ badge }) => {
   return (
     <Container>
-      <BadgeImg />
-      <BadgeName>뱃지 이름</BadgeName>
-      <BadgeDate>2022. 08. 31</BadgeDate>
+      <BadgeImgContainer>
+        <BadgeImg src={badgeTestImg} />
+      </BadgeImgContainer>
+      <CommonText isSubtitle1={true}>{badge.badge}</CommonText>
+      <CommonText isCaption={true} fc={colors.text}>
+        {badge.date}
+      </CommonText>
     </Container>
   );
 };
@@ -19,12 +26,16 @@ const Container = styled.div`
   flex-direction: column;
 `;
 
-const BadgeImg = styled.div`
+const BadgeImgContainer = styled.div`
   width: 100%;
   aspect-ratio: 1/1;
   border-radius: 20px;
-  background-color: #eee;
   margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
-const BadgeName = styled.div``;
-const BadgeDate = styled.div``;
+const BadgeImg = styled.img`
+  width: 80%;
+  height: 80%;
+`;

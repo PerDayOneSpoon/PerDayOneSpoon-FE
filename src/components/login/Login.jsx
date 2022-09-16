@@ -135,7 +135,7 @@ const StMainTextBox = styled.div`
   flex-direction: column;
   text-align: center;
   margin-top: 24px;
-  margin-bottom: 104px;
+  margin-bottom: 60px;
   word-break: keep-all;
 `;
 

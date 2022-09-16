@@ -7,7 +7,7 @@ const Friend = ({ friend }) => {
       <ProfileContainer>
         <ProfileImg />
       </ProfileContainer>
-      <CommonText isCaption={true}>{friend.name}</CommonText>
+      <CommonText isCaption={true}>{friend.nickname}</CommonText>
     </Container>
   );
 };

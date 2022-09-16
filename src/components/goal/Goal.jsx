@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as IconHeartEmpty } from '../../assets/icons/icon-heart-empty.svg';
-import { ReactComponent as IconHeartFill } from '../../assets/icons/icon-heart-fill.svg';
+import { ReactComponent as IconLock } from '../../assets/icons/icon-lock.svg';
+import { ReactComponent as IconUnlock } from '../../assets/icons/icon-unlock.svg';
 import { useMutation, useQueryClient } from 'react-query';
 import { goalApi } from '../../api/goalApi';
 import { colors } from '../../theme/theme';
@@ -23,6 +24,16 @@ const Goal = ({ isMain, item }) => {
     },
     onError: (error) => {
       console.log('achieveGoalMutation 에러 데이터', error);
+    },
+  });
+
+  const changePrivateGoalMutaion = useMutation(goalApi.changePrivateGoal, {
+    onSuccess: (data) => {
+      queryClient.invalidateQueries('getGoalInfo');
+      console.log('changePrivateGoalMutaion 성공 데이터', data);
+    },
+    onError: (error) => {
+      console.log('changePrivateGoalMutaion 에러 데이터', error);
     },
   });
 
@@ -99,6 +110,10 @@ const Goal = ({ isMain, item }) => {
     // setIsPlay(true);
   };
 
+  const handleLockClick = (check) => {
+    changePrivateGoalMutaion.mutate({ privateCheck: !check });
+  };
+
   useEffect(() => {
     if (testTime.hh === 0 && testTime.mm === 0 && testTime.ss === 0) {
       clearInterval(startProgress);
@@ -138,7 +153,21 @@ const Goal = ({ isMain, item }) => {
         <LikeContent>
           <IconContainer>
             {isMain ? (
-              <IconHeartFill onClick={(e) => e.stopPropagation()} />
+              privateCheck ? (
+                <IconLock
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleLockClick(privateCheck);
+                  }}
+                />
+              ) : (
+                <IconUnlock
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleLockClick(privateCheck);
+                  }}
+                />
+              )
             ) : (
               <IconHeartEmpty onClick={(e) => e.stopPropagation()} />
             )}

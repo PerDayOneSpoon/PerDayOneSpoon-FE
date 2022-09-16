@@ -38,7 +38,9 @@ const Header = ({
           <IconContainer>
             <IconLeft onClick={() => navigate(-1)} />
           </IconContainer>
-          <CommonText isH6={true}>{title}</CommonText>
+          <CommonText isH6={true} mg='0 0 0 12px'>
+            {title}
+          </CommonText>
           <RightButton onClick={handleRightButtonClick}>
             {rightButton}
           </RightButton>
