@@ -2,6 +2,7 @@ import React from 'react';
 import Layout from '../layout/Layout';
 import Header from '../components/global/Header';
 import GoalForm from '../components/goal/GoalForm';
+import ToastModal from '../components/global/ToastModal';
 import character1 from '../assets/imgs/character1.png';
 import character2 from '../assets/imgs/character2.png';
 import character3 from '../assets/imgs/character3.png';
@@ -21,6 +22,8 @@ const CreatePage = () => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const [modal, setModal] = useRecoilState(modalState);
+  const [toast, setToast] = useState(true);
+  const [toastMessage, setToastMessage] = useState('');
 
   const startDate = dayjs().format('YYYY년 MM월 DD일');
   const [endDate, setEndDate] = useState(
@@ -52,9 +55,14 @@ const CreatePage = () => {
 
   const handleRightButtonClick = () => {
     if (form.title === '') {
-      return alert('제목을 입력해 주세요');
+      setToast(false);
+      setToastMessage('제목을 입력해 주세요');
+      setTimeout(() => setToast(true), 3000);
     } else if (form.characterId === 0) {
-      return alert('캐릭터를 선택해 주세요');
+      setToast(false);
+      setToastMessage('캐릭터를 선택해 주세요');
+      setTimeout(() => setToast(true), 3000);
+      // return alert('캐릭터를 선택해 주세요');
     } else if (form.time === '00:00') {
       return alert('설정한 습관의 타이머를 유효한 값으로 수정해주세요');
     } else {
@@ -143,6 +151,7 @@ const CreatePage = () => {
         handleRightButtonClick={handleRightButtonClick}
         rightButton='추가'
       />
+
       <GoalForm
         form={form}
         selectTime={selectTime}
@@ -157,6 +166,7 @@ const CreatePage = () => {
         endDate={endDate}
         character={character}
       />
+      <ToastModal toastMessage={toastMessage} displayNone={toast} />
     </Layout>
   );
 };

@@ -1,42 +1,13 @@
-import { useState } from 'react';
-import Snackbar from '@mui/material/Snackbar';
-import styled from 'styled-components';
-import { ReactComponent as IconClose } from '../../assets/icons/icon-close.svg';
 import { colors } from '../../theme/theme';
+import styled from 'styled-components';
+import CommonText from '../elements/CommonText';
 
-const ToastModal = ({ toastMessage }) => {
-  const [state, setState] = useState({
-    open: false,
-    vertical: 'top',
-    horizontal: 'center',
-  });
-
-  const { vertical, horizontal, open } = state;
-
-  console.log(state);
-
-  const handleClick = () => {
-    setState({ ...state, open: true });
-  };
-
-  const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    setState({ ...state, open: false });
-  };
-
+const ToastModal = ({ toastMessage, displayNone }) => {
   return (
-    <Container>
-      <button onClick={handleClick}>Open simple snackbar</button>
-      <Snackbar
-        anchorOrigin={{ vertical, horizontal }}
-        open={open}
-        autoHideDuration={3000}
-        onClose={handleClose}
-        message={toastMessage}
-      />
+    <Container displayNone={displayNone}>
+      <CommonText isSubtitle2={true} fc={colors.white} pd='8px 24px'>
+        {toastMessage}
+      </CommonText>
     </Container>
   );
 };
@@ -44,8 +15,16 @@ const ToastModal = ({ toastMessage }) => {
 export default ToastModal;
 
 const Container = styled.div`
-  .css-1eqdgzv-MuiPaper-root-MuiSnackbarContent-root {
-    background-color: ${colors.primary};
-    border-radius: 32px;
-  }
+  position: fixed;
+  top: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 30px;
+  max-width: 240px;
+  width: 100%;
+  text-align: center;
+
+  color: ${colors.white};
+  background-color: ${colors.danger};
+  display: ${({ displayNone }) => (displayNone ? 'none' : 'block')};
 `;
