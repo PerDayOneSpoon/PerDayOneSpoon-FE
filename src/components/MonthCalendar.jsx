@@ -11,7 +11,7 @@ import { useRef } from 'react';
 const MonthCalendar = ({
   dateValue,
   handleChangeDate,
-  handleGetStartEndDate,
+  handleGetMonth,
   monthCalenderDtoList,
 }) => {
   const dates = monthCalenderDtoList.map((item) => item.currentDate);
@@ -42,7 +42,7 @@ const MonthCalendar = ({
         calendarType={'Hebrew'}
         nextLabel={<IconRight />}
         prevLabel={<IconLeft />}
-        onActiveStartDateChange={handleGetStartEndDate}
+        onActiveStartDateChange={handleGetMonth}
         formatDay={(locale, date) => dayjs(date).format('DD')}
       />
     </Container>

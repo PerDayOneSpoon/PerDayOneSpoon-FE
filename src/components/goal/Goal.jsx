@@ -111,7 +111,7 @@ const Goal = ({ isMain, item }) => {
   };
 
   const handleLockClick = (check) => {
-    changePrivateGoalMutaion.mutate({ privateCheck: !check });
+    changePrivateGoalMutaion.mutate({ goalId: id, privateCheck: !check });
   };
 
   useEffect(() => {
