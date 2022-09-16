@@ -5,7 +5,6 @@ import { useQuery } from 'react-query';
 import { goalApi } from '../api/goalApi';
 import { colors } from '../theme/theme';
 import Loading from './global/Loading';
-import ToastModal from './global/ToastModal';
 
 const Main = () => {
   const {
@@ -14,7 +13,9 @@ const Main = () => {
     error,
     data: mainGoalData,
   } = useQuery('getGoalInfo', goalApi.getGoal, {
-    onSuccess: () => {},
+    onSuccess: (data) => {
+      console.log('습관데이터 GET 성공', data);
+    },
   });
 
   if (isLoading) {

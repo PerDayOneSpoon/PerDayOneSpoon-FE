@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 import CommonText from '../elements/CommonText';
 
-const Friend = ({ friend }) => {
+const Friend = ({ person }) => {
   return (
     <Container>
       <ProfileContainer>
-        <ProfileImg />
+        <ProfileImg src={person.profileImage} />
       </ProfileContainer>
-      <CommonText isCaption={true}>{friend.nickname}</CommonText>
+      <CommonText isCaption={true}>{person.nickname}</CommonText>
     </Container>
   );
 };
@@ -27,10 +27,14 @@ const Container = styled.div`
 `;
 
 const ProfileContainer = styled.div`
-  width: 40px;
-  height: 40px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
-  background-color: #eee;
   margin-bottom: 8px;
+  overflow: hidden;
 `;
-const ProfileImg = styled.div``;
+const ProfileImg = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+`;

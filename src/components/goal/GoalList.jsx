@@ -1,8 +1,7 @@
 import styled from 'styled-components';
 import Goal from './Goal';
+import CalendarGoal from './CalendarGoal';
 import GoalEmpty from './GoalEmpty';
-import { calendarApi } from '../../api/calendarApi';
-import { useQuery } from 'react-query';
 
 const GoalList = ({ isMain, data }) => {
   if (data === undefined || data.length === 0) {
@@ -13,7 +12,7 @@ const GoalList = ({ isMain, data }) => {
     return (
       <Container>
         {data.map((item) => (
-          <Goal key={item.id} item={item} isMain={isMain} />
+          <Goal key={item.id} item={item} />
         ))}
       </Container>
     );
@@ -22,7 +21,7 @@ const GoalList = ({ isMain, data }) => {
   return (
     <Container>
       {data.map((item) => (
-        <Goal key={item.id} item={item} isMain={isMain} />
+        <CalendarGoal key={item.id} item={item} />
       ))}
     </Container>
   );

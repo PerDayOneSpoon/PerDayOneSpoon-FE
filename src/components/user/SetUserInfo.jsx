@@ -12,8 +12,8 @@ const SetUserInfo = ({
   handleInputChange,
 }) => {
   const queryClient = useQueryClient();
-
   const profileImg = useRef();
+  const nameInput = useRef();
 
   const updateUserImgMutation = useMutation(userApi.updateUserImg, {
     onSuccess: (data) => {
@@ -54,6 +54,7 @@ const SetUserInfo = ({
             type='text'
             value={editUserInfo.nickname || ''}
             name='nickname'
+            ref={nameInput}
             onChange={handleInputChange}
             disabled={onlyView}
           />
@@ -134,7 +135,6 @@ const FormLeft = styled.div`
 const FormRight = styled.div`
   width: 100%;
   margin-left: 16px;
-  opacity: 0.3;
   border-bottom: 1px solid ${colors.border};
   padding: 8px 0;
 `;
@@ -142,13 +142,15 @@ const FormRight = styled.div`
 const InputRight = styled.input`
   width: 100%;
   margin-left: 16px;
+  color: ${colors.text};
   border: none;
   outline: none;
   border-bottom: 1px solid ${colors.border};
   padding: 8px;
 
   &:disabled {
-    color: ${colors.text};
+    background-color: transparent;
+    color: ${colors.black};
   }
 `;
 

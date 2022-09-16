@@ -6,12 +6,12 @@ import Loading from './global/Loading';
 import dayjs from 'dayjs';
 import { useQuery } from 'react-query';
 import { calendarApi } from '../api/calendarApi';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 const Calendar = () => {
-  const data = [];
   const [dateValue, setDateValue] = useState(new Date());
   const [month, setMonth] = useState('');
+  const searchDate = dayjs(dateValue).format('YYYY-MM-DD');
 
   const {
     isLoading,
@@ -22,28 +22,23 @@ const Calendar = () => {
     onSuccess: () => {},
   });
 
+  const search = useQuery(
+    searchDate,
+    () => calendarApi.getCalendarDate(searchDate),
+    {
+      onSuccess: () => {},
+    }
+  );
+
   const handleChangeDate = (date) => {
     setDateValue(date);
-    // console.log('체인지 date!!', dayjs(date).format('YYYY-MM-DD'));
-    return date;
   };
 
-  const handleGetStartEndDate = ({ action, activeStartDate, value, view }) => {
+  const handleGetMonth = ({ action, activeStartDate, value, view }) => {
     if (view === 'month') {
       setMonth(dayjs(activeStartDate).format('MM'));
     }
   };
-
-  const searchData = dayjs(dateValue).format('YYYY-MM-DD');
-
-  const search = useQuery(
-    searchData,
-    () => calendarApi.getCalendarDate(searchData),
-    {
-      // enabled: dateValue !== null,
-      onSuccess: (data) => {},
-    }
-  );
 
   // console.log('달!!!', month);
 
@@ -51,15 +46,15 @@ const Calendar = () => {
     return <Loading />;
   }
 
-  const { monthCalenderDtoList, todayGoalsDtoList } = calendarData.data;
+  const { monthCalenderDtoList, peopleList } = calendarData.data;
 
   return (
     <>
-      <FriendsList />
+      <FriendsList peopleList={peopleList} />
       <MonthCalendar
         dateValue={dateValue}
         handleChangeDate={handleChangeDate}
-        handleGetStartEndDate={handleGetStartEndDate}
+        handleGetMonth={handleGetMonth}
         monthCalenderDtoList={monthCalenderDtoList}
       />
       <CommonText isSubtitle1={true} mg={'16px 0 0 0'}>
