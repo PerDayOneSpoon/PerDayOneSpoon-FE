@@ -5,7 +5,7 @@ export const calendarApi = {
     return instance.get('/confirm/calendar');
   },
 
-  getCalendarDate: ({ calendarDate }) => {
+  getCalendarDate: (calendarDate) => {
     return instance.get(`/confirm/calendar/${calendarDate}`);
   },
 };

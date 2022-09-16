@@ -17,9 +17,9 @@ export const goalTimeFamily = atomFamily({
         const getTime = data.todayGoalsDtoList.map((item) => item.time);
         const timeValue = {
           id: id,
-          hh: Number(getTime[i].split(':')[0]),
-          mm: Number(getTime[i].split(':')[1]),
-          ss: Number(getTime[i].split(':')[2]),
+          hh: Number(getTime[i]?.split(':')[0]),
+          mm: Number(getTime[i]?.split(':')[1]),
+          ss: Number(getTime[i]?.split(':')[2]),
           isPlay: false,
           currentTime: 0,
         };

@@ -24,7 +24,8 @@ const Calendar = () => {
 
   const handleChangeDate = (date) => {
     setDateValue(date);
-    console.log('체인지 date!!', dayjs(date).format('YYYY-MM-DD'));
+    // console.log('체인지 date!!', dayjs(date).format('YYYY-MM-DD'));
+    return date;
   };
 
   const handleGetStartEndDate = ({ action, activeStartDate, value, view }) => {
@@ -33,7 +34,18 @@ const Calendar = () => {
     }
   };
 
-  console.log('달!!!', month);
+  const searchData = dayjs(dateValue).format('YYYY-MM-DD');
+
+  const search = useQuery(
+    searchData,
+    () => calendarApi.getCalendarDate(searchData),
+    {
+      // enabled: dateValue !== null,
+      onSuccess: (data) => {},
+    }
+  );
+
+  // console.log('달!!!', month);
 
   if (isLoading) {
     return <Loading />;
@@ -53,7 +65,8 @@ const Calendar = () => {
       <CommonText isSubtitle1={true} mg={'16px 0 0 0'}>
         {dayjs(dateValue).format('MM월 DD일')}의 습관
       </CommonText>
-      <GoalList data={todayGoalsDtoList} isMain={false} />
+      {/* <GoalList data={todayGoalsDtoList} isMain={false} /> */}
+      <GoalList data={search?.data?.data} isMain={false} />
     </>
   );
 };
