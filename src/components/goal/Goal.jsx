@@ -8,9 +8,7 @@ import { colors } from '../../theme/theme';
 import CommonText from '../elements/CommonText';
 import useInterval from '../../hooks/useInterval';
 
-import { useRecoilState, useRecoilValue } from 'recoil';
-
-import { asyncGetGoal } from '../../recoil/goal';
+import { useRecoilState } from 'recoil';
 import { goalTimeFamily } from '../../recoil/goal';
 
 const Goal = ({ isMain, item }) => {
@@ -118,18 +116,6 @@ const Goal = ({ isMain, item }) => {
       setTimerInterval(customInterval);
     }
   }, [testTime.isPlay]);
-
-  // console.log('testTime', testTime);
-
-  // useEffect 시에 담아주면 컴포넌트 이동할 때마다 초기화 됨. 수정 필요..
-  // useEffect(() => {
-  //   setTestTime({
-  //     ...testTime,
-  //     hh: parseInt(time.split(':')[0]),
-  //     mm: parseInt(time.split(':')[1]),
-  //     ss: parseInt(time.split(':')[2]),
-  //   });
-  // }, []);
 
   return (
     <Container

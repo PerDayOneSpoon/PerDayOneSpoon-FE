@@ -3,20 +3,29 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
+import Loading from './components/global/Loading';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { RecoilRoot } from 'recoil';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      suspense: true,
+    },
+  },
+});
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <QueryClientProvider client={queryClient}>
-    <RecoilRoot>
-      <ReactQueryDevtools initialIsOpen={true} />
-      <App />
-    </RecoilRoot>
-  </QueryClientProvider>
+  <React.Suspense fallback={<Loading />}>
+    <QueryClientProvider client={queryClient}>
+      <RecoilRoot>
+        <ReactQueryDevtools initialIsOpen={true} />
+        <App />
+      </RecoilRoot>
+    </QueryClientProvider>
+  </React.Suspense>
 );
 
 // If you want your app to work offline and load faster, you can change
