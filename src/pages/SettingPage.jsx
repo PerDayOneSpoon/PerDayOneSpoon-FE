@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 import Layout from '../layout/Layout';
 import Header from '../components/global/Header';
@@ -16,6 +16,7 @@ const SettingPage = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const [editUserInfo, setEditUserInfo] = useRecoilState(userInfoState);
+  const [onlyView, setOnlyView] = useState(true);
 
   const {
     isLoading,
@@ -32,11 +33,12 @@ const SettingPage = () => {
     },
   });
 
-  const [onlyView, setOnlyView] = useState(true);
-
   const handleInputChange = (e) => {
     const { value, name } = e.target;
-    setEditUserInfo({ ...editUserInfo, [name]: value });
+    if (name.length !== 0) {
+    } else {
+      setEditUserInfo({ ...editUserInfo, [name]: value });
+    }
   };
 
   const handleRightButtonClick = (e) => {

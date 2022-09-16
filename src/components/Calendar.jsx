@@ -11,7 +11,7 @@ import { useState } from 'react';
 const Calendar = () => {
   const [dateValue, setDateValue] = useState(new Date());
   const [month, setMonth] = useState('');
-  const searchData = dayjs(dateValue).format('YYYY-MM-DD');
+  const searchDate = dayjs(dateValue).format('YYYY-MM-DD');
 
   const {
     isLoading,
@@ -23,8 +23,8 @@ const Calendar = () => {
   });
 
   const search = useQuery(
-    searchData,
-    () => calendarApi.getCalendarDate(searchData),
+    searchDate,
+    () => calendarApi.getCalendarDate(searchDate),
     {
       onSuccess: () => {},
     }
@@ -47,8 +47,6 @@ const Calendar = () => {
   }
 
   const { monthCalenderDtoList, peopleList } = calendarData.data;
-
-  console.log(peopleList);
 
   return (
     <>

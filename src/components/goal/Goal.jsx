@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { ReactComponent as IconHeartEmpty } from '../../assets/icons/icon-heart-empty.svg';
+import { ReactComponent as IconHeartFill } from '../../assets/icons/icon-heart-fill.svg';
 import { ReactComponent as IconLock } from '../../assets/icons/icon-lock.svg';
 import { ReactComponent as IconUnlock } from '../../assets/icons/icon-unlock.svg';
 import { useMutation, useQueryClient } from 'react-query';
@@ -12,7 +12,7 @@ import useInterval from '../../hooks/useInterval';
 import { useRecoilState } from 'recoil';
 import { goalTimeFamily } from '../../recoil/goal';
 
-const Goal = ({ isMain, item }) => {
+const Goal = ({ item }) => {
   const queryClient = useQueryClient();
 
   const [isTimer, setIsTimer] = useState(false);
@@ -44,13 +44,10 @@ const Goal = ({ isMain, item }) => {
     startDate,
     endDate,
     time, //"00:10:00"
-    likeNum,
+    heartCnt,
     achievementCheck,
     privateCheck,
   } = item;
-
-  // const getGoalTest = useRecoilValue(asyncGetGoal);
-  // console.log('getGoalTest', getGoalTest);
 
   let totalTime = 0;
 
@@ -152,32 +149,25 @@ const Goal = ({ isMain, item }) => {
         </RightContent>
         <LikeContent>
           <IconContainer>
-            {isMain ? (
-              privateCheck ? (
-                <IconLock
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleLockClick(privateCheck);
-                  }}
-                />
-              ) : (
-                <IconUnlock
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleLockClick(privateCheck);
-                  }}
-                />
-              )
+            {privateCheck ? (
+              <IconLock
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleLockClick(privateCheck);
+                }}
+              />
             ) : (
-              <IconHeartEmpty onClick={(e) => e.stopPropagation()} />
+              <IconUnlock
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleLockClick(privateCheck);
+                }}
+              />
             )}
           </IconContainer>
-          <CommonText isCaption={true} fc={colors.text}>
-            {likeNum}
-          </CommonText>
         </LikeContent>
       </Contents>
-      {isMain && isTimer && (
+      {isTimer && (
         <TimerContainer>
           <Timer>
             <Time isCaption={true} fc={colors.text}>
