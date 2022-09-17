@@ -2,20 +2,22 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import { colors } from '../../theme/theme';
 import CommonText from '../elements/CommonText';
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { friendsApi } from '../../api/friendsApi';
 
 const FriendsItem = ({ val }) => {
-  const [isFollow, setIsFollow] = useState(false);
+  const queryClient = useQueryClient();
 
   const addFriendMutation = useMutation(friendsApi.addFriend, {
-    onSuccess: (data) => {},
+    onSuccess: (data) => {
+      queryClient.invalidateQueries('getFriends');
+    },
     onError: ({ response }) => {},
   });
 
   const handleFollow = (friendId) => {
     addFriendMutation.mutate({ friendId: friendId });
-    setIsFollow(true);
+    // setIsFollow(true);
   };
 
   return (
@@ -29,12 +31,13 @@ const FriendsItem = ({ val }) => {
         </CommonText>
       </ProfileBox>
       <div>
-        <FollowButton
-          onClick={() => handleFollow(val.socialId)}
-          isFollow={isFollow}
-        >
-          팔로우
-        </FollowButton>
+        {val.followCheck ? (
+          <FollowButton disabled={true}>팔로우</FollowButton>
+        ) : (
+          <FollowButton onClick={() => handleFollow(val.socialId)}>
+            팔로우
+          </FollowButton>
+        )}
       </div>
     </SearchList>
   );
@@ -60,11 +63,16 @@ const ProfileBox = styled.div`
 const FollowButton = styled.button`
   width: 68px;
   height: 28px;
-  background-color: ${({ isFollow }) => (isFollow ? '#aaa' : colors.primary)};
+  background-color: ${colors.primary};
   border: none;
   border-radius: 14px;
   color: white;
   cursor: pointer;
+
+  :disabled {
+    background-color: ${colors.placeholder};
+    cursor: auto;
+  }
 `;
 
 const ImgContainer = styled.div`
