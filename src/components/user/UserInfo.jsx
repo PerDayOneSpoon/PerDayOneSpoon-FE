@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import CommonText from '../elements/CommonText';
 import Loading from '../global/Loading';
 
-const UserInfo = ({ isMypage }) => {
+const UserInfo = () => {
   const navigate = useNavigate();
 
   const {
@@ -24,7 +24,6 @@ const UserInfo = ({ isMypage }) => {
 
   return (
     <Container>
-      {/* <Top> */}
       <ProfileImgContainer>
         <ProfileImg src={userInfo.data.profileImage} />
       </ProfileImgContainer>
@@ -41,7 +40,6 @@ const UserInfo = ({ isMypage }) => {
           프로필 편집
         </EditProfileButton>
       </ProfileBox>
-      {/* </Top> */}
     </Container>
   );
 };
