@@ -1,10 +1,21 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 import { colors } from '../../theme/theme';
 import CommonText from '../elements/CommonText';
+import { useMutation } from 'react-query';
+import { friendsApi } from '../../api/friendsApi';
 
 const FriendsItem = ({ val }) => {
-  const handleFollow = () => {
-    console.log(val.socialid);
+  const [isFollow, setIsFollow] = useState(false);
+
+  const addFriendMutation = useMutation(friendsApi.addFriend, {
+    onSuccess: (data) => {},
+    onError: ({ response }) => {},
+  });
+
+  const handleFollow = (friendId) => {
+    addFriendMutation.mutate({ friendId: friendId });
+    setIsFollow(true);
   };
 
   return (
@@ -18,7 +29,12 @@ const FriendsItem = ({ val }) => {
         </CommonText>
       </ProfileBox>
       <div>
-        <FollowButton onClick={handleFollow}>팔로우</FollowButton>
+        <FollowButton
+          onClick={() => handleFollow(val.socialId)}
+          isFollow={isFollow}
+        >
+          팔로우
+        </FollowButton>
       </div>
     </SearchList>
   );
@@ -44,7 +60,7 @@ const ProfileBox = styled.div`
 const FollowButton = styled.button`
   width: 68px;
   height: 28px;
-  background-color: ${colors.primary};
+  background-color: ${({ isFollow }) => (isFollow ? '#aaa' : colors.primary)};
   border: none;
   border-radius: 14px;
   color: white;

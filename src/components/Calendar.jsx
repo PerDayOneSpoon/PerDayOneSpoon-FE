@@ -61,7 +61,7 @@ const Calendar = () => {
         {dayjs(dateValue).format('MM월 DD일')}의 습관
       </CommonText>
       {/* <GoalList data={todayGoalsDtoList} isMain={false} /> */}
-      <GoalList data={search?.data?.data} isMain={false} />
+      <GoalList isMain={false} data={search?.data?.data} />
     </>
   );
 };
