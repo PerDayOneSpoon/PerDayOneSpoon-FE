@@ -13,9 +13,7 @@ const Main = () => {
     error,
     data: mainGoalData,
   } = useQuery('getGoalInfo', goalApi.getGoal, {
-    onSuccess: (data) => {
-      console.log('습관데이터 GET 성공', data);
-    },
+    onSuccess: (data) => {},
   });
 
   if (isLoading) {

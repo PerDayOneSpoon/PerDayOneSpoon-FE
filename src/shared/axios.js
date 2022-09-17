@@ -25,7 +25,7 @@ instance.interceptors.request.use(
     return config;
   },
   (error) => {
-    console.log('axios 파일 request error', error);
+    // console.log('axios 파일 request error', error);
     // window.location('/login');
     return Promise.reject(error);
   }
@@ -74,7 +74,7 @@ instance.interceptors.response.use(
       }
     }
 
-    console.log('axios 파일 response error', error);
+    // console.log('axios 파일 response error', error);
     return Promise.reject(error);
   }
 );

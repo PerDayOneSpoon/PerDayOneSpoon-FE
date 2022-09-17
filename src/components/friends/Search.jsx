@@ -14,7 +14,7 @@ const Search = () => {
   const [searchTerm, setSearchTerm] = useState('');
 
   const { data: searchFriends } = useQuery(
-    searchTerm,
+    ['getFriends', searchTerm],
     () => userApi.getSearchFriends(searchTerm),
     {
       enabled: !!searchTerm,

@@ -38,10 +38,6 @@ const BottomSheetModal = ({ children, isHeader, title, handleOkClick }) => {
     }
   }, [modal.open]);
 
-  useEffect(() => {
-    console.log('modal.open', modal.open, 'isOpen', isOpen);
-  }, [isOpen]);
-
   if (!modal.open) return null;
 
   return (

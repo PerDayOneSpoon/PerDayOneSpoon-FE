@@ -29,7 +29,7 @@ const GoogleLogin = () => {
       });
   }, [code, navigate]);
 
-  return <div>구글 로그인</div>;
+  return <div></div>;
 };
 
 export default GoogleLogin;

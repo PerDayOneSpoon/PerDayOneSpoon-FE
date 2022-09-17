@@ -45,7 +45,6 @@ const CreatePage = () => {
 
   const addGoalMutation = useMutation(goalApi.addGoal, {
     onSuccess: (data) => {
-      console.log('습관 추가 POST 성공', data);
       queryClient.invalidateQueries('getGoalInfo');
       navigate('/');
     },
