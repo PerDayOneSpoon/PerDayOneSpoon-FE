@@ -15,9 +15,7 @@ const UserInfo = ({ isMypage }) => {
     error,
     data: userInfo,
   } = useQuery('getUserInfo', userApi.getUserInfo, {
-    onSuccess: (data) => {
-      console.log('GET USER INFO', data);
-    },
+    onSuccess: (data) => {},
   });
 
   if (isLoading) {

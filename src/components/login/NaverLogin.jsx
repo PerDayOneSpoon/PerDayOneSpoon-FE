@@ -30,7 +30,7 @@ const NaverLogin = () => {
       });
   }, [code, state, navigate]);
 
-  return <div>네이버 로그인</div>;
+  return <div></div>;
 };
 
 export default NaverLogin;

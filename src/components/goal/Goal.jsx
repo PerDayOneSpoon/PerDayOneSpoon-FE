@@ -20,21 +20,15 @@ const Goal = ({ item }) => {
   const achieveGoalMutation = useMutation(goalApi.achieveGoal, {
     onSuccess: (data) => {
       queryClient.invalidateQueries('getGoalInfo');
-      console.log('achieveGoalMutation 성공 데이터', data);
     },
-    onError: (error) => {
-      console.log('achieveGoalMutation 에러 데이터', error);
-    },
+    onError: (error) => {},
   });
 
   const changePrivateGoalMutaion = useMutation(goalApi.changePrivateGoal, {
     onSuccess: (data) => {
       queryClient.invalidateQueries('getGoalInfo');
-      console.log('changePrivateGoalMutaion 성공 데이터', data);
     },
-    onError: (error) => {
-      console.log('changePrivateGoalMutaion 에러 데이터', error);
-    },
+    onError: (error) => {},
   });
 
   const {
@@ -102,7 +96,6 @@ const Goal = ({ item }) => {
   );
 
   const handleStartCilck = () => {
-    console.log(id, '시작 버튼 클릭!');
     setTestTime((prev) => ({ ...prev, isPlay: true }));
     // setIsPlay(true);
   };
@@ -114,7 +107,6 @@ const Goal = ({ item }) => {
   useEffect(() => {
     if (testTime.hh === 0 && testTime.mm === 0 && testTime.ss === 0) {
       clearInterval(startProgress);
-      console.log(id, '타이머 종료!');
       const data = {
         goalId: id,
         achivement: true,

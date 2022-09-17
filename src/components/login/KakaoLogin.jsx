@@ -29,7 +29,7 @@ const KakaoLogin = () => {
       });
   }, [code, navigate]);
 
-  return <div>카카오 로그인</div>;
+  return <div></div>;
 };
 
 export default KakaoLogin;
