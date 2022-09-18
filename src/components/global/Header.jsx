@@ -75,7 +75,7 @@ const Container = styled.div`
   padding: 16px;
   box-sizing: border-box;
   margin-left: -16px;
-  margin-bottom: 16px;
+  /* margin-right: -16px; */
 `;
 
 const ContainerInner = styled.div`

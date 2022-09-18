@@ -68,7 +68,7 @@ const SettingPage = () => {
   }
 
   return (
-    <Layout>
+    <Layout hasNavBar={false}>
       <Header
         title='프로필 편집'
         hasBack={true}
@@ -81,7 +81,6 @@ const SettingPage = () => {
         editUserInfo={editUserInfo}
         handleInputChange={handleInputChange}
       />
-      <NavBar />
     </Layout>
   );
 };

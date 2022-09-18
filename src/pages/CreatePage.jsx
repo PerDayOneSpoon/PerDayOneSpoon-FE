@@ -144,7 +144,7 @@ const CreatePage = () => {
   // console.log('form 전송 데이터', form);
 
   return (
-    <Layout bgColor={colors.bgColor}>
+    <Layout bgColor={colors.bgColor} hasNavBar={false}>
       <Header
         hasBack={true}
         title='습관 추가'

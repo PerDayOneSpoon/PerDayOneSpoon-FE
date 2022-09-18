@@ -5,9 +5,9 @@ import { isMobile } from 'react-device-detect';
 
 const AddButton = ({ handleAddClick }) => {
   return (
-    <Container isMobile={isMobile}>
+    <Container isMobile={isMobile} onClick={handleAddClick}>
       <Button>
-        <IconAdd onClick={handleAddClick} />
+        <IconAdd />
       </Button>
     </Container>
   );

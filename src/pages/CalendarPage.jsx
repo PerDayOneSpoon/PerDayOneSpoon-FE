@@ -9,7 +9,6 @@ const CalendarPage = () => {
     <Layout hasNavBar={true} bgColor={colors.bgColor}>
       <Header hasIcon={true} icon={'addFriend'} title='캘린더' />
       <Calendar />
-      <NavBar />
     </Layout>
   );
 };

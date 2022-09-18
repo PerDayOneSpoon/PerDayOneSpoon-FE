@@ -19,7 +19,6 @@ const MainPage = () => {
     <Layout hasNavBar={true} bgColor={colors.bgColor}>
       <Header title='주간 습관 달성률' bgColor={colors.secondary} />
       <Main />
-      <NavBar />
       <AddButton handleAddClick={() => navigate('/create')} />
     </Layout>
   );

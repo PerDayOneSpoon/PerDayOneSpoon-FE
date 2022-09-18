@@ -348,7 +348,7 @@ const CharacterLi = styled.li`
     box-shadow: 0 0 0 3px #ff5cb3 inset;
   }
 
-  &.dbB4f4 {
+  &.dbb4f4 {
     box-shadow: 0 0 0 3px #c56bfd inset;
   }
 
