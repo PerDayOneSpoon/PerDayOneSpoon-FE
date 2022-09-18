@@ -18,7 +18,7 @@ const Calendar = () => {
     isError,
     error,
     data: calendarData,
-  } = useQuery(['getCalendarInfo'], calendarApi.getCalendar, {
+  } = useQuery(['getGoalInfo', 2], calendarApi.getCalendar, {
     onSuccess: () => {},
     staleTime: Infinity,
   });
