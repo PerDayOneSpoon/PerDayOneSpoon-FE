@@ -32,10 +32,6 @@ export const userApi = {
     });
   },
 
-  getSearchFriends: (data) => {
-    return instance.get(`/search/friends/${data}`);
-  },
-
   logout: () => {
     return instance.delete('/delete/user/logout');
   },

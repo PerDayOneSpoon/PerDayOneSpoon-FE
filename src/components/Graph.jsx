@@ -6,19 +6,20 @@ const Graph = ({ weekRateDtoList, weekStartDate, weekEndDate }) => {
   return (
     <Container>
       <CommonText
-        isCaption={true}
-        mg={'0 0 8px 0'}
-        pd={'0 16px'}
+        isFootnote1={true}
+        pd={'0 24px'}
         bgColor={colors.secondary}
-        fc={colors.text}
+        fc={colors.orange700}
       >
         {weekStartDate} ~ {weekEndDate}
       </CommonText>
       <GraphBox>
         {weekRateDtoList.map((day) => (
           <GraphList key={day.id}>
-            <GraphBar percentage={day.rate} />
-            <CommonText isCaption={true}>{day.dayString}</CommonText>
+            <GraphBar>
+              <GraphBarInner percentage={day.rate} />
+            </GraphBar>
+            <CommonText isFootnote1={true}>{day.dayString}</CommonText>
           </GraphList>
         ))}
       </GraphBox>
@@ -31,7 +32,7 @@ export default Graph;
 const Container = styled.div`
   margin-left: -16px;
   margin-right: -16px;
-  margin-top: -10px;
+  margin-top: -8px;
   background-color: ${colors.secondary};
   border-radius: 0 0 16px 16px;
   overflow: hidden;
@@ -39,15 +40,11 @@ const Container = styled.div`
   box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.06);
 `;
 
-const Date = styled.div`
-  /* margin-bottom: 8px; */
-`;
-
 const GraphBox = styled.div`
   display: flex;
   justify-content: space-between;
   background-color: ${colors.secondary};
-  padding: 16px 32px;
+  padding: 24px 24px 16px;
 `;
 const GraphList = styled.div`
   display: flex;
@@ -56,22 +53,22 @@ const GraphList = styled.div`
 `;
 
 const GraphBar = styled.div`
-  position: relative;
+  /* position: relative; */
   width: 20px;
   height: 80px;
-  background-color: ${colors.white};
+  background-color: ${colors.orange100};
   margin-bottom: 8px;
-  border-radius: 6px;
+  border-radius: 4px;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+`;
 
-  ::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    display: inline-block;
-    width: 100%;
-    height: ${({ percentage }) => `${percentage}%`};
-    background-color: ${colors.primary};
-  }
+const GraphBarInner = styled.div`
+  width: 100%;
+  height: ${({ percentage }) => `${percentage}%`};
+  background-color: ${colors.primary};
+  transition: all 0.3s ease-out;
+  border-radius: 4px;
 `;

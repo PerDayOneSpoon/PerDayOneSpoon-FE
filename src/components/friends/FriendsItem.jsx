@@ -10,7 +10,7 @@ const FriendsItem = ({ val }) => {
 
   const addFriendMutation = useMutation(friendsApi.addFriend, {
     onSuccess: (data) => {
-      queryClient.invalidateQueries('getFriends');
+      queryClient.invalidateQueries(['getGoalInfo']);
     },
     onError: ({ response }) => {},
   });

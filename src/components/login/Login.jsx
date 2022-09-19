@@ -1,14 +1,13 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import {
   KAKAO_AUTH_URL,
   GOOGLE_AUTH_URL,
   NAVER_AUTH_URL,
 } from '../../constants/common';
 import char1 from '../../assets/imgs/character1.png';
-import loginImg from '../../assets/imgs/login.png';
-import loginKakao from '../../assets/imgs/login-kakao.png';
-import loginNaver from '../../assets/imgs/login-naver.png';
-import loginGoogle from '../../assets/imgs/login-google.png';
+import { ReactComponent as IconGoogle } from '../../assets/icons/icon-google.svg';
+import { ReactComponent as IconKakao } from '../../assets/icons/icon-kakao.svg';
+import { ReactComponent as IconNaver } from '../../assets/icons/icon-naver.svg';
 import { colors } from '../../theme/theme';
 import CommonText from '../elements/CommonText';
 
@@ -27,7 +26,6 @@ const Login = () => {
 
   return (
     <>
-      <StTop />
       <StMainLogoBox>
         <StMainDiv>
           <ChracterContainer>
@@ -36,51 +34,51 @@ const Login = () => {
         </StMainDiv>
       </StMainLogoBox>
       <StMainTextBox>
-        <CommonText fc={colors.primary} fw='500' fz='18px' lh='24px' wd='180px'>
+        <CommonText
+          fc={colors.primary}
+          isTitle2={true}
+          isBold={true}
+          wd='190px'
+        >
           지금 하루 한 줌과 습관을 만들어 보아요!
         </CommonText>
 
-        <CommonText isCaption={true} fc={colors.text} mg='8px 0 0 0'>
+        <CommonText isCaption={true} fc={colors.gray700} mg='16px 0 0 0'>
           빠른 습관 설정과 달성까지
         </CommonText>
       </StMainTextBox>
 
       <StLoginStart>
-        <StLoginText isCaption={true}>3초만에 시작하기</StLoginText>
+        <StLoginText isFootnote1={true} fc={colors.textBlack}>
+          ⏱ 3초만에 시작하기
+        </StLoginText>
       </StLoginStart>
 
       <StLoginButtonBox>
-        <StLoginButton>
-          <ImgContainer onClick={handleKakaoLogin}>
-            <ButtonImg src={loginKakao} alt='카카오로그인' />
-          </ImgContainer>
-
-          <CommonText isCaption={true}>
-            카카오로
-            <br />
-            시작하기
+        <StLoginButton bgColor='kakao' onClick={handleKakaoLogin}>
+          <IconContainer>
+            <IconKakao />
+          </IconContainer>
+          <CommonText wd='162px' isSubhead={true}>
+            카카오톡 계정으로 로그인
           </CommonText>
         </StLoginButton>
 
-        <StLoginButton>
-          <ImgContainer onClick={handleNaverLogin}>
-            <ButtonImg src={loginNaver} alt='네이버로그인' />
-          </ImgContainer>
-          <CommonText isCaption={true}>
-            네이버로
-            <br />
-            시작하기
+        <StLoginButton bgColor='naver' onClick={handleNaverLogin}>
+          <IconContainer>
+            <IconNaver />
+          </IconContainer>
+          <CommonText wd='162px' isSubhead={true}>
+            네이버 계정으로 로그인
           </CommonText>
         </StLoginButton>
 
-        <StLoginButton>
-          <ImgContainer onClick={handleGoogleLogin}>
-            <ButtonImg src={loginGoogle} alt='구글로그인' />
-          </ImgContainer>
-          <CommonText isCaption={true}>
-            구글로
-            <br />
-            시작하기
+        <StLoginButton bgColor='google' onClick={handleGoogleLogin}>
+          <IconContainer>
+            <IconGoogle />
+          </IconContainer>
+          <CommonText wd='162px' isSubhead={true}>
+            구글 계정으로 로그인
           </CommonText>
         </StLoginButton>
       </StLoginButtonBox>
@@ -90,13 +88,9 @@ const Login = () => {
 
 export default Login;
 
-const StTop = styled.div`
-  height: 44px;
-`;
-
 const StMainLogoBox = styled.div`
   width: 100%;
-  padding-top: 73px;
+  padding-top: 80px;
   display: flex;
   justify-content: center;
 `;
@@ -154,14 +148,6 @@ const StLoginText = styled(CommonText)`
     position: absolute;
     bottom: -12px;
     left: 50%;
-    /* transform: translateX(50%);
-    width: 0;
-    height: 0;
-    border: 10px solid transparent;
-    border-top-color: ${colors.white};
-    border-bottom: 0;
-    margin-left: -20px;
-    margin-bottom: -20px; */
     width: 16px;
     height: 16px;
     transform: rotate(45deg) translateX(-50%);
@@ -173,30 +159,53 @@ const StLoginText = styled(CommonText)`
 const StLoginButtonBox = styled.div`
   display: flex;
   justify-content: center;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const StLoginButton = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
   text-align: center;
+  border-radius: 60px;
+  padding: 14px 24px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+
+  ${({ bgColor }) => {
+    switch (bgColor) {
+      case 'kakao':
+        return css`
+          background-color: #f9e001;
+        `;
+      case 'naver':
+        return css`
+          background-color: #03c75a;
+        `;
+      case 'google':
+        return css`
+          background-color: #ffffff;
+        `;
+      default:
+        return css`
+          background-color: ${colors.white};
+        `;
+    }
+  }}
 
   & + & {
-    margin-left: 24px;
+    margin-top: 16px;
   }
 `;
 
-const ImgContainer = styled.div`
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  margin-bottom: 8px;
-  overflow: hidden;
+const IconContainer = styled.div`
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
 `;
 
 const ButtonImg = styled.img`

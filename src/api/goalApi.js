@@ -15,8 +15,12 @@ export const goalApi = {
     });
   },
 
-  changePrivateGoal: ({ goalId, privateCheck }) => {
-    return instance.patch(`/change/goal/${goalId}`, {
+  deleteGoal: ({ goalFlag }) => {
+    return instance.delete(`/delete/${goalFlag}`);
+  },
+
+  changePrivateGoal: ({ goalFlag, privateCheck }) => {
+    return instance.patch(`/change/goal/${goalFlag}`, {
       privateCheck: privateCheck,
     });
   },

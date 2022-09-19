@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { ReactComponent as IconTrash } from '../../assets/icons/icon-trash.svg';
 import { ReactComponent as IconLock } from '../../assets/icons/icon-lock.svg';
 import { ReactComponent as IconUnlock } from '../../assets/icons/icon-unlock.svg';
+import { ReactComponent as IconCalendar } from '../../assets/icons/icon-calendar.svg';
 import { useMutation, useQueryClient } from 'react-query';
 import { goalApi } from '../../api/goalApi';
 import { colors } from '../../theme/theme';
@@ -16,6 +17,12 @@ const Goal = ({ item }) => {
   const queryClient = useQueryClient();
 
   const [isTimer, setIsTimer] = useState(false);
+
+  const deleteGoalMutation = useMutation(goalApi.deleteGoal, {
+    onSuccess: (data) => {
+      queryClient.invalidateQueries('getGoalInfo');
+    },
+  });
 
   const achieveGoalMutation = useMutation(goalApi.achieveGoal, {
     onSuccess: (data) => {
@@ -37,10 +44,10 @@ const Goal = ({ item }) => {
     characterUrl,
     startDate,
     endDate,
-    time, //"00:10:00"
-    heartCnt,
+    time,
     achievementCheck,
     privateCheck,
+    goalFlag,
   } = item;
 
   let totalTime = 0;
@@ -101,7 +108,20 @@ const Goal = ({ item }) => {
   };
 
   const handleLockClick = (check) => {
-    changePrivateGoalMutaion.mutate({ goalId: id, privateCheck: !check });
+    changePrivateGoalMutaion.mutate({
+      goalFlag: goalFlag,
+      privateCheck: !check,
+    });
+  };
+
+  const handleGoalDelete = (deleteId) => {
+    if (
+      window.confirm('모든 날짜의 해당 습관이 삭제됩니다. 삭제하시겠습니까?')
+    ) {
+      deleteGoalMutation.mutate({ goalFlag: deleteId });
+    } else {
+      return;
+    }
   };
 
   useEffect(() => {
@@ -122,7 +142,7 @@ const Goal = ({ item }) => {
   }, [testTime.isPlay]);
 
   return (
-    <GoalContainer>
+    <GoalContainer isTimer={isTimer}>
       <Container
         onClick={() => setIsTimer(!isTimer)}
         isAchievementCheck={achievementCheck}
@@ -134,10 +154,13 @@ const Goal = ({ item }) => {
             </ChracterContainer>
 
             <div>
-              <CommonText isSubtitle1={true}>{title}</CommonText>
-              <CommonText isCaption={true} fc={colors.text}>
+              <CommonText isCallout={true}>{title}</CommonText>
+              <CustomText isFootnote2={true} fc={colors.text}>
+                <IconContainer className='calendar-icon'>
+                  <IconCalendar />
+                </IconContainer>
                 {startDate} - {endDate}
-              </CommonText>
+              </CustomText>
             </div>
           </RightContent>
           <LikeContent>
@@ -164,15 +187,15 @@ const Goal = ({ item }) => {
           <>
             <TimerContainer>
               <Timer>
-                <Time isCaption={true} fc={colors.text}>
-                  {`${HH}:${MM}:${SS} `}
-                </Time>
                 <ProgressBar>
                   <ProgressPercentage
                     percentage={percentage}
                     isAchievementCheck={achievementCheck}
                   />
                 </ProgressBar>
+                <Time isFootnote2={true} fc={colors.gray500}>
+                  {`${HH}:${MM}:${SS} `}
+                </Time>
               </Timer>
               <Button
                 onClick={(e) => {
@@ -190,7 +213,10 @@ const Goal = ({ item }) => {
       </Container>
       {isTimer && (
         <TrashIconContainer>
-          <IconContainer className='trash-icon'>
+          <IconContainer
+            className='trash-icon'
+            onClick={() => handleGoalDelete(goalFlag)}
+          >
             <IconTrash />
           </IconContainer>
         </TrashIconContainer>
@@ -204,6 +230,14 @@ export default Goal;
 const GoalContainer = styled.div`
   & + & {
     margin-top: 16px;
+  }
+
+  :last-child {
+    ${({ isTimer }) =>
+      isTimer &&
+      css`
+        margin-bottom: 54px;
+      `}
   }
 `;
 
@@ -234,7 +268,7 @@ const ChracterContainer = styled.div`
   height: 56px;
   border-radius: 50%;
   overflow: hidden;
-  margin-right: 10px;
+  margin-right: 16px;
 `;
 
 const Character = styled.img`
@@ -258,6 +292,19 @@ const IconContainer = styled.div`
     height: 20px;
     margin: 0 16px;
     cursor: pointer;
+  }
+
+  &.calendar-icon {
+    width: 12px;
+    height: 12px;
+    margin-right: 4px;
+    display: inline-block;
+    flex-basis: 20px;
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
   }
 `;
 
@@ -283,7 +330,7 @@ const TimerContainer = styled.div`
 const Time = styled(CommonText)`
   display: flex;
   justify-content: flex-end;
-  margin-bottom: 10px;
+  margin-top: 8px;
 `;
 
 const Timer = styled.div`
@@ -293,10 +340,9 @@ const Timer = styled.div`
 const ProgressBar = styled.div`
   position: relative;
   width: 100%;
-  height: 16px;
-  margin-top: 4px;
-  background-color: ${colors.inputColor};
-  border-radius: 4px;
+  height: 12px;
+  background-color: ${colors.gray100};
+  border-radius: 30px;
   overflow: hidden;
 `;
 
@@ -312,6 +358,7 @@ const ProgressPercentage = styled.div.attrs((props) => ({
   left: 0;
   top: 0;
   height: 100%;
+  border-radius: 30px;
   background-color: ${({ isAchievementCheck }) =>
     isAchievementCheck ? '#ccc' : colors.primary};
   transition: all 0.2s linear;
@@ -331,4 +378,14 @@ const Button = styled.button`
   font-size: 12px;
 
   cursor: pointer;
+`;
+
+const CustomText = styled(CommonText)`
+  margin-top: 8px;
+  padding: 4px;
+  border-radius: 4px;
+  background-color: ${colors.gray50};
+  display: flex;
+  align-items: stretch;
+  word-break: keep-all;
 `;

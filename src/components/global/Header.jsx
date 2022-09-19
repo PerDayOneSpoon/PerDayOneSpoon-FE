@@ -38,7 +38,7 @@ const Header = ({
           <IconContainer>
             <IconLeft onClick={() => navigate(-1)} />
           </IconContainer>
-          <CommonText isH6={true} mg='0 0 0 12px'>
+          <CommonText isTitle3={true} isBold={true} mg='0 0 0 12px'>
             {title}
           </CommonText>
           <RightButton onClick={handleRightButtonClick}>
@@ -51,7 +51,9 @@ const Header = ({
     return (
       <Container bgColor={bgColor}>
         <ContainerInner hasIcon={hasIcon}>
-          <CommonText isH6={true}>{title}</CommonText>
+          <CommonText isTitle3={true} isBold={true}>
+            {title}
+          </CommonText>
           <IconContainer>{handleIcons(icon)}</IconContainer>
         </ContainerInner>
       </Container>
@@ -60,7 +62,9 @@ const Header = ({
     return (
       <Container bgColor={bgColor}>
         <ContainerInner>
-          <CommonText isH6={true}>{title}</CommonText>
+          <CommonText isTitle3={true} isBold={true}>
+            {title}
+          </CommonText>
         </ContainerInner>
       </Container>
     );
@@ -72,7 +76,7 @@ export default Header;
 const Container = styled.div`
   background-color: ${({ bgColor }) => bgColor};
   width: calc(100% + 32px);
-  padding: 16px;
+  padding: 16px 24px;
   box-sizing: border-box;
   margin-left: -16px;
   /* margin-right: -16px; */

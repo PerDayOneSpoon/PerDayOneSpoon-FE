@@ -1,8 +1,7 @@
-import { useState } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as IconHeartFill } from '../../assets/icons/icon-heart-fill.svg';
-import { useMutation, useQueryClient } from 'react-query';
-import { goalApi } from '../../api/goalApi';
+import { ReactComponent as IconCalendar } from '../../assets/icons/icon-calendar.svg';
+import { useQueryClient } from 'react-query';
 import { colors } from '../../theme/theme';
 import CommonText from '../elements/CommonText';
 
@@ -29,10 +28,13 @@ const CalendarGoal = ({ item }) => {
           </ChracterContainer>
 
           <div>
-            <CommonText isSubtitle1={true}>{title}</CommonText>
-            <CommonText isCaption={true} fc={colors.text}>
+            <CommonText isCallout={true}>{title}</CommonText>
+            <CustomText isFootnote2={true} fc={colors.text}>
+              <IconContainer className='calendar-icon'>
+                <IconCalendar />
+              </IconContainer>
               {startDate} - {endDate}
-            </CommonText>
+            </CustomText>
           </div>
         </RightContent>
         <LikeContent>
@@ -80,7 +82,7 @@ const ChracterContainer = styled.div`
   height: 56px;
   border-radius: 50%;
   overflow: hidden;
-  margin-right: 10px;
+  margin-right: 16px;
 `;
 
 const Character = styled.img`
@@ -98,4 +100,27 @@ const LikeContent = styled.div`
 const IconContainer = styled.div`
   width: 24px;
   height: 24px;
+
+  &.calendar-icon {
+    width: 12px;
+    height: 12px;
+    margin-right: 4px;
+    flex-basis: 20px;
+    display: inline-block;
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+  }
+`;
+
+const CustomText = styled(CommonText)`
+  margin-top: 8px;
+  padding: 4px;
+  border-radius: 4px;
+  background-color: ${colors.gray50};
+  display: flex;
+  align-items: stretch;
+  word-break: keep-all;
 `;

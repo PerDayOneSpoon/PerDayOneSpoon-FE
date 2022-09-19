@@ -1,13 +1,17 @@
+import { useState } from 'react';
 import styled from 'styled-components';
+import { colors } from '../../theme/theme';
 import CommonText from '../elements/CommonText';
 
-const Friend = ({ person }) => {
+const Friend = ({ person, focusUser, handleUserClick }) => {
   return (
-    <Container>
+    <Container onClick={handleUserClick}>
       <ProfileContainer>
         <ProfileImg src={person.profileImage} />
       </ProfileContainer>
-      <CommonText isCaption={true}>{person.nickname}</CommonText>
+      <CommonText isFootnote1={true} fc={colors.gray500}>
+        {person.nickname}
+      </CommonText>
     </Container>
   );
 };

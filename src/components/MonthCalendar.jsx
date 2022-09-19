@@ -43,7 +43,7 @@ const MonthCalendar = ({
         nextLabel={<IconRight />}
         prevLabel={<IconLeft />}
         onActiveStartDateChange={handleGetMonth}
-        formatDay={(locale, date) => dayjs(date).format('DD')}
+        formatDay={(locale, date) => dayjs(date).format('D')}
       />
     </Container>
   );
@@ -52,16 +52,40 @@ const MonthCalendar = ({
 export default MonthCalendar;
 
 const Container = styled.div`
-  /* height: 340px; */
+  margin-left: -16px;
+  margin-right: -16px;
+  padding: 16px 24px;
+  background-color: ${colors.white};
+  border-radius: 0px 0px 16px 16px;
+  box-shadow: 0px 10px 14px rgba(0, 0, 0, 0.06);
 `;
 
 const CutomCalendar = styled(Calendar)`
+  button {
+    font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui,
+      Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo',
+      'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji',
+      'Segoe UI Symbol', sans-serif;
+  }
+
   &.react-calendar {
     width: 100%;
     border: none;
     background-color: ${colors.bgColor};
     padding-bottom: 16px;
-    border-bottom: 1px solid ${colors.border};
+  }
+
+  .react-calendar__viewContainer {
+    margin-left: -8px;
+    margin-right: -8px;
+  }
+
+  .react-calendar__month-view__days__day--weekend {
+    color: ${colors.black};
+  }
+
+  .react-calendar__month-view__days__day--neighboringMonth {
+    color: ${colors.gray400} !important;
   }
 
   .react-calendar__tile--now {
@@ -97,8 +121,8 @@ const CutomCalendar = styled(Calendar)`
     abbr {
       display: inline-block;
       width: 30px;
-      height: 30px;
-      background-color: ${colors.primary};
+      aspect-ratio: 1/1;
+      background-color: ${colors.orange500};
       color: white;
       border-radius: 50%;
       vertical-align: middle;
@@ -125,11 +149,17 @@ const CutomCalendar = styled(Calendar)`
   }
   .react-calendar__navigation__label {
     flex-grow: initial !important;
-    font-size: 18px;
-    line-height: 24px;
-    letter-spacing: 0.15px;
+    font-size: 20px;
+    line-height: 25px;
     font-weight: 500;
     padding-top: 0;
+  }
+
+  .react-calendar__month-view__weekdays {
+    font-size: 15px;
+    line-height: 24px;
+    font-weight: 400;
+    color: ${colors.gray500};
   }
 
   .react-calendar__navigation__prev-button,
@@ -137,9 +167,16 @@ const CutomCalendar = styled(Calendar)`
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
+    min-width: unset;
+    border: 1px solid #d4d6d9;
+    padding: 4px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   .react-calendar__navigation__prev-button {
-    right: 32px;
+    right: 46px;
   }
   .react-calendar__navigation__next-button {
     right: 0;
@@ -157,6 +194,9 @@ const CutomCalendar = styled(Calendar)`
   .react-calendar__month-view__days button {
     position: relative;
     height: 44px;
+    font-size: 15px;
+    line-height: 24px;
+    font-weight: 400;
   }
 `;
 

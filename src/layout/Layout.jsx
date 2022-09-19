@@ -23,12 +23,12 @@ const Background = styled.div`
   justify-content: space-between;
   align-items: center;
   position: relative;
-  background-color: ${colors.bgColor};
+  background-color: ${colors.gray50};
 
   ${({ isMobile }) =>
     isMobile
       ? css`
-          min-height: calc(var(--vh, 1vh) * 100);
+          height: calc(var(--vh, 1vh) * 100);
         `
       : css`
           height: 100vh;
@@ -37,7 +37,7 @@ const Background = styled.div`
 `;
 
 const BodyContent = styled.div`
-  height: calc(100% - 60px);
+  height: ${({ hasNavBar }) => (hasNavBar ? 'calc(100% - 60px)' : '100%')};
   overflow: hidden auto;
   width: 100%;
   padding: 0 16px;

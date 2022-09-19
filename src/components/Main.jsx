@@ -36,10 +36,10 @@ const Main = () => {
         weekStartDate={weekStartDate}
         weekEndDate={weekEndDate}
       />
-      <CommonText isSubtitle1={true} mg='16px 0 4px 0'>
+      <CommonText isBody={true} fw='600' mg='24px 0 6px 0'>
         오늘의 습관
       </CommonText>
-      <CommonText isCaption={true} fc={colors.text}>
+      <CommonText isFootnote1={true} fc={colors.gray500}>
         {currentDate}
       </CommonText>
       <GoalList isMain={true} data={todayGoalsDtoList} />
