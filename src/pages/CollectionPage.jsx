@@ -9,7 +9,6 @@ const CollectionPage = () => {
     <Layout hasNavBar={true}>
       <Header title='뱃지 컬렉션' />
       <CollectionList />
-      <NavBar />
     </Layout>
   );
 };

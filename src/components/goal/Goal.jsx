@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { ReactComponent as IconHeartFill } from '../../assets/icons/icon-heart-fill.svg';
+import { ReactComponent as IconTrash } from '../../assets/icons/icon-trash.svg';
 import { ReactComponent as IconLock } from '../../assets/icons/icon-lock.svg';
 import { ReactComponent as IconUnlock } from '../../assets/icons/icon-unlock.svg';
 import { useMutation, useQueryClient } from 'react-query';
@@ -122,73 +122,90 @@ const Goal = ({ item }) => {
   }, [testTime.isPlay]);
 
   return (
-    <Container
-      onClick={() => setIsTimer(!isTimer)}
-      isAchievementCheck={achievementCheck}
-    >
-      <Contents>
-        <RightContent>
-          <ChracterContainer>
-            <Character src={characterUrl} alt='캐릭터 이미지' />
-          </ChracterContainer>
+    <GoalContainer>
+      <Container
+        onClick={() => setIsTimer(!isTimer)}
+        isAchievementCheck={achievementCheck}
+      >
+        <Contents>
+          <RightContent>
+            <ChracterContainer>
+              <Character src={characterUrl} alt='캐릭터 이미지' />
+            </ChracterContainer>
 
-          <div>
-            <CommonText isSubtitle1={true}>{title}</CommonText>
-            <CommonText isCaption={true} fc={colors.text}>
-              {startDate} - {endDate}
-            </CommonText>
-          </div>
-        </RightContent>
-        <LikeContent>
-          <IconContainer>
-            {privateCheck ? (
-              <IconLock
+            <div>
+              <CommonText isSubtitle1={true}>{title}</CommonText>
+              <CommonText isCaption={true} fc={colors.text}>
+                {startDate} - {endDate}
+              </CommonText>
+            </div>
+          </RightContent>
+          <LikeContent>
+            <IconContainer>
+              {privateCheck ? (
+                <IconLock
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleLockClick(privateCheck);
+                  }}
+                />
+              ) : (
+                <IconUnlock
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleLockClick(privateCheck);
+                  }}
+                />
+              )}
+            </IconContainer>
+          </LikeContent>
+        </Contents>
+        {isTimer && (
+          <>
+            <TimerContainer>
+              <Timer>
+                <Time isCaption={true} fc={colors.text}>
+                  {`${HH}:${MM}:${SS} `}
+                </Time>
+                <ProgressBar>
+                  <ProgressPercentage
+                    percentage={percentage}
+                    isAchievementCheck={achievementCheck}
+                  />
+                </ProgressBar>
+              </Timer>
+              <Button
                 onClick={(e) => {
                   e.stopPropagation();
-                  handleLockClick(privateCheck);
+                  handleStartCilck();
                 }}
-              />
-            ) : (
-              <IconUnlock
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleLockClick(privateCheck);
-                }}
-              />
-            )}
-          </IconContainer>
-        </LikeContent>
-      </Contents>
-      {isTimer && (
-        <TimerContainer>
-          <Timer>
-            <Time isCaption={true} fc={colors.text}>
-              {`${HH}:${MM}:${SS} `}
-            </Time>
-            <ProgressBar>
-              <ProgressPercentage
-                percentage={percentage}
                 isAchievementCheck={achievementCheck}
-              />
-            </ProgressBar>
-          </Timer>
-          <Button
-            onClick={(e) => {
-              e.stopPropagation();
-              handleStartCilck();
-            }}
-            isAchievementCheck={achievementCheck}
-            disabled={achievementCheck}
-          >
-            시작
-          </Button>
-        </TimerContainer>
+                disabled={achievementCheck}
+              >
+                시작
+              </Button>
+            </TimerContainer>
+          </>
+        )}
+      </Container>
+      {isTimer && (
+        <TrashIconContainer>
+          <IconContainer className='trash-icon'>
+            <IconTrash />
+          </IconContainer>
+        </TrashIconContainer>
       )}
-    </Container>
+    </GoalContainer>
   );
 };
 
 export default Goal;
+
+const GoalContainer = styled.div`
+  & + & {
+    margin-top: 16px;
+  }
+`;
 
 const Container = styled.div`
   padding: 16px;
@@ -198,16 +215,13 @@ const Container = styled.div`
   border-radius: 10px;
 
   cursor: pointer;
-
-  & + & {
-    margin-top: 16px;
-  }
 `;
 
 const Contents = styled.div`
   display: flex;
   justify-content: space-between;
 `;
+
 const RightContent = styled.div`
   display: flex;
   align-items: center;
@@ -238,6 +252,25 @@ const LikeContent = styled.div`
 const IconContainer = styled.div`
   width: 24px;
   height: 24px;
+
+  &.trash-icon {
+    width: 20px;
+    height: 20px;
+    margin: 0 16px;
+    cursor: pointer;
+  }
+`;
+
+const TrashIconContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 8px;
+
+  svg {
+    width: 100%;
+    color: ${colors.danger};
+  }
 `;
 
 const TimerContainer = styled.div`

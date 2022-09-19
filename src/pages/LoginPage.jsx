@@ -3,7 +3,7 @@ import Login from '../components/login/Login';
 
 const LoginPage = () => {
   return (
-    <Layout>
+    <Layout hasNavBar={false}>
       <Login />
     </Layout>
   );

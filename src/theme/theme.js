@@ -1,6 +1,7 @@
 export const colors = {
   primary: '#ffb55f',
   secondary: '#ffe8cd',
+  wallPaper: '#faf3ea',
   bgColor: '#fafafa',
   inputColor: '#e9e9e9',
   char1: '#fbe5a5',

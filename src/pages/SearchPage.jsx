@@ -16,7 +16,7 @@ const SearchPage = () => {
   }, []);
 
   return (
-    <Layout>
+    <Layout hasNavBar={false}>
       <Search />
     </Layout>
   );

@@ -46,7 +46,6 @@ const Login = () => {
       </StMainTextBox>
 
       <StLoginStart>
-        <LoginImg src={loginImg} alt='로그인 이미지' />
         <StLoginText isCaption={true}>3초만에 시작하기</StLoginText>
       </StLoginStart>
 
@@ -76,11 +75,7 @@ const Login = () => {
 
         <StLoginButton>
           <ImgContainer onClick={handleGoogleLogin}>
-            <ButtonImg
-              src={loginGoogle}
-              alt='구글로그인'
-              className='google-icon'
-            />
+            <ButtonImg src={loginGoogle} alt='구글로그인' />
           </ImgContainer>
           <CommonText isCaption={true}>
             구글로
@@ -135,28 +130,44 @@ const StMainTextBox = styled.div`
   flex-direction: column;
   text-align: center;
   margin-top: 24px;
-  margin-bottom: 60px;
+  margin-bottom: 50px;
   word-break: keep-all;
 `;
 
 const StLoginStart = styled.div`
-  position: relative;
-  height: 80px;
-`;
-
-const LoginImg = styled.img`
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
+  width: fit-content;
+  margin: 0 auto;
+  margin-bottom: 30px;
 `;
 
 const StLoginText = styled(CommonText)`
-  position: absolute;
-  top: 18px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 10;
+  width: inherit;
+  position: relative;
+
+  padding: 12px 16px;
+  border-radius: 22px;
+  background-color: ${colors.white};
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.15);
+
+  ::before {
+    content: '';
+    position: absolute;
+    bottom: -12px;
+    left: 50%;
+    /* transform: translateX(50%);
+    width: 0;
+    height: 0;
+    border: 10px solid transparent;
+    border-top-color: ${colors.white};
+    border-bottom: 0;
+    margin-left: -20px;
+    margin-bottom: -20px; */
+    width: 16px;
+    height: 16px;
+    transform: rotate(45deg) translateX(-50%);
+    background-color: ${colors.white};
+    box-shadow: 6px 6px 6px rgba(0, 0, 0, 0.07);
+  }
 `;
 
 const StLoginButtonBox = styled.div`
@@ -180,8 +191,8 @@ const ImgContainer = styled.div`
   width: 56px;
   height: 56px;
   border-radius: 50%;
-  background-color: ${colors.inputColor};
   margin-bottom: 8px;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -190,8 +201,6 @@ const ImgContainer = styled.div`
 
 const ButtonImg = styled.img`
   width: 100%;
-
-  &.google-icon {
-    width: 70% !important;
-  }
+  height: 100%;
+  object-fit: cover;
 `;

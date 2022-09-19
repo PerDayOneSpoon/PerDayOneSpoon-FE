@@ -1,14 +1,14 @@
 import styled, { css } from 'styled-components';
+import NavBar from '../components/global/NavBar';
 import { NAV_BAR_HEIGHT } from '../constants/common';
 import { isMobile } from 'react-device-detect';
 import { colors } from '../theme/theme';
 
-const Layout = ({ children, hasNavBar, bgColor = colors.white }) => {
+const Layout = ({ children, hasNavBar = true }) => {
   return (
     <Background>
-      <Container hasNavBar={hasNavBar} isMobile={isMobile} bgColor={bgColor}>
-        {children}
-      </Container>
+      <BodyContent isMobile={isMobile}>{children}</BodyContent>
+      {hasNavBar && <NavBar />}
     </Background>
   );
 };
@@ -17,27 +17,36 @@ export default Layout;
 
 const Background = styled.div`
   width: 100%;
-  height: 100%;
-  /* background-color: ${colors.black}; */
-`;
+  max-width: 768px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  background-color: ${colors.bgColor};
 
-const Container = styled.div`
-  background-color: ${({ bgColor }) => bgColor};
-  max-width: 390px;
-  /* width: 100%; */
   ${({ isMobile }) =>
     isMobile
       ? css`
           min-height: calc(var(--vh, 1vh) * 100);
         `
       : css`
-          min-height: ${({ hasNavBar }) =>
-            hasNavBar ? `calc(100vh - ${NAV_BAR_HEIGHT}px)` : '100vh'};
+          height: 100vh;
         `}
+  box-sizing: border-box;
+`;
 
-  padding: 0 16px
-    ${({ hasNavBar }) => (hasNavBar ? `${NAV_BAR_HEIGHT}px` : '0')};
-  overflow: hidden;
-  margin: 0 auto;
-  word-break: break-all;
+const BodyContent = styled.div`
+  height: calc(100% - 60px);
+  overflow: hidden auto;
+  width: 100%;
+  padding: 0 16px;
+  box-sizing: border-box;
+
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;

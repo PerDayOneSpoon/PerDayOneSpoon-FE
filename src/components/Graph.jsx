@@ -31,7 +31,7 @@ export default Graph;
 const Container = styled.div`
   margin-left: -16px;
   margin-right: -16px;
-  margin-top: -26px;
+  margin-top: -10px;
   background-color: ${colors.secondary};
   border-radius: 0 0 16px 16px;
   overflow: hidden;

@@ -49,7 +49,7 @@ export default UserInfo;
 const Container = styled.div`
   display: flex;
   align-items: center;
-  margin: -16px -16px 24px -16px;
+  margin: 0 -16px 24px -16px;
   padding: 30px 16px;
   background-color: ${colors.white};
   border-radius: 0 0 16px 16px;

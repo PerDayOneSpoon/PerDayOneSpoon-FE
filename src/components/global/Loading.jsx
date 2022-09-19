@@ -12,8 +12,7 @@ const Loading = () => {
 export default Loading;
 
 const LoadingContainer = styled.div`
-  position: fixed;
-  /* border: 1px solid red; */
+  position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, 0);

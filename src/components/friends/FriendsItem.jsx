@@ -33,7 +33,7 @@ const FriendsItem = ({ val }) => {
       <div>
         {val.followCheck ? (
           <FollowButton disabled={true}>팔로우</FollowButton>
-        ) : (
+        ) : val.selfCheck ? null : (
           <FollowButton onClick={() => handleFollow(val.socialId)}>
             팔로우
           </FollowButton>

@@ -23,8 +23,10 @@ const Container = styled.div`
   max-width: 240px;
   width: 100%;
   text-align: center;
+  opacity: ${({ displayNone }) => (displayNone ? 0 : 1)};
 
   color: ${colors.white};
   background-color: ${colors.danger};
-  display: ${({ displayNone }) => (displayNone ? 'none' : 'block')};
+  transition: all 0.3s;
+  /* display: ${({ displayNone }) => (displayNone ? 'none' : 'block')}; */
 `;

@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { NAV_BAR_HEIGHT } from '../../constants/common';
 import NavBarIcon from './NavBarIcon';
@@ -10,7 +9,6 @@ import { ReactComponent as IconCalendar } from '../../assets/icons/icon-calendar
 import { colors } from '../../theme/theme';
 import { useRecoilState } from 'recoil';
 import { navBarState } from '../../recoil/common';
-import { getAccessToken } from '../../shared/localStorage';
 
 const NavBar = () => {
   const navigate = useNavigate();
@@ -80,17 +78,10 @@ const NavBar = () => {
 export default NavBar;
 
 const NavContainer = styled.div`
-  position: fixed;
-  bottom: 0;
-  left: 50%;
-  z-index: 9;
-  transform: translateX(-50%);
   display: flex;
   align-items: center;
   justify-content: space-evenly;
   width: 100%;
-  max-width: inherit;
-  padding: 0 16px;
   height: ${NAV_BAR_HEIGHT}px;
   background-color: ${colors.white};
   filter: drop-shadow(0px -1px 20px rgba(0, 0, 0, 0.07));
