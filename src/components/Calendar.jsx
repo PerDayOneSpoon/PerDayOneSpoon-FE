@@ -14,7 +14,7 @@ const Calendar = () => {
   const [month, setMonth] = useState('');
   const searchDate = dayjs(dateValue).format('YYYY-MM-DD');
 
-  const [userId, setUserId] = useState(0);
+  const [userId, setUserId] = useState('');
 
   const {
     isLoading,
@@ -22,7 +22,9 @@ const Calendar = () => {
     error,
     data: calendarData,
   } = useQuery(['getGoalInfo', 2], calendarApi.getCalendar, {
-    onSuccess: () => {},
+    onSuccess: (data) => {
+      setUserId(data.data.peopleList[0].id);
+    },
     staleTime: Infinity,
   });
 
@@ -38,7 +40,7 @@ const Calendar = () => {
     friendsApi.getFriendGoal(userId)
   );
 
-  console.log('uid data', uid);
+  // console.log('uid data', uid);
   console.log('userId!!!!!', userId);
 
   const handleChangeDate = (date) => {
@@ -82,17 +84,19 @@ const Calendar = () => {
         // monthCalenderDtoList={monthCalenderDtoList}
         // monthCalenderDtoList={uid?.date?.data}
       />
+
       <CommonText isCallout={true} mg={'24px 0 0 0'}>
         {dayjs(dateValue).format('MM월 DD일')}의 습관
       </CommonText>
-      <GoalList
+
+      {/* <GoalList
         isMain={false}
         data={
           userId === 0 ? search?.data?.data : uid?.data?.data.todayGoalsDtoList
         }
-      />
+      /> */}
       {/* <GoalList data={todayGoalsDtoList} isMain={false} /> */}
-      {/* <GoalList isMain={false} data={search?.data?.data} /> */}
+      <GoalList isMain={false} data={search?.data?.data} />
     </>
   );
 };
