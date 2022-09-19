@@ -23,6 +23,9 @@ const Container = styled.div`
 `;
 
 const Button = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: fixed;
   bottom: 70px;
   width: 45px;

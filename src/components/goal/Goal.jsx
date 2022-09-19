@@ -17,6 +17,12 @@ const Goal = ({ item }) => {
 
   const [isTimer, setIsTimer] = useState(false);
 
+  const deleteGoalMutation = useMutation(goalApi.deleteGoal, {
+    onSuccess: (data) => {
+      queryClient.invalidateQueries('getGoalInfo');
+    },
+  });
+
   const achieveGoalMutation = useMutation(goalApi.achieveGoal, {
     onSuccess: (data) => {
       queryClient.invalidateQueries('getGoalInfo');
@@ -37,10 +43,10 @@ const Goal = ({ item }) => {
     characterUrl,
     startDate,
     endDate,
-    time, //"00:10:00"
-    heartCnt,
+    time,
     achievementCheck,
     privateCheck,
+    deleteFlag,
   } = item;
 
   let totalTime = 0;
@@ -102,6 +108,16 @@ const Goal = ({ item }) => {
 
   const handleLockClick = (check) => {
     changePrivateGoalMutaion.mutate({ goalId: id, privateCheck: !check });
+  };
+
+  const handleGoalDelete = (deleteId) => {
+    if (
+      window.confirm('모든 날짜의 해당 습관이 삭제됩니다. 삭제하시겠습니까?')
+    ) {
+      deleteGoalMutation.mutate({ deleteFlag: deleteId });
+    } else {
+      return;
+    }
   };
 
   useEffect(() => {
@@ -190,7 +206,10 @@ const Goal = ({ item }) => {
       </Container>
       {isTimer && (
         <TrashIconContainer>
-          <IconContainer className='trash-icon'>
+          <IconContainer
+            className='trash-icon'
+            onClick={() => handleGoalDelete(deleteFlag)}
+          >
             <IconTrash />
           </IconContainer>
         </TrashIconContainer>
