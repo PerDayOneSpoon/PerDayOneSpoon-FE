@@ -30,5 +30,5 @@ const GoalList = ({ isMain, data }) => {
 export default GoalList;
 
 const Container = styled.div`
-  padding: 16px 0 64px;
+  padding: 24px 0;
 `;

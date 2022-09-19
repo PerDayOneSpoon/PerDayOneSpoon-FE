@@ -7,11 +7,14 @@ import dayjs from 'dayjs';
 import { useQuery } from 'react-query';
 import { calendarApi } from '../api/calendarApi';
 import { useState } from 'react';
+import { friendsApi } from '../api/friendsApi';
 
 const Calendar = () => {
   const [dateValue, setDateValue] = useState(new Date());
   const [month, setMonth] = useState('');
   const searchDate = dayjs(dateValue).format('YYYY-MM-DD');
+
+  const [userId, setUserId] = useState(0);
 
   const {
     isLoading,
@@ -24,12 +27,19 @@ const Calendar = () => {
   });
 
   const search = useQuery(
-    searchDate,
+    ['searchUser', searchDate],
     () => calendarApi.getCalendarDate(searchDate),
     {
       onSuccess: () => {},
     }
   );
+
+  const uid = useQuery(['friendGoal', userId], () =>
+    friendsApi.getFriendGoal(userId)
+  );
+
+  console.log('uid data', uid);
+  console.log('userId!!!!!', userId);
 
   const handleChangeDate = (date) => {
     setDateValue(date);
@@ -39,6 +49,11 @@ const Calendar = () => {
     if (view === 'month') {
       setMonth(dayjs(activeStartDate).format('MM'));
     }
+  };
+
+  const handleUserClick = (id) => {
+    console.log(id, 'user click');
+    setUserId(id);
   };
 
   // console.log('달!!!', month);
@@ -51,18 +66,33 @@ const Calendar = () => {
 
   return (
     <>
-      <FriendsList peopleList={peopleList} />
+      <FriendsList
+        peopleList={peopleList}
+        handleUserClick={(id) => handleUserClick(id)}
+      />
       <MonthCalendar
         dateValue={dateValue}
         handleChangeDate={handleChangeDate}
         handleGetMonth={handleGetMonth}
-        monthCalenderDtoList={monthCalenderDtoList}
+        monthCalenderDtoList={
+          uid.data !== undefined
+            ? uid.data.data.monthCalenderDtoList
+            : monthCalenderDtoList
+        }
+        // monthCalenderDtoList={monthCalenderDtoList}
+        // monthCalenderDtoList={uid?.date?.data}
       />
-      <CommonText isSubtitle1={true} mg={'16px 0 0 0'}>
+      <CommonText isCallout={true} mg={'24px 0 0 0'}>
         {dayjs(dateValue).format('MM월 DD일')}의 습관
       </CommonText>
+      <GoalList
+        isMain={false}
+        data={
+          userId === 0 ? search?.data?.data : uid?.data?.data.todayGoalsDtoList
+        }
+      />
       {/* <GoalList data={todayGoalsDtoList} isMain={false} /> */}
-      <GoalList isMain={false} data={search?.data?.data} />
+      {/* <GoalList isMain={false} data={search?.data?.data} /> */}
     </>
   );
 };

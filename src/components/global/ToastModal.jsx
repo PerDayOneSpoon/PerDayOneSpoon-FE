@@ -5,9 +5,9 @@ import CommonText from '../elements/CommonText';
 const ToastModal = ({ toastMessage, displayNone }) => {
   return (
     <Container displayNone={displayNone}>
-      <CommonText isSubtitle2={true} fc={colors.white} pd='8px 24px'>
+      <CustomText isSubtitle2={true} fc={colors.white}>
         {toastMessage}
-      </CommonText>
+      </CustomText>
     </Container>
   );
 };
@@ -19,14 +19,25 @@ const Container = styled.div`
   top: 50px;
   left: 50%;
   transform: translateX(-50%);
-  border-radius: 30px;
-  max-width: 240px;
-  width: 100%;
+
+  max-height: 40px;
+  width: 80%;
   text-align: center;
   opacity: ${({ displayNone }) => (displayNone ? 0 : 1)};
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-  color: ${colors.white};
-  background-color: ${colors.danger};
   transition: all 0.3s;
   /* display: ${({ displayNone }) => (displayNone ? 'none' : 'block')}; */
+`;
+
+const CustomText = styled(CommonText)`
+  width: fit-content;
+  border-radius: 30px;
+  padding: 4px 20px;
+  background-color: ${colors.danger};
+  color: ${colors.white};
+  word-break: break-all;
+  margin: 0;
 `;

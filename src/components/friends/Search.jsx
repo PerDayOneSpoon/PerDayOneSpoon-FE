@@ -1,11 +1,10 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import FriendsItem from './FriendsItem';
-import { ReactComponent as IconSearch } from '../../assets/icons/icon-search.svg';
 import iconSearch from '../../assets/icons/icon-search.svg';
 import { colors } from '../../theme/theme';
 import { useNavigate } from 'react-router-dom';
-import { userApi } from '../../api/userApi.js';
+import { friendsApi } from '../../api/friendsApi';
 import { useQuery } from 'react-query';
 
 const Search = () => {
@@ -15,7 +14,7 @@ const Search = () => {
 
   const { data: searchFriends } = useQuery(
     ['getFriends', searchTerm],
-    () => userApi.getSearchFriends(searchTerm),
+    () => friendsApi.getSearchFriends(searchTerm),
     {
       enabled: !!searchTerm,
       onSuccess: (data) => {},

@@ -31,7 +31,7 @@ const Button = styled.button`
   width: 45px;
   height: 45px;
   border-radius: 50%;
-  background-color: ${colors.primary};
+  background: linear-gradient(180deg, #ffb55f 0%, #ff9f2e 100%), #ffb55f;
   border: none;
   outline: none;
   cursor: pointer;
