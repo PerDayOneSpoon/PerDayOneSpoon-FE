@@ -3,8 +3,15 @@ import { colors } from '../../theme/theme';
 import CommonText from '../elements/CommonText';
 import { useMutation, useQueryClient } from 'react-query';
 import { friendsApi } from '../../api/friendsApi';
+import CommonButton from '../elements/CommonButton';
 
-const FriendsItem = ({ val }) => {
+const FriendsItem = ({
+  val,
+  isSearch,
+  isFollower,
+  isFollowing,
+  handleButtonClick,
+}) => {
   const queryClient = useQueryClient();
 
   const addFriendMutation = useMutation(friendsApi.addFriend, {
@@ -23,21 +30,85 @@ const FriendsItem = ({ val }) => {
     <SearchList>
       <ProfileBox>
         <ImgContainer>
-          <ProfileImg src={val.imgUrl} />
+          <ProfileImg src={val.profileImage} />
         </ImgContainer>
-        <CommonText isSubtitle1={true} fw='500'>
-          {val.nickname}
-        </CommonText>
-      </ProfileBox>
-      <div>
-        {val.followCheck ? (
-          <FollowButton disabled={true}>팔로우</FollowButton>
-        ) : val.selfCheck ? null : (
-          <FollowButton onClick={() => handleFollow(val.socialId)}>
-            팔로우
-          </FollowButton>
+        {isSearch ? (
+          <CommonText isCallout={true} fw='500'>
+            {val.nickname}
+          </CommonText>
+        ) : (
+          <ProfileStatusBox>
+            <CommonText isCallout={true} mg='0 0 4px 0'>
+              {val.nickname}
+            </CommonText>
+            <CommonText isFootnote1={true} fc={colors.gray500}>
+              {val.status}
+            </CommonText>
+          </ProfileStatusBox>
         )}
-      </div>
+      </ProfileBox>
+      {isSearch && (
+        <div>
+          {val.followCheck ? (
+            <CommonButton
+              text='팔로잉'
+              wd='88px'
+              pd='8px 0'
+              bdrs='20px'
+              fz='15px'
+              fw='600'
+              fc={colors.gray700}
+              bg={colors.white}
+              bd={`1px solid ${colors.gray200}`}
+              disabled={true}
+            />
+          ) : val.selfCheck ? null : (
+            <CommonButton
+              handleButtonClick={(e) => {
+                e.stopPropagation();
+                handleFollow(val.socialId);
+              }}
+              text='팔로우'
+              wd='88px'
+              pd='8px 0'
+              bdrs='20px'
+              fz='15px'
+              fw='600'
+              fc={colors.white}
+              bg={colors.orange500}
+              bd='none'
+            />
+          )}
+        </div>
+      )}
+      {isFollower && (
+        <CommonButton
+          handleButtonClick={handleButtonClick}
+          text='팔로워 끊기'
+          wd='90px'
+          pd='8px 0'
+          bdrs='20px'
+          fz='14px'
+          fw='600'
+          fc={colors.white}
+          bg={colors.danger}
+          bd='none'
+        />
+      )}
+      {isFollowing && (
+        <CommonButton
+          handleButtonClick={handleButtonClick}
+          text='팔로잉 끊기'
+          wd='90px'
+          pd='8px 0'
+          bdrs='20px'
+          fz='14px'
+          fw='600'
+          fc={colors.white}
+          bg={colors.danger}
+          bd='none'
+        />
+      )}
     </SearchList>
   );
 };
@@ -59,21 +130,6 @@ const ProfileBox = styled.div`
   align-items: center;
 `;
 
-const FollowButton = styled.button`
-  width: 68px;
-  height: 28px;
-  background-color: ${colors.primary};
-  border: none;
-  border-radius: 14px;
-  color: white;
-  cursor: pointer;
-
-  :disabled {
-    background-color: ${colors.placeholder};
-    cursor: auto;
-  }
-`;
-
 const ImgContainer = styled.div`
   width: 56px;
   height: 56px;
@@ -84,4 +140,9 @@ const ImgContainer = styled.div`
 
 const ProfileImg = styled.img`
   width: 100%;
+`;
+
+const ProfileStatusBox = styled.div`
+  max-width: 240px;
+  word-break: break-all;
 `;
