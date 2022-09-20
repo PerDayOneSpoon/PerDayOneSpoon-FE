@@ -6,13 +6,16 @@ import { isMobile } from 'react-device-detect';
 import { colors } from './theme/theme';
 
 function App() {
-  function setScreenSize() {
-    let vh = window.innerHeight * 0.01;
+  const setScreenSize = () => {
+    const vh = window.innerHeight * 0.01;
     document.documentElement.style.setProperty('--vh', `${vh}px`);
-  }
+  };
 
   useEffect(() => {
     setScreenSize();
+    window.addEventListener('resize', setScreenSize);
+
+    return () => window.removeEventListener('resize', setScreenSize);
   });
 
   return (
