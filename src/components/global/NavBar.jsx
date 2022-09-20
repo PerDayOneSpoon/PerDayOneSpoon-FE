@@ -84,5 +84,5 @@ const NavContainer = styled.div`
   width: 100%;
   height: ${NAV_BAR_HEIGHT}px;
   background-color: ${colors.white};
-  filter: drop-shadow(0px -1px 20px rgba(0, 0, 0, 0.07));
+  box-shadow: 0px -1px 20px rgba(0, 0, 0, 0.07);
 `;

@@ -59,7 +59,7 @@ const Login = () => {
           <IconContainer>
             <IconKakao />
           </IconContainer>
-          <CommonText wd='162px' isSubhead={true}>
+          <CommonText wd='162px' isSubhead={true} fz='15px'>
             카카오톡 계정으로 로그인
           </CommonText>
         </StLoginButton>
@@ -68,7 +68,7 @@ const Login = () => {
           <IconContainer>
             <IconNaver />
           </IconContainer>
-          <CommonText wd='162px' isSubhead={true}>
+          <CommonText wd='162px' isSubhead={true} fz='15px'>
             네이버 계정으로 로그인
           </CommonText>
         </StLoginButton>
@@ -77,7 +77,7 @@ const Login = () => {
           <IconContainer>
             <IconGoogle />
           </IconContainer>
-          <CommonText wd='162px' isSubhead={true}>
+          <CommonText wd='162px' isSubhead={true} fz='15px'>
             구글 계정으로 로그인
           </CommonText>
         </StLoginButton>

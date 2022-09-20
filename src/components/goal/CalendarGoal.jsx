@@ -29,19 +29,21 @@ const CalendarGoal = ({ item }) => {
 
           <div>
             <CommonText isCallout={true}>{title}</CommonText>
-            <CustomText isFootnote2={true} fc={colors.text}>
+            <DateBox isFootnote2={true}>
               <IconContainer className='calendar-icon'>
                 <IconCalendar />
               </IconContainer>
-              {startDate} - {endDate}
-            </CustomText>
+              <CommonText isFootnote2={true} fc={colors.gray500}>
+                {startDate} - {endDate}
+              </CommonText>
+            </DateBox>
           </div>
         </RightContent>
         <LikeContent>
           <IconContainer>
             <IconHeartFill onClick={(e) => e.stopPropagation()} />
           </IconContainer>
-          <CommonText isCaption={true} fc={colors.text}>
+          <CommonText isFootnote2={true} fc={colors.gray600} mg='4px 0 0 0'>
             {heartCnt}
           </CommonText>
         </LikeContent>
@@ -95,6 +97,7 @@ const LikeContent = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  margin-left: 16px;
 `;
 
 const IconContainer = styled.div`
@@ -111,11 +114,13 @@ const IconContainer = styled.div`
     svg {
       width: 100%;
       height: 100%;
+      color: ${colors.gray500};
     }
   }
 `;
 
-const CustomText = styled(CommonText)`
+const DateBox = styled.div`
+  width: 100%;
   margin-top: 8px;
   padding: 4px;
   border-radius: 4px;

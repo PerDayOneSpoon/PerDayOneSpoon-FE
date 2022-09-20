@@ -3,6 +3,8 @@ import { useRef } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { userApi } from '../../api/userApi';
 import { colors } from '../../theme/theme';
+import { ReactComponent as IconCamera } from '../../assets/icons/icon-camera.svg';
+import { ReactComponent as IconCopy } from '../../assets/icons/icon-copy.svg';
 import CommonText from '../elements/CommonText';
 
 const SetUserInfo = ({
@@ -17,7 +19,7 @@ const SetUserInfo = ({
 
   const updateUserImgMutation = useMutation(userApi.updateUserImg, {
     onSuccess: (data) => {
-      queryClient.invalidateQueries('getUserInfo');
+      queryClient.invalidateQueries('getGoalInfo');
     },
   });
 
@@ -36,41 +38,67 @@ const SetUserInfo = ({
     <Container>
       <Top>
         <ProfileImgContainer>
-          <ProfileImg
-            src={userInfo.data.profileImage}
-            onClick={handleClickImageUpload}
-          />
+          {onlyView ? (
+            <ProfileImgContainerInner>
+              <ProfileImg src={userInfo.data.profileImage} />
+            </ProfileImgContainerInner>
+          ) : (
+            <>
+              <ProfileImgContainerInner>
+                <ProfileImg src={userInfo.data.profileImage} />
+              </ProfileImgContainerInner>
+              <IconContainer onClick={handleClickImageUpload}>
+                <IconCamera />
+              </IconContainer>
+            </>
+          )}
         </ProfileImgContainer>
         <ImgInput type='file' ref={profileImg} onChange={handleChangeProfile} />
-        <CommonText isSubtitle1={true}>{userInfo.data.nickname}</CommonText>
-        <CommonText isBody2={true}>{userInfo.data.status}</CommonText>
+        <CommonText isCallout={true} mg='0 0 8px 0'>
+          {userInfo.data.nickname}
+        </CommonText>
+        <CommonText isFootnote2={true}>{userInfo.data.status}</CommonText>
       </Top>
       <Middle>
         <SettingForm>
-          <FormLeft>
-            <CommonText isSubtitle1={true}>이름</CommonText>
-          </FormLeft>
-          <InputRight
-            type='text'
-            value={editUserInfo.nickname || ''}
-            name='nickname'
-            onChange={handleInputChange}
-            disabled={onlyView}
-          />
+          <CommonText isSentece3={true}>이름</CommonText>
+          {onlyView ? (
+            <FormInput>{userInfo.data.nickname}</FormInput>
+          ) : (
+            <InputRight
+              type='text'
+              value={editUserInfo.nickname || ''}
+              name='nickname'
+              onChange={handleInputChange}
+            />
+          )}
         </SettingForm>
         <SettingForm>
-          <FormLeft>상태 메세지</FormLeft>
-          <InputRight
-            type='text'
-            value={editUserInfo.status || ''}
-            name='status'
-            onChange={handleInputChange}
-            disabled={onlyView}
-          />
+          <CommonText isSentece3={true}>상태 메세지</CommonText>
+          {onlyView ? (
+            <FormInput>{userInfo.data.status}</FormInput>
+          ) : (
+            <InputRight
+              type='text'
+              value={editUserInfo.status || ''}
+              name='status'
+              onChange={handleInputChange}
+            />
+          )}
         </SettingForm>
         <SettingForm>
-          <FormLeft>검색 코드</FormLeft>
-          <FormRight>{userInfo.data.socialCode}</FormRight>
+          <CommonText isSentece3={true}>검색 코드</CommonText>
+          <FormInput>
+            {userInfo.data.socialCode}
+            <IconCopyContainer
+              onClick={() => {
+                navigator.clipboard.writeText(userInfo.data.socialCode);
+                alert('검색 코드를 복사했습니다.');
+              }}
+            >
+              <IconCopy />
+            </IconCopyContainer>
+          </FormInput>
         </SettingForm>
       </Middle>
     </Container>
@@ -92,14 +120,18 @@ const Top = styled.div`
   flex-direction: column;
   margin-bottom: 24px;
 `;
-
 const ProfileImgContainer = styled.div`
   width: 96px;
   height: 96px;
   margin-bottom: 16px;
+  position: relative;
+`;
+
+const ProfileImgContainerInner = styled.div`
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
   overflow: hidden;
-  cursor: pointer;
 `;
 
 const ProfileImg = styled.img`
@@ -110,46 +142,74 @@ const ProfileImg = styled.img`
 
 const Middle = styled.div`
   width: 100%;
-  border-top: 1px solid ${colors.border};
-  padding-top: 24px;
 `;
 
 const SettingForm = styled.div`
-  display: flex;
-  align-items: center;
   & + & {
     margin-top: 24px;
   }
 `;
 
-const FormLeft = styled.div`
-  min-width: 90px;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
-  letter-spacing: 0.15px;
-`;
-
-const FormRight = styled.div`
+const FormInput = styled.div`
+  position: relative;
   width: 100%;
-  margin-left: 16px;
-  opacity: 0.3;
-  border-bottom: 1px solid ${colors.border};
-  padding: 8px 0;
+  height: 48px;
+  padding: 16px 8px;
+  margin-top: 8px;
+  box-sizing: border-box;
+  background-color: ${colors.gray100};
+  border: 1px solid ${colors.gray200};
+  border-radius: 10px;
+  font-size: 14px;
+
+  input {
+    border: none;
+    background: transparent;
+  }
 `;
 
 const InputRight = styled.input`
   width: 100%;
-  margin-left: 16px;
-  border: none;
+  height: 48px;
+  padding: 16px 8px;
+  margin-top: 8px;
+  box-sizing: border-box;
+  background-color: ${colors.white};
+  border: 1px solid ${colors.gray200};
+  border-radius: 10px;
+  font-size: 14px;
   outline: none;
-  border-bottom: 1px solid ${colors.border};
-  padding: 8px;
-  &:disabled {
-    color: ${colors.text};
-  }
 `;
 
 const ImgInput = styled.input`
   display: none;
+`;
+
+const IconContainer = styled.div`
+  position: absolute;
+  right: 0;
+  bottom: -20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid ${colors.gray200};
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  z-index: 10;
+  background-color: ${colors.white};
+  transform: translateY(-50%);
+
+  cursor: pointer;
+`;
+
+const IconCopyContainer = styled.div`
+  position: absolute;
+  top: 50%;
+  right: 16px;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+
+  cursor: pointer;
 `;

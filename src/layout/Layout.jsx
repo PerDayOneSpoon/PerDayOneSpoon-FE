@@ -24,15 +24,18 @@ const Background = styled.div`
   align-items: center;
   position: relative;
   background-color: ${colors.gray50};
+  height: -webkit-fill-available;
+  height: 100vh;
 
-  ${({ isMobile }) =>
+  /* ${({ isMobile }) =>
     isMobile
       ? css`
+          height: -webkit-fill-available;
           height: calc(var(--vh, 1vh) * 100);
         `
       : css`
           height: 100vh;
-        `}
+        `} */
   box-sizing: border-box;
 `;
 

@@ -6,6 +6,9 @@ const GlobalStyles = createGlobalStyle`
   :root {
        --vh: 100%;
    }
+   * {
+    font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+   }
   body {
     width: 100%;
     height: 100%;
@@ -19,14 +22,14 @@ const GlobalStyles = createGlobalStyle`
     }
   }
 
-  input, textarea, button {
+  /* input, textarea, button {
     appearance: none;
     -moz-appearance: none;
     -webkit-appearance: none;
     border-radius: 0;
     -webkit-border-radius: 0;
     -moz-border-radius: 0;
-  }
+  } */
 
 `;
 

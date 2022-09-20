@@ -5,6 +5,7 @@ import { ReactComponent as IconLeft } from '../../assets/icons/icon-left.svg';
 import { ReactComponent as IconFriend } from '../../assets/icons/icon-addfriend.svg';
 import { getAccessToken } from '../../shared/localStorage';
 import CommonText from '../elements/CommonText';
+import { colors } from '../../theme/theme';
 
 const Header = ({
   hasBack,
@@ -33,12 +34,12 @@ const Header = ({
 
   if (hasBack) {
     return (
-      <Container bgColor={bgColor}>
+      <Container bgColor={bgColor} className='hasback-icon'>
         <ContainerInner hasBack={hasBack}>
           <IconContainer>
             <IconLeft onClick={() => navigate(-1)} />
           </IconContainer>
-          <CommonText isTitle3={true} isBold={true} mg='0 0 0 12px'>
+          <CommonText isBody={true} mg='0 0 0 12px'>
             {title}
           </CommonText>
           <RightButton onClick={handleRightButtonClick}>
@@ -79,7 +80,12 @@ const Container = styled.div`
   padding: 16px 24px;
   box-sizing: border-box;
   margin-left: -16px;
-  /* margin-right: -16px; */
+
+  &.hasback-icon {
+    box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.04);
+    margin-bottom: 24px;
+    background-color: ${colors.white};
+  }
 `;
 
 const ContainerInner = styled.div`
@@ -101,9 +107,10 @@ const RightButton = styled.button`
   border: none;
   outline: none;
   background-color: transparent;
-  font-size: 14px;
-  line-height: 20px;
-  letter-spacing: 0.25px;
+  font-size: 16px;
+  line-height: 22px;
+  font-weight: 500;
+  color: ${colors.orange500};
 
   cursor: pointer;
 `;

@@ -40,11 +40,8 @@ const SettingPage = () => {
   };
 
   const handleRightButtonClick = (e) => {
-    if (e.target.innerText === '수정') {
-      setOnlyView(false);
-    }
+    setOnlyView(!onlyView);
     if (e.target.innerText === '저장') {
-      setOnlyView(true);
       updateUserStatusMutation.mutate(editUserInfo);
     }
   };

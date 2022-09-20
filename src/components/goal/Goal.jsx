@@ -8,6 +8,7 @@ import { useMutation, useQueryClient } from 'react-query';
 import { goalApi } from '../../api/goalApi';
 import { colors } from '../../theme/theme';
 import CommonText from '../elements/CommonText';
+import CommonButton from '../elements/CommonButton';
 import useInterval from '../../hooks/useInterval';
 
 import { useRecoilState } from 'recoil';
@@ -155,12 +156,14 @@ const Goal = ({ item }) => {
 
             <div>
               <CommonText isCallout={true}>{title}</CommonText>
-              <CustomText isFootnote2={true} fc={colors.text}>
+              <DateBox isFootnote2={true}>
                 <IconContainer className='calendar-icon'>
                   <IconCalendar />
                 </IconContainer>
-                {startDate} - {endDate}
-              </CustomText>
+                <CommonText isFootnote2={true} fc={colors.gray500}>
+                  {startDate} - {endDate}
+                </CommonText>
+              </DateBox>
             </div>
           </RightContent>
           <LikeContent>
@@ -197,16 +200,24 @@ const Goal = ({ item }) => {
                   {`${HH}:${MM}:${SS} `}
                 </Time>
               </Timer>
-              <Button
-                onClick={(e) => {
+              <CommonButton
+                handleButtonClick={(e) => {
                   e.stopPropagation();
                   handleStartCilck();
                 }}
-                isAchievementCheck={achievementCheck}
+                wd='50px'
+                mg='-4px 0 0 16px'
+                pd='6px 4px'
+                bdrs='20px'
+                bd='none'
+                bg={achievementCheck ? colors.gray300 : colors.primary}
+                fc={colors.white}
+                fz='12px'
+                lh='16px'
+                text='시작'
+                flexBasis='50px'
                 disabled={achievementCheck}
-              >
-                시작
-              </Button>
+              ></CommonButton>
             </TimerContainer>
           </>
         )}
@@ -281,6 +292,7 @@ const LikeContent = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  margin-left: 16px;
 `;
 
 const IconContainer = styled.div`
@@ -304,6 +316,7 @@ const IconContainer = styled.div`
     svg {
       width: 100%;
       height: 100%;
+      color: ${colors.gray500};
     }
   }
 `;
@@ -322,7 +335,7 @@ const TrashIconContainer = styled.div`
 
 const TimerContainer = styled.div`
   display: flex;
-  align-items: flex-end;
+  align-items: stretch;
   justify-content: space-between;
   margin-top: 16px;
 `;
@@ -373,14 +386,15 @@ const Button = styled.button`
   padding: 2px 4px;
   border-radius: 4px;
   color: ${colors.white};
-  background-color: ${({ isAchievementCheck }) =>
+  background: ${({ isAchievementCheck }) =>
     isAchievementCheck ? '#ccc' : colors.primary};
   font-size: 12px;
 
   cursor: pointer;
 `;
 
-const CustomText = styled(CommonText)`
+const DateBox = styled.div`
+  width: 100%;
   margin-top: 8px;
   padding: 4px;
   border-radius: 4px;

@@ -1,44 +1,37 @@
 import styled from 'styled-components';
-import { useQuery } from 'react-query';
-import { userApi } from '../../api/userApi';
 import { colors } from '../../theme/theme';
 import { useNavigate } from 'react-router-dom';
 import CommonText from '../elements/CommonText';
-import Loading from '../global/Loading';
+import CommonButton from '../elements/CommonButton';
 
-const UserInfo = () => {
+const UserInfo = ({ userInfo }) => {
   const navigate = useNavigate();
-
-  const {
-    isLoading,
-    isError,
-    error,
-    data: userInfo,
-  } = useQuery('getUserInfo', userApi.getUserInfo, {
-    onSuccess: (data) => {},
-  });
-
-  if (isLoading) {
-    return <Loading />;
-  }
 
   return (
     <Container>
       <ProfileImgContainer>
-        <ProfileImg src={userInfo.data.profileImage} />
+        <ProfileImg src={userInfo.profileImage} />
       </ProfileImgContainer>
       <ProfileBox>
-        <CommonText isSubtitle1={true}>{userInfo.data.nickname}</CommonText>
-        <CommonText isBody2={true} fc={colors.text}>
-          {userInfo.data.status}
+        <CommonText isCallout={true} fw='600'>
+          {userInfo.nickname}
         </CommonText>
-        <EditProfileButton
-          onClick={() => {
+        <CommonText isFootnote1={true} fc={colors.gray700} mg='8px 0 16px'>
+          {userInfo.status}
+        </CommonText>
+        <CommonButton
+          handleButtonClick={() => {
             navigate('/setting');
           }}
-        >
-          프로필 편집
-        </EditProfileButton>
+          wd='240px'
+          pd='8px 0'
+          bdrs='22px'
+          fz='15px'
+          fw='600'
+          bd={`1px solid ${colors.gray300}`}
+          bg={colors.white}
+          text='프로필 편집'
+        />
       </ProfileBox>
     </Container>
   );
@@ -56,11 +49,13 @@ const Container = styled.div`
   background-color: ${colors.white};
   border-radius: 0 0 16px 16px;
   overflow: hidden;
-  box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.06);
+  box-shadow: 0px 8px 6px rgba(0, 0, 0, 0.06);
 `;
 
 const ProfileBox = styled.div`
+  max-width: 260px;
   text-align: center;
+  word-break: break-all;
 `;
 
 const ProfileImgContainer = styled.div`
