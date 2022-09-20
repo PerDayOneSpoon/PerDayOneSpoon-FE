@@ -2,9 +2,16 @@ import styled from 'styled-components';
 import { colors } from '../../theme/theme';
 import CommonText from '../elements/CommonText';
 
-const Achievement = ({ title, num, totalNum, isBadge, handleAchiveClick }) => {
+const Achievement = ({
+  title,
+  num,
+  totalNum,
+  isBadge,
+  handleAchiveClick,
+  cursor,
+}) => {
   return (
-    <Container onClick={handleAchiveClick}>
+    <Container onClick={handleAchiveClick} cursor={cursor}>
       <CommonText isSentece3={true} fc={colors.gray600} mg='0 0 8px 0'>
         {title}
       </CommonText>
@@ -34,6 +41,7 @@ const Container = styled.div`
   background-color: ${colors.white};
   border-radius: 10px;
   border: 1px solid ${colors.gray200};
+  cursor: ${({ cursor }) => cursor && 'pointer'};
 
   & + & {
     margin-left: 16px;

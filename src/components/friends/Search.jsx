@@ -41,7 +41,7 @@ const Search = () => {
       </InputBox>
       {searchFriends &&
         searchFriends.data.map((val, key) => {
-          return <FriendsItem val={val} key={key} />;
+          return <FriendsItem val={val} key={key} isSearch={true} />;
         })}
     </Container>
   );

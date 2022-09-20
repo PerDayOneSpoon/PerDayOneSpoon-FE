@@ -6,6 +6,8 @@ import CreatePage from '../pages/CreatePage';
 import CalendarPage from '../pages/CalendarPage';
 import MyPage from '../pages/MyPage';
 import SearchPage from '../pages/SearchPage';
+import FollowerListPage from '../pages/FollowerListPage';
+import FollowingListPage from '../pages/FollowingListPage';
 import KakaoLogin from '../components/login/KakaoLogin';
 import GoogleLogin from '../components/login/GoogleLogin';
 import SettingPage from '../pages/SettingPage';
@@ -28,6 +30,8 @@ const Router = () => {
           <Route path='/mypage' element={<MyPage />} />
           <Route path='/search' element={<SearchPage />} />
           <Route path='/setting' element={<SettingPage />} />
+          <Route path='/following' element={<FollowingListPage />} />
+          <Route path='/follower' element={<FollowerListPage />} />
         </Routes>
       </ScrollToTop>
     </BrowserRouter>

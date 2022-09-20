@@ -16,6 +16,7 @@ export default Layout;
 
 const Background = styled.div`
   width: 100%;
+  height: 100vh;
   max-width: 768px;
   display: flex;
   flex-direction: column;
@@ -23,8 +24,6 @@ const Background = styled.div`
   align-items: center;
   position: relative;
   background-color: ${colors.gray50};
-  height: -webkit-fill-available;
-  height: 100vh;
 
   /* ${({ isMobile }) =>
     isMobile

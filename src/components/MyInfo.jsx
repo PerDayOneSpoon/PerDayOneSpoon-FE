@@ -42,8 +42,6 @@ const MyInfo = () => {
     return <Loading />;
   }
 
-  console.log(userInfo.data);
-
   return (
     <Container>
       <Info>
@@ -60,14 +58,16 @@ const MyInfo = () => {
           </FlexContainer>
           <FlexContainer>
             <Achievement
-              title='팔로우'
+              title='팔로잉'
               num={userInfo.data.followingCnt}
-              handleAchiveClick={() => navigate('/')}
+              handleAchiveClick={() => navigate('/following')}
+              cursor='true'
             />
             <Achievement
               title='팔로워'
               num={userInfo.data.followerCnt}
-              handleAchiveClick={() => navigate('/')}
+              handleAchiveClick={() => navigate('/follower')}
+              cursor='true'
             />
           </FlexContainer>
         </BoxContainer>
