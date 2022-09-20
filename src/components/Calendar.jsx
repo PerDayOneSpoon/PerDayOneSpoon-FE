@@ -6,14 +6,13 @@ import Loading from './global/Loading';
 import dayjs from 'dayjs';
 import { useQuery } from 'react-query';
 import { calendarApi } from '../api/calendarApi';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { friendsApi } from '../api/friendsApi';
 
 const Calendar = () => {
   const [dateValue, setDateValue] = useState(new Date());
   const [month, setMonth] = useState('');
   const searchDate = dayjs(dateValue).format('YYYY-MM-DD');
-
   const [userId, setUserId] = useState('');
 
   const {
@@ -29,19 +28,30 @@ const Calendar = () => {
   });
 
   const search = useQuery(
-    ['searchUser', searchDate],
-    () => calendarApi.getCalendarDate(searchDate),
+    ['searchUser', searchDate, userId],
+    () =>
+      calendarApi.getCalendarDate({
+        calendarDate: searchDate,
+        memberId: Number(userId),
+      }),
     {
       onSuccess: () => {},
+      staleTime: Infinity,
     }
   );
 
-  const uid = useQuery(['friendGoal', userId], () =>
-    friendsApi.getFriendGoal(userId)
+  const uid = useQuery(
+    ['friendGoal', userId],
+    () => friendsApi.getFriendGoal(userId),
+    {
+      enabled: !!userId,
+      staleTime: Infinity,
+    }
   );
 
   // console.log('uid data', uid);
-  console.log('userId!!!!!', userId);
+  // console.log('userId!!!!!', userId);
+  // console.log('searchDate!!!!!', searchDate);
 
   const handleChangeDate = (date) => {
     setDateValue(date);
@@ -64,7 +74,8 @@ const Calendar = () => {
     return <Loading />;
   }
 
-  const { monthCalenderDtoList, peopleList } = calendarData.data;
+  const { monthCalenderDtoList, peopleList, todayGoalsDtoList, me } =
+    calendarData.data;
 
   return (
     <>
@@ -77,26 +88,23 @@ const Calendar = () => {
         handleChangeDate={handleChangeDate}
         handleGetMonth={handleGetMonth}
         monthCalenderDtoList={
-          uid.data !== undefined
-            ? uid.data.data.monthCalenderDtoList
-            : monthCalenderDtoList
+          uid.data === undefined
+            ? monthCalenderDtoList
+            : uid.data.data.monthCalenderDtoList
         }
-        // monthCalenderDtoList={monthCalenderDtoList}
-        // monthCalenderDtoList={uid?.date?.data}
       />
-
       <CommonText isCallout={true} mg={'24px 0 0 0'}>
         {dayjs(dateValue).format('MM월 DD일')}의 습관
       </CommonText>
-
-      {/* <GoalList
-        isMain={false}
-        data={
-          userId === 0 ? search?.data?.data : uid?.data?.data.todayGoalsDtoList
-        }
-      /> */}
-      {/* <GoalList data={todayGoalsDtoList} isMain={false} /> */}
-      <GoalList isMain={false} data={search?.data?.data} />
+      {me ? (
+        search.data === undefined ? (
+          <GoalList isMain={false} data={todayGoalsDtoList} />
+        ) : (
+          <GoalList isMain={false} data={search.data.data.todayGoalsDtoList} />
+        )
+      ) : (
+        <GoalList isMain={false} data={search.data.data.todayGoalsDtoList} />
+      )}
     </>
   );
 };

@@ -46,9 +46,12 @@ const GoalForm = ({
               <Icon src={character} />
             </IconContainer>
           </FlexContainer>
+          <CommonText isSentence3={true} fc={colors.orange700}>
+            캐릭터를 선택해 주세요
+          </CommonText>
         </SetForm>
         <SetForm>
-          <CommonText isSubtitle1={true}>지킬 습관</CommonText>
+          <CommonText isSubhead={true}>지킬 습관</CommonText>
           <TitleInput
             placeholder='습관을 입력해 주세요'
             value={form.title}
@@ -57,7 +60,7 @@ const GoalForm = ({
         </SetForm>
         <SetForm>
           <div>
-            <CommonText isSubtitle1={true}>목표일</CommonText>
+            <CommonText isSubhead={true}>목표일</CommonText>
             <DayUl>
               {dayArr.map((day, i) => (
                 <DayLi
@@ -73,22 +76,26 @@ const GoalForm = ({
             </DayUl>
           </div>
           <FlexContainer>
-            <CommonText isSubtitle1={true}>시작 날짜</CommonText>
-            <CommonText isSubtitle1={true} fc={colors.text}>
+            <CommonText isSubhead={true} fw='400'>
+              시작 날짜
+            </CommonText>
+            <CommonText isSentence2={true} fc={colors.gray500}>
               {startDate}
             </CommonText>
           </FlexContainer>
           <FlexContainer>
-            <CommonText isSubtitle1={true}>종료 날짜</CommonText>
-            <CommonText isSubtitle1={true} fc={colors.text}>
+            <CommonText isSubhead={true} fw='400'>
+              종료 날짜
+            </CommonText>
+            <CommonText isSentence2={true} fc={colors.gray500}>
               {endDate}
             </CommonText>
           </FlexContainer>
         </SetForm>
         <SetForm isPointer={true}>
           <FlexContainer onClick={() => setModal({ open: true, type: 'time' })}>
-            <CommonText isSubtitle1={true}>시간 설정</CommonText>
-            <CommonText isSubtitle1={true} fc={colors.text}>
+            <CommonText isSubhead={true}>시간 설정</CommonText>
+            <CommonText isSentence2={true} fc={colors.gray500}>
               {form.time.split(':')[0]}시간 {form.time.split(':')[1]}분
             </CommonText>
           </FlexContainer>
@@ -97,15 +104,15 @@ const GoalForm = ({
           <FlexContainer
             onClick={() => setModal({ open: true, type: 'private' })}
           >
-            <CommonText isSubtitle1={true}>공개 설정</CommonText>
-            <CommonText isSubtitle1={true} fc={colors.text}>
+            <CommonText isSubhead={true}>공개 설정</CommonText>
+            <CommonText isSentence2={true} fc={colors.gray500}>
               {form.privateCheck ? '나만 보기' : '친구 공개'}
             </CommonText>
           </FlexContainer>
         </SetForm>
         <SetForm>
           <FlexContainer>
-            <CommonText isSubtitle1={true}>캐릭터 설정</CommonText>
+            <CommonText isSubhead={true}>캐릭터 설정</CommonText>
             <CharacterUl>
               {colorsArr.map((color, i) => (
                 <CharacterLi
@@ -208,9 +215,9 @@ const TitleInput = styled.input`
   width: 100%;
   height: 44px;
   padding: 10px 16px;
-  background-color: ${colors.valueBox};
+  background-color: ${colors.gray100};
   border-radius: 10px;
-  margin-top: 8px;
+  margin-top: 12px;
   font-size: 14px;
   line-height: 24px;
   letter-spacing: 0.1px;
@@ -220,7 +227,7 @@ const TitleInput = styled.input`
   box-sizing: border-box;
 
   ::placeholder {
-    color: ${colors.placeholder};
+    color: ${colors.gray400};
   }
 `;
 
@@ -228,7 +235,7 @@ const SetForm = styled.div`
   background-color: ${colors.white};
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
-  padding: 16px;
+  padding: 20px 16px;
   ${({ isPointer }) =>
     isPointer &&
     css`
@@ -245,6 +252,7 @@ const SetForm = styled.div`
 
   &.character-box {
     padding: 30px 16px;
+    text-align: center;
   }
 `;
 
@@ -259,36 +267,39 @@ const DayUl = styled.ul`
   align-items: center;
   justify-content: center;
   width: 100%;
-  margin-top: 8px;
+  margin-top: 12px;
+  padding: 4px;
+  border-radius: 50px;
+  background-color: ${colors.gray100};
 `;
 
 const DayLi = styled.li`
   width: 50%;
   text-align: center;
-  background-color: ${colors.valueBox};
   border-radius: 23px;
-  padding: 10px 0;
+  padding: 8px 0;
   color: ${colors.text};
+  box-sizing: border-box;
+  font-size: 16px;
+  font-weight: 500;
   cursor: pointer;
 
   &.active {
-    background-color: ${colors.primary};
+    background-color: ${colors.orange500};
+    border: 1px solid #fa8700;
     color: ${colors.white};
-  }
-
-  & + & {
-    margin-left: 10px;
   }
 `;
 
 const TimeContainer = styled.div`
   display: flex;
   align-items: center;
+  padding: 0 64px;
 `;
 
 const TimeDiv = styled.div`
-  padding: 0 10px;
   margin: 0;
+  padding: 0 8px;
   list-style: none;
   width: 50%;
   height: 100px;

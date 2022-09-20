@@ -5,7 +5,7 @@ import CommonText from '../elements/CommonText';
 const ToastModal = ({ toastMessage, displayNone }) => {
   return (
     <Container displayNone={displayNone}>
-      <CustomText isSubtitle2={true} fc={colors.white}>
+      <CustomText isCallout={true} fc={colors.white}>
         {toastMessage}
       </CustomText>
     </Container>
@@ -15,8 +15,8 @@ const ToastModal = ({ toastMessage, displayNone }) => {
 export default ToastModal;
 
 const Container = styled.div`
-  position: fixed;
-  top: 50px;
+  position: absolute;
+  top: 56px;
   left: 50%;
   transform: translateX(-50%);
 
@@ -29,13 +29,13 @@ const Container = styled.div`
   justify-content: center;
 
   transition: all 0.3s;
-  /* display: ${({ displayNone }) => (displayNone ? 'none' : 'block')}; */
 `;
 
 const CustomText = styled(CommonText)`
   width: fit-content;
   border-radius: 30px;
-  padding: 4px 20px;
+  padding: 8px 20px;
+  font-weight: 400;
   background-color: ${colors.danger};
   color: ${colors.white};
   word-break: break-all;

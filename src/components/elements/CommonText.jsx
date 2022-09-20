@@ -20,9 +20,9 @@ const CommonText = ({
   isTitle3,
   isBody,
   isCallout,
-  isSentece1,
-  isSentece2,
-  isSentece3,
+  isSentence1,
+  isSentence2,
+  isSentence3,
   isSubhead,
   isFootnote1,
   isFootnote2,
@@ -49,9 +49,9 @@ const CommonText = ({
       isTitle3={isTitle3}
       isBody={isBody}
       isCallout={isCallout}
-      isSentece1={isSentece1}
-      isSentece2={isSentece2}
-      isSentece3={isSentece3}
+      isSentence1={isSentence1}
+      isSentence2={isSentence2}
+      isSentence3={isSentence3}
       isSubhead={isSubhead}
       isFootnote1={isFootnote1}
       isFootnote2={isFootnote2}
@@ -153,24 +153,24 @@ const Text = styled.div`
       font-weight: 500;
     `}
 
-    ${({ isSentece1 }) =>
-    isSentece1 &&
+    ${({ isSentence1 }) =>
+    isSentence1 &&
     css`
       font-size: 18px;
       line-height: 28px;
       font-weight: 400;
     `}
 
-    ${({ isSentece2 }) =>
-    isSentece2 &&
+    ${({ isSentence2 }) =>
+    isSentence2 &&
     css`
       font-size: 16px;
       line-height: 26px;
       font-weight: 400;
     `}
 
-    ${({ isSentece3 }) =>
-    isSentece3 &&
+    ${({ isSentence3 }) =>
+    isSentence3 &&
     css`
       font-size: 15px;
       line-height: 24px;
@@ -180,7 +180,7 @@ const Text = styled.div`
     ${({ isSubhead }) =>
     isSubhead &&
     css`
-      font-size: 15px;
+      font-size: 16px;
       line-height: 18px;
       font-weight: 600;
     `}

@@ -53,7 +53,7 @@ const BottomSheetModal = ({ children, isHeader, title, handleOkClick }) => {
             <IconContainer>
               <IconClose onClick={handleModalClose} />
             </IconContainer>
-            <CommonText isH6={true}>{title}</CommonText>
+            <CommonText isBody={true}>{title}</CommonText>
             <ButtonContainer>
               <ModalButton onClick={handleOkClick}>확인</ModalButton>
             </ButtonContainer>
@@ -69,21 +69,11 @@ const BottomSheetModal = ({ children, isHeader, title, handleOkClick }) => {
 export default BottomSheetModal;
 
 const ModalContainer = styled.div`
-  position: fixed;
+  position: absolute;
   top: 0;
-  ${({ isMobile }) =>
-    isMobile
-      ? css`
-          left: 0;
-          box-sizing: border-box;
-        `
-      : css`
-          left: 50%;
-          transform: translateX(-50%);
-        `}
+  left: 0;
   z-index: 999;
   background-color: rgba(0, 0, 0, 0.5);
-  max-width: 422px;
   width: 100%;
   height: 100vh;
   height: -webkit-fill-available;
@@ -151,7 +141,6 @@ const ModalHeader = styled.div`
 const IconContainer = styled.div`
   cursor: pointer;
 `;
-const Title = styled.div``;
 const ButtonContainer = styled.div``;
 const ModalButton = styled.button`
   border: none;
@@ -159,6 +148,5 @@ const ModalButton = styled.button`
   background: transparent;
   font-size: 14px;
   line-height: 20px;
-  letter-spacing: 0.25px;
   cursor: pointer;
 `;

@@ -2,17 +2,19 @@ import styled from 'styled-components';
 import { colors } from '../../theme/theme';
 import CommonText from '../elements/CommonText';
 
-const Achievement = ({ title, num, totalNum, isBadge }) => {
+const Achievement = ({ title, num, totalNum, isBadge, handleAchiveClick }) => {
   return (
-    <Container>
-      <CommonText fc={colors.text}>{title}</CommonText>
+    <Container onClick={handleAchiveClick}>
+      <CommonText isSentece3={true} fc={colors.gray600} mg='0 0 8px 0'>
+        {title}
+      </CommonText>
 
       {isBadge ? (
-        <CommonText isH6={true} fc={colors.primary} mg='8px 0 0 0'>
+        <CommonText isBody={true} isBold={true} fc={colors.primary}>
           {num}/{totalNum}
         </CommonText>
       ) : (
-        <CommonText isH6={true} fc={colors.primary} mg='8px 0 0 0'>
+        <CommonText isBody={true} isBold={true} fc={colors.primary}>
           {num}
         </CommonText>
       )}
@@ -28,10 +30,10 @@ const Container = styled.div`
   justify-content: center;
   flex-direction: column;
   width: 50%;
-  padding: 20px 0;
+  padding: 16px 0;
   background-color: ${colors.white};
   border-radius: 10px;
-  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid ${colors.gray200};
 
   & + & {
     margin-left: 16px;
