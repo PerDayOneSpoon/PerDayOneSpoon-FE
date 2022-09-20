@@ -9,11 +9,6 @@ const CommonText = ({
   pd,
   lh,
   wd,
-  // isCaption,
-  // isSubtitle1,
-  // isSubtitle2,
-  // isBody2,
-  // isH6,
 
   isTitle1,
   isTitle2,
@@ -38,12 +33,6 @@ const CommonText = ({
       lh={lh}
       pd={pd}
       wd={wd}
-      // isCaption={isCaption}
-      // isSubtitle1={isSubtitle1}
-      // isSubtitle2={isSubtitle2}
-      // isBody2={isBody2}
-      // isH6={isH6}
-
       isTitle1={isTitle1}
       isTitle2={isTitle2}
       isTitle3={isTitle3}
@@ -84,32 +73,6 @@ const Text = styled.div`
       font-weight: 400;
     `}
 
-  ${({ isSubtitle2 }) =>
-    isSubtitle2 &&
-    css`
-      font-size: 14px;
-      letter-spacing: 0.1px;
-      line-height: 24px;
-      font-weight: 500;
-    `}
-
-  ${({ isBody2 }) =>
-    isBody2 &&
-    css`
-      font-size: 14px;
-      letter-spacing: 0.25px;
-      line-height: 20px;
-      font-weight: 400;
-    `}
-
-    ${({ isH6 }) =>
-    isH6 &&
-    css`
-      font-size: 18px;
-      letter-spacing: 0.15px;
-      line-height: 24px;
-      font-weight: 500;
-    `}
 
 /* ======================================================= */
 

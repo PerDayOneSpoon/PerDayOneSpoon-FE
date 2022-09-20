@@ -1,6 +1,5 @@
 import styled, { css } from 'styled-components';
 import NavBar from '../components/global/NavBar';
-import { NAV_BAR_HEIGHT } from '../constants/common';
 import { isMobile } from 'react-device-detect';
 import { colors } from '../theme/theme';
 

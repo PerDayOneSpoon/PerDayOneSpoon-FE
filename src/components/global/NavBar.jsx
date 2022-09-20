@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { NAV_BAR_HEIGHT } from '../../constants/common';
 import NavBarIcon from './NavBarIcon';
 import { ReactComponent as IconHome } from '../../assets/icons/icon-home.svg';

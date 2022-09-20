@@ -1,13 +1,10 @@
 import styled from 'styled-components';
 import { ReactComponent as IconHeartFill } from '../../assets/icons/icon-heart-fill.svg';
 import { ReactComponent as IconCalendar } from '../../assets/icons/icon-calendar.svg';
-import { useQueryClient } from 'react-query';
 import { colors } from '../../theme/theme';
 import CommonText from '../elements/CommonText';
 
 const CalendarGoal = ({ item }) => {
-  const queryClient = useQueryClient();
-
   const {
     id,
     title,

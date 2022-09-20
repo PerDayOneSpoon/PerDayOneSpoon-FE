@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import Friend from './Friend';
-import { useState } from 'react';
 import { useHorizontalScroll } from '../../hooks/useHorizontalScroll';
 import { colors } from '../../theme/theme';
 
