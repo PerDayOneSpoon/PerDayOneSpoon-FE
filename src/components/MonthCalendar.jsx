@@ -1,12 +1,10 @@
-import { useState, useEffect } from 'react';
 import { ReactComponent as IconLeft } from '../assets/icons/icon-left.svg';
 import { ReactComponent as IconRight } from '../assets/icons/icon-right.svg';
 import Calendar from 'react-calendar';
 import dayjs from 'dayjs';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import 'react-calendar/dist/Calendar.css';
 import { colors } from '../theme/theme';
-import { useRef } from 'react';
 
 const MonthCalendar = ({
   dateValue,

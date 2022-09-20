@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import Router from './shared/Router';
 import GlobalStyles from './GlobalStyle';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { isMobile } from 'react-device-detect';
 import { colors } from './theme/theme';
 

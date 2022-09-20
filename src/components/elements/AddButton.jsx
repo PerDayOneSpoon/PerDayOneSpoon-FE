@@ -1,5 +1,4 @@
-import styled, { css } from 'styled-components';
-import { colors } from '../../theme/theme';
+import styled from 'styled-components';
 import { ReactComponent as IconAdd } from '../../assets/icons/icon-add.svg';
 import { isMobile } from 'react-device-detect';
 
