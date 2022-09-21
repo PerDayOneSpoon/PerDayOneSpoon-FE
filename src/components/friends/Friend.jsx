@@ -1,11 +1,15 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { colors } from '../../theme/theme';
 import CommonText from '../elements/CommonText';
+import { useRecoilValue } from 'recoil';
+import { calendarUserIdState } from '../../recoil/common';
 
 const Friend = ({ person, focusUser, handleUserClick }) => {
+  const userId = useRecoilValue(calendarUserIdState);
+
   return (
     <Container onClick={handleUserClick}>
-      <ProfileContainer>
+      <ProfileContainer focusUser={person.id === userId}>
         <ProfileImg src={person.profileImage} />
       </ProfileContainer>
       <CommonText isFootnote1={true} fc={colors.gray500}>
@@ -22,6 +26,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  text-align: center;
   cursor: pointer;
 
   & + & {
@@ -35,6 +40,13 @@ const ProfileContainer = styled.div`
   border-radius: 50%;
   margin-bottom: 8px;
   overflow: hidden;
+  box-sizing: border-box;
+
+  ${({ focusUser }) =>
+    focusUser &&
+    css`
+      border: 3px solid ${colors.orange500};
+    `}
 `;
 const ProfileImg = styled.img`
   width: 100%;

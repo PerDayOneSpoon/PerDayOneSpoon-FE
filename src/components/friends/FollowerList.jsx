@@ -11,13 +11,13 @@ const FollowerList = () => {
     isError,
     error,
     data: followerList,
-  } = useQuery(['getFollower'], friendsApi.getFollower, {
+  } = useQuery(['followerList'], friendsApi.getFollower, {
     onSuccess: () => {},
   });
 
   const { mutate: follwerMutation } = useMutation(friendsApi.deleteFollower, {
     onSuccess: (data) => {
-      queryClient.invalidateQueries('getFollower');
+      queryClient.invalidateQueries('followerList');
     },
   });
 

@@ -16,3 +16,8 @@ export const navBarState = atom({
   default: '홈',
   effects_UNSTABLE: [persistAtom],
 });
+
+export const calendarUserIdState = atom({
+  key: 'calendarUserIdState',
+  default: '',
+});

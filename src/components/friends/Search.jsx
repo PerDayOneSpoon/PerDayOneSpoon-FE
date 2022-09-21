@@ -13,11 +13,11 @@ const Search = () => {
   const [searchTerm, setSearchTerm] = useState('');
 
   const { data: searchFriends } = useQuery(
-    ['getFriends', searchTerm],
+    ['searchFriends', searchTerm],
     () => friendsApi.getSearchFriends(searchTerm),
     {
       enabled: !!searchTerm,
-      onSuccess: (data) => {},
+      onSuccess: () => {},
     }
   );
 

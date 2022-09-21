@@ -1,10 +1,12 @@
 import styled from 'styled-components';
 import { ReactComponent as IconHeartFill } from '../../assets/icons/icon-heart-fill.svg';
+import { ReactComponent as IconHeartEmpty } from '../../assets/icons/icon-heart-empty.svg';
 import { ReactComponent as IconCalendar } from '../../assets/icons/icon-calendar.svg';
+import { ReactComponent as IconCheck } from '../../assets/icons/icon-check.svg';
 import { colors } from '../../theme/theme';
 import CommonText from '../elements/CommonText';
 
-const CalendarGoal = ({ item }) => {
+const CalendarGoal = ({ item, isMe }) => {
   const {
     id,
     title,
@@ -17,52 +19,74 @@ const CalendarGoal = ({ item }) => {
   } = item;
 
   return (
-    <Container isAchievementCheck={achievementCheck}>
-      <Contents>
-        <RightContent>
-          <ChracterContainer>
-            <Character src={characterUrl} alt='캐릭터 이미지' />
-          </ChracterContainer>
+    <GoalContainer>
+      {achievementCheck ? (
+        <IconContainer className='check-icon'>
+          <IconCheck style={{ color: colors.orange500 }} />
+        </IconContainer>
+      ) : (
+        <CheckContainer />
+      )}
+      <Container>
+        <Contents>
+          <RightContent>
+            <ChracterContainer>
+              <Character src={characterUrl} alt='캐릭터 이미지' />
+            </ChracterContainer>
 
-          <div>
-            <CommonText isCallout={true}>{title}</CommonText>
-            <DateBox isFootnote2={true}>
-              <IconContainer className='calendar-icon'>
-                <IconCalendar />
+            <div>
+              <CommonText isCallout={true}>{title}</CommonText>
+              <DateBox>
+                <IconContainer className='calendar-icon'>
+                  <IconCalendar />
+                </IconContainer>
+                <CommonText isFootnote2={true} fc={colors.gray500}>
+                  {startDate} - {endDate}
+                </CommonText>
+              </DateBox>
+            </div>
+          </RightContent>
+          <LikeContent>
+            {isMe ? (
+              <IconContainer>
+                <IconHeartFill onClick={(e) => e.stopPropagation()} />
               </IconContainer>
-              <CommonText isFootnote2={true} fc={colors.gray500}>
-                {startDate} - {endDate}
-              </CommonText>
-            </DateBox>
-          </div>
-        </RightContent>
-        <LikeContent>
-          <IconContainer>
-            <IconHeartFill onClick={(e) => e.stopPropagation()} />
-          </IconContainer>
-          <CommonText isFootnote2={true} fc={colors.gray600} mg='4px 0 0 0'>
-            {heartCnt}
-          </CommonText>
-        </LikeContent>
-      </Contents>
-    </Container>
+            ) : (
+              <IconContainer>
+                <IconHeartEmpty onClick={(e) => e.stopPropagation()} />
+              </IconContainer>
+            )}
+
+            <CommonText isFootnote2={true} fc={colors.gray600} mg='4px 0 0 0'>
+              {heartCnt}
+            </CommonText>
+          </LikeContent>
+        </Contents>
+      </Container>
+    </GoalContainer>
   );
 };
 
 export default CalendarGoal;
 
-const Container = styled.div`
-  padding: 16px;
-  background-color: ${({ isAchievementCheck }) =>
-    isAchievementCheck ? '#efefef' : colors.white};
-  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-
-  cursor: pointer;
+const GoalContainer = styled.div`
+  display: flex;
+  align-items: center;
 
   & + & {
     margin-top: 16px;
   }
+`;
+
+const Container = styled.div`
+  flex: 1;
+  width: 100%;
+  padding: 16px;
+  background-color: ${colors.white};
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+
+  cursor: pointer;
 `;
 
 const Contents = styled.div`
@@ -101,6 +125,10 @@ const IconContainer = styled.div`
   width: 24px;
   height: 24px;
 
+  &.check-icon {
+    margin-right: 8px;
+  }
+
   &.calendar-icon {
     width: 12px;
     height: 12px;
@@ -111,7 +139,7 @@ const IconContainer = styled.div`
     svg {
       width: 100%;
       height: 100%;
-      color: ${colors.gray500};
+      color: ${colors.gray300};
     }
   }
 `;
@@ -119,10 +147,21 @@ const IconContainer = styled.div`
 const DateBox = styled.div`
   width: 100%;
   margin-top: 8px;
-  padding: 4px;
+  /* padding: 4px;
   border-radius: 4px;
-  background-color: ${colors.gray50};
+  background-color: ${colors.gray50}; */
   display: flex;
   align-items: stretch;
   word-break: keep-all;
+`;
+
+const CheckContainer = styled.div`
+  width: 20px;
+  height: 20px;
+  max-width: 20px;
+  max-height: 20px;
+  box-sizing: border-box;
+  margin: 2px 10px 2px 2px;
+  border-radius: 50%;
+  border: 2px solid ${colors.gray300};
 `;
