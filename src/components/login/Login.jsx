@@ -48,11 +48,11 @@ const Login = () => {
         </CommonText>
       </StMainTextBox>
 
-      <StLoginStart>
+      {/* <StLoginStart>
         <StLoginText isFootnote1={true} fc={colors.textBlack}>
           ⏱ 3초만에 시작하기
         </StLoginText>
-      </StLoginStart>
+      </StLoginStart> */}
 
       <StLoginButtonBox>
         <StLoginButton bgColor='kakao' onClick={handleKakaoLogin}>
@@ -124,7 +124,8 @@ const StMainTextBox = styled.div`
   flex-direction: column;
   text-align: center;
   margin-top: 24px;
-  margin-bottom: 50px;
+  /* margin-bottom: 50px; */
+  margin-bottom: 70px;
   word-break: keep-all;
 `;
 

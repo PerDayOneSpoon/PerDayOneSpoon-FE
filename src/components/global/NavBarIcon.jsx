@@ -8,7 +8,7 @@ const NavBarIcon = ({ icon, label, handleNavIconClick, className }) => {
       <IconContainer className={className === label && 'active'}>
         {icon}
       </IconContainer>
-      <CommonText isCaption={true} fc={colors.text}>
+      <CommonText isFootnote2={true} fc={colors.gray300}>
         <Label className={className === label && 'active'}>{label}</Label>
       </CommonText>
     </Container>
@@ -28,10 +28,10 @@ const Container = styled.div`
 
 const IconContainer = styled.div`
   margin-bottom: 2px;
-  color: ${colors.navIcon};
+  color: ${colors.gray300};
 
   &.active {
-    color: ${colors.primary};
+    color: ${colors.orange500};
   }
 `;
 

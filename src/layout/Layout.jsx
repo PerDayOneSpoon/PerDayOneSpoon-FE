@@ -3,9 +3,9 @@ import NavBar from '../components/global/NavBar';
 import { isMobile } from 'react-device-detect';
 import { colors } from '../theme/theme';
 
-const Layout = ({ children, hasNavBar = true }) => {
+const Layout = ({ children, hasNavBar = true, bgColor = colors.gray50 }) => {
   return (
-    <Background>
+    <Background bgColor={bgColor}>
       <BodyContent isMobile={isMobile}>{children}</BodyContent>
       {hasNavBar && <NavBar />}
     </Background>
@@ -16,24 +16,22 @@ export default Layout;
 
 const Background = styled.div`
   width: 100%;
-  height: 100vh;
   max-width: 768px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   position: relative;
-  background-color: ${colors.gray50};
+  background-color: ${({ bgColor }) => bgColor};
 
-  /* ${({ isMobile }) =>
+  ${({ isMobile }) =>
     isMobile
       ? css`
-          height: -webkit-fill-available;
           height: calc(var(--vh, 1vh) * 100);
         `
       : css`
           height: 100vh;
-        `} */
+        `}
   box-sizing: border-box;
 `;
 

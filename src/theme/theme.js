@@ -20,7 +20,6 @@ export const colors = {
   black: '#000000',
   danger: '#e84f30',
   softDanger: '#fad8d1',
-  navIcon: '#989898',
   gray700: '#363d44',
   gray600: '#4c5660',
   gray500: '#6c7a89',
