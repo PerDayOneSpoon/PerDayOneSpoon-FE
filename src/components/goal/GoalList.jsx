@@ -3,7 +3,7 @@ import Goal from './Goal';
 import CalendarGoal from './CalendarGoal';
 import GoalEmpty from './GoalEmpty';
 
-const GoalList = ({ isMain, data }) => {
+const GoalList = ({ isMain, data, isMe }) => {
   if (data === undefined || data.length === 0) {
     return <GoalEmpty />;
   }
@@ -21,7 +21,7 @@ const GoalList = ({ isMain, data }) => {
   return (
     <Container>
       {data.map((item) => (
-        <CalendarGoal key={item.id} item={item} />
+        <CalendarGoal key={item.id} item={item} isMe={isMe} />
       ))}
     </Container>
   );

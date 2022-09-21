@@ -52,9 +52,7 @@ const Header = ({
     return (
       <Container bgColor={bgColor}>
         <ContainerInner hasIcon={hasIcon}>
-          <CommonText isTitle3={true} isBold={true}>
-            {title}
-          </CommonText>
+          <CommonText isTitle3={true}>{title}</CommonText>
           <IconContainer>{handleIcons(icon)}</IconContainer>
         </ContainerInner>
       </Container>
@@ -63,9 +61,7 @@ const Header = ({
     return (
       <Container bgColor={bgColor}>
         <ContainerInner>
-          <CommonText isTitle3={true} isBold={true}>
-            {title}
-          </CommonText>
+          <CommonText isTitle3={true}>{title}</CommonText>
         </ContainerInner>
       </Container>
     );

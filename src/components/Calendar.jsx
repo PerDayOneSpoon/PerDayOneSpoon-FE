@@ -6,29 +6,34 @@ import Loading from './global/Loading';
 import dayjs from 'dayjs';
 import { useQuery } from 'react-query';
 import { calendarApi } from '../api/calendarApi';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { friendsApi } from '../api/friendsApi';
+import { useRecoilState } from 'recoil';
+import { calendarUserIdState } from '../recoil/common';
 
 const Calendar = () => {
   const [dateValue, setDateValue] = useState(new Date());
   const [month, setMonth] = useState('');
   const searchDate = dayjs(dateValue).format('YYYY-MM-DD');
-  const [userId, setUserId] = useState('');
+  const [userId, setUserId] = useRecoilState(calendarUserIdState);
 
   const {
     isLoading,
     isError,
     error,
     data: calendarData,
-  } = useQuery(['getGoalInfo', 2], calendarApi.getCalendar, {
+  } = useQuery(['myCalendar'], calendarApi.getCalendar, {
     onSuccess: (data) => {
       setUserId(data.data.peopleList[0].id);
     },
-    staleTime: Infinity,
   });
 
-  const search = useQuery(
-    ['searchUser', searchDate, userId],
+  const {
+    isLoading: searchDateLoading,
+    isFetching: searchDateFetching,
+    data: getSearchDate,
+  } = useQuery(
+    ['friendDateSearch', searchDate, userId],
     () =>
       calendarApi.getCalendarDate({
         calendarDate: searchDate,
@@ -36,11 +41,26 @@ const Calendar = () => {
       }),
     {
       onSuccess: () => {},
+      enabled: !!dateValue,
       staleTime: Infinity,
     }
   );
 
-  const uid = useQuery(
+  const getSearchMonth = useQuery(
+    ['friendDateSearch', month, userId],
+    () =>
+      calendarApi.getCalendarMonth({
+        calendarMonth: month,
+        memberId: Number(userId),
+      }),
+    {
+      onSuccess: () => {},
+      enabled: !!month,
+      staleTime: Infinity,
+    }
+  );
+
+  const getUserData = useQuery(
     ['friendGoal', userId],
     () => friendsApi.getFriendGoal(userId),
     {
@@ -48,10 +68,6 @@ const Calendar = () => {
       staleTime: Infinity,
     }
   );
-
-  // console.log('uid data', uid);
-  // console.log('userId!!!!!', userId);
-  // console.log('searchDate!!!!!', searchDate);
 
   const handleChangeDate = (date) => {
     setDateValue(date);
@@ -64,13 +80,14 @@ const Calendar = () => {
   };
 
   const handleUserClick = (id) => {
-    console.log(id, 'user click');
     setUserId(id);
   };
 
-  // console.log('달!!!', month);
-
   if (isLoading) {
+    return <Loading />;
+  }
+
+  if (searchDateLoading || searchDateFetching) {
     return <Loading />;
   }
 
@@ -88,22 +105,35 @@ const Calendar = () => {
         handleChangeDate={handleChangeDate}
         handleGetMonth={handleGetMonth}
         monthCalenderDtoList={
-          uid.data === undefined
+          getUserData.data === undefined
             ? monthCalenderDtoList
-            : uid.data.data.monthCalenderDtoList
+            : getSearchMonth.data === undefined
+            ? getUserData.data.data.monthCalenderDtoList
+            : getSearchMonth.data.data.monthCalenderDtoList
         }
       />
       <CommonText isCallout={true} mg={'24px 0 0 0'}>
         {dayjs(dateValue).format('MM월 DD일')}의 습관
       </CommonText>
       {me ? (
-        search.data === undefined ? (
-          <GoalList isMain={false} data={todayGoalsDtoList} />
+        getSearchDate === undefined ? (
+          <GoalList
+            isMain={false}
+            data={todayGoalsDtoList}
+            isMe={getUserData?.data?.data.me}
+          />
         ) : (
-          <GoalList isMain={false} data={search.data.data.todayGoalsDtoList} />
+          <GoalList
+            isMain={false}
+            data={getSearchDate.data.todayGoalsDtoList}
+            isMe={getUserData?.data?.data.me}
+          />
         )
       ) : (
-        <GoalList isMain={false} data={search.data.data.todayGoalsDtoList} />
+        <GoalList
+          isMain={false}
+          data={getSearchDate.data.data.todayGoalsDtoList}
+        />
       )}
     </>
   );

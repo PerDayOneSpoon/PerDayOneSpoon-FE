@@ -55,28 +55,7 @@ const CommonText = ({
 export default CommonText;
 
 const Text = styled.div`
-  ${({ isCaption }) =>
-    isCaption &&
-    css`
-      font-size: 12px;
-      letter-spacing: 0.4px;
-      line-height: 16px;
-      font-weight: 400;
-    `}
-
-  ${({ isSubtitle1 }) =>
-    isSubtitle1 &&
-    css`
-      font-size: 16px;
-      letter-spacing: 0.15px;
-      line-height: 24px;
-      font-weight: 400;
-    `}
-
-
-/* ======================================================= */
-
-    ${({ isTitle1, isBold }) =>
+  ${({ isTitle1, isBold }) =>
     isTitle1 &&
     css`
       font-size: 28px;
@@ -84,7 +63,7 @@ const Text = styled.div`
       font-weight: ${({ isBold }) => (isBold ? '700' : '400')};
     `}
 
-    ${({ isTitle2, isBold }) =>
+  ${({ isTitle2, isBold }) =>
     isTitle2 &&
     css`
       font-size: 22px;
@@ -97,7 +76,7 @@ const Text = styled.div`
     css`
       font-size: 20px;
       line-height: 25px;
-      font-weight: ${({ isBold }) => (isBold ? '700' : '500')};
+      font-weight: ${({ isBold }) => (isBold ? '700' : '600')};
     `}
 
     ${({ isBody }) =>
@@ -163,10 +142,6 @@ const Text = styled.div`
       line-height: 14px;
       font-weight: ${({ isBold }) => (isBold ? '600' : '400')};
     `}
-
-
-
-
 
 
   width: ${({ wd }) => wd};

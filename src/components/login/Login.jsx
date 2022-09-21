@@ -43,7 +43,7 @@ const Login = () => {
           지금 하루 한 줌과 습관을 만들어 보아요!
         </CommonText>
 
-        <CommonText isCaption={true} fc={colors.gray700} mg='16px 0 0 0'>
+        <CommonText isCallout={true} fc={colors.gray700} mg='16px 0 0 0'>
           빠른 습관 설정과 달성까지
         </CommonText>
       </StMainTextBox>

@@ -18,7 +18,7 @@ const MyInfo = () => {
     isError,
     error,
     data: userInfo,
-  } = useQuery('getUserInfo', userApi.getUserInfo, {
+  } = useQuery(['userInfo'], userApi.getUserInfo, {
     onSuccess: (data) => {},
   });
 

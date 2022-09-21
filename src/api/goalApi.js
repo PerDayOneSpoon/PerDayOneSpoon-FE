@@ -24,4 +24,10 @@ export const goalApi = {
       privateCheck: privateCheck,
     });
   },
+
+  likeGoal: ({ goalId, heartCheck }) => {
+    return instance.patch(`/heart/${goalId}`, {
+      heartCheck: heartCheck,
+    });
+  },
 };

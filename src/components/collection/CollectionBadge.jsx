@@ -9,8 +9,8 @@ const CollectionBadge = ({ badge }) => {
       <BadgeImgContainer>
         <BadgeImg src={badgeTestImg} />
       </BadgeImgContainer>
-      <CommonText isSubtitle1={true}>{badge.badge}</CommonText>
-      <CommonText isCaption={true} fc={colors.text}>
+      <CommonText isCallout={true}>{badge.badge}</CommonText>
+      <CommonText isCallout={true} fc={colors.text}>
         {badge.date}
       </CommonText>
     </Container>

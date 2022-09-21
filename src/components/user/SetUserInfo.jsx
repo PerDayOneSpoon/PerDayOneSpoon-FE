@@ -19,7 +19,8 @@ const SetUserInfo = ({
 
   const updateUserImgMutation = useMutation(userApi.updateUserImg, {
     onSuccess: (data) => {
-      queryClient.invalidateQueries('getGoalInfo');
+      queryClient.invalidateQueries('myCalendar');
+      queryClient.invalidateQueries('userInfo');
     },
   });
 

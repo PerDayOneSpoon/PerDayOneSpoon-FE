@@ -23,7 +23,7 @@ export default FriendsList;
 
 const Container = styled.div`
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   padding: 8px 24px;
   overflow-x: scroll;
   background-color: ${colors.white};

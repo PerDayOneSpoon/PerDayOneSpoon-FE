@@ -12,7 +12,7 @@ const Main = () => {
     isError,
     error,
     data: mainGoalData,
-  } = useQuery(['getGoalInfo', 1], goalApi.getGoal, {
+  } = useQuery(['goalInfo'], goalApi.getGoal, {
     onSuccess: (data) => {},
     staleTime: Infinity,
   });

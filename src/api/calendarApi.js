@@ -10,4 +10,10 @@ export const calendarApi = {
       `/confirm/calendar/member/${calendarDate}?memberId=${memberId}`
     );
   },
+
+  getCalendarMonth: ({ calendarMonth, memberId }) => {
+    return instance.get(
+      `/confirm/calendar/month/${calendarMonth}?memberId=${memberId}`
+    );
+  },
 };

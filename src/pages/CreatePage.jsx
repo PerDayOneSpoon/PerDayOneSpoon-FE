@@ -45,7 +45,8 @@ const CreatePage = () => {
 
   const addGoalMutation = useMutation(goalApi.addGoal, {
     onSuccess: (data) => {
-      queryClient.invalidateQueries('getGoalInfo');
+      queryClient.invalidateQueries(['goalInfo']);
+      queryClient.invalidateQueries(['myCalendar']);
       navigate('/');
     },
     onError: ({ response }) => {

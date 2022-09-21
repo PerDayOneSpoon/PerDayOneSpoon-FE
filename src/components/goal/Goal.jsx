@@ -4,6 +4,7 @@ import { ReactComponent as IconTrash } from '../../assets/icons/icon-trash.svg';
 import { ReactComponent as IconLock } from '../../assets/icons/icon-lock.svg';
 import { ReactComponent as IconUnlock } from '../../assets/icons/icon-unlock.svg';
 import { ReactComponent as IconCalendar } from '../../assets/icons/icon-calendar.svg';
+import { ReactComponent as IconCheck } from '../../assets/icons/icon-check.svg';
 import { useMutation, useQueryClient } from 'react-query';
 import { goalApi } from '../../api/goalApi';
 import { colors } from '../../theme/theme';
@@ -21,20 +22,26 @@ const Goal = ({ item }) => {
 
   const deleteGoalMutation = useMutation(goalApi.deleteGoal, {
     onSuccess: (data) => {
-      queryClient.invalidateQueries('getGoalInfo');
+      queryClient.invalidateQueries('goalInfo');
+      queryClient.invalidateQueries('friendDateSearch');
+      queryClient.invalidateQueries('friendGoal');
     },
   });
 
   const achieveGoalMutation = useMutation(goalApi.achieveGoal, {
     onSuccess: (data) => {
-      queryClient.invalidateQueries('getGoalInfo');
+      queryClient.invalidateQueries('goalInfo');
+      queryClient.invalidateQueries('friendDateSearch');
+      queryClient.invalidateQueries('friendGoal');
     },
     onError: (error) => {},
   });
 
   const changePrivateGoalMutaion = useMutation(goalApi.changePrivateGoal, {
     onSuccess: (data) => {
-      queryClient.invalidateQueries('getGoalInfo');
+      queryClient.invalidateQueries('goalInfo');
+      queryClient.invalidateQueries('friendDateSearch');
+      queryClient.invalidateQueries('friendGoal');
     },
     onError: (error) => {},
   });
@@ -144,84 +151,91 @@ const Goal = ({ item }) => {
 
   return (
     <GoalContainer isTimer={isTimer}>
-      <Container
-        onClick={() => setIsTimer(!isTimer)}
-        isAchievementCheck={achievementCheck}
-      >
-        <Contents>
-          <RightContent>
-            <ChracterContainer>
-              <Character src={characterUrl} alt='캐릭터 이미지' />
-            </ChracterContainer>
-
-            <div>
-              <CommonText isCallout={true}>{title}</CommonText>
-              <DateBox isFootnote2={true}>
-                <IconContainer className='calendar-icon'>
-                  <IconCalendar />
-                </IconContainer>
-                <CommonText isFootnote2={true} fc={colors.gray500}>
-                  {startDate} - {endDate}
-                </CommonText>
-              </DateBox>
-            </div>
-          </RightContent>
-          <LikeContent>
-            <IconContainer>
-              {privateCheck ? (
-                <IconLock
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleLockClick(privateCheck);
-                  }}
-                />
-              ) : (
-                <IconUnlock
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleLockClick(privateCheck);
-                  }}
-                />
-              )}
-            </IconContainer>
-          </LikeContent>
-        </Contents>
-        {isTimer && (
-          <>
-            <TimerContainer>
-              <Timer>
-                <ProgressBar>
-                  <ProgressPercentage
-                    percentage={percentage}
-                    isAchievementCheck={achievementCheck}
-                  />
-                </ProgressBar>
-                <Time isFootnote2={true} fc={colors.gray500}>
-                  {`${HH}:${MM}:${SS} `}
-                </Time>
-              </Timer>
-              <CommonButton
-                handleButtonClick={(e) => {
-                  e.stopPropagation();
-                  handleStartCilck();
-                }}
-                wd='50px'
-                mg='-4px 0 0 16px'
-                pd='6px 4px'
-                bdrs='20px'
-                bd='none'
-                bg={achievementCheck ? colors.gray300 : colors.primary}
-                fc={colors.white}
-                fz='12px'
-                lh='16px'
-                text='시작'
-                flexBasis='50px'
-                disabled={achievementCheck}
-              ></CommonButton>
-            </TimerContainer>
-          </>
+      <GoalContainerInner>
+        {achievementCheck ? (
+          <IconContainer className='check-icon'>
+            <IconCheck style={{ color: colors.orange500 }} />
+          </IconContainer>
+        ) : (
+          <CheckContainer onClick={() => alert('타이머를 완료해 주세요')} />
         )}
-      </Container>
+
+        <Container onClick={() => setIsTimer(!isTimer)}>
+          <Contents>
+            <RightContent>
+              <ChracterContainer>
+                <Character src={characterUrl} alt='캐릭터 이미지' />
+              </ChracterContainer>
+
+              <div>
+                <CommonText isCallout={true}>{title}</CommonText>
+                <DateBox>
+                  <IconContainer className='calendar-icon'>
+                    <IconCalendar />
+                  </IconContainer>
+                  <CommonText isFootnote2={true} fc={colors.gray500}>
+                    {startDate} ~ {endDate}
+                  </CommonText>
+                </DateBox>
+              </div>
+            </RightContent>
+            <LikeContent>
+              <IconContainer>
+                {privateCheck ? (
+                  <IconLock
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleLockClick(privateCheck);
+                    }}
+                  />
+                ) : (
+                  <IconUnlock
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleLockClick(privateCheck);
+                    }}
+                  />
+                )}
+              </IconContainer>
+            </LikeContent>
+          </Contents>
+          {isTimer && (
+            <>
+              <TimerContainer>
+                <Timer>
+                  <ProgressBar>
+                    <ProgressPercentage
+                      percentage={percentage}
+                      isAchievementCheck={achievementCheck}
+                    />
+                  </ProgressBar>
+                  <Time isFootnote2={true} fc={colors.gray500}>
+                    {`${HH}:${MM}:${SS} `}
+                  </Time>
+                </Timer>
+                <CommonButton
+                  handleButtonClick={(e) => {
+                    e.stopPropagation();
+                    handleStartCilck();
+                  }}
+                  wd='50px'
+                  mg='-4px 0 0 16px'
+                  pd='6px 4px'
+                  bdrs='20px'
+                  bd='none'
+                  bg={achievementCheck ? '#ccc' : colors.primary}
+                  fc={colors.white}
+                  fz='12px'
+                  lh='16px'
+                  text={achievementCheck ? '완료' : '시작'}
+                  flexBasis='50px'
+                  disabled={achievementCheck}
+                ></CommonButton>
+              </TimerContainer>
+            </>
+          )}
+        </Container>
+      </GoalContainerInner>
       {isTimer && (
         <TrashIconContainer>
           <IconContainer
@@ -247,15 +261,21 @@ const GoalContainer = styled.div`
     ${({ isTimer }) =>
       isTimer &&
       css`
-        margin-bottom: 54px;
+        margin-bottom: 40px;
       `}
   }
 `;
 
+const GoalContainerInner = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
 const Container = styled.div`
+  flex: 1;
+  width: 100%;
   padding: 16px;
-  background-color: ${({ isAchievementCheck }) =>
-    isAchievementCheck ? '#efefef' : colors.white};
+  background-color: ${colors.white};
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
 
@@ -289,9 +309,8 @@ const Character = styled.img`
 
 const LikeContent = styled.div`
   display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
   align-items: center;
+  justify-content: center;
   margin-left: 16px;
 `;
 
@@ -299,9 +318,11 @@ const IconContainer = styled.div`
   width: 24px;
   height: 24px;
 
+  &.check-icon {
+    margin-right: 8px;
+  }
+
   &.trash-icon {
-    width: 20px;
-    height: 20px;
     margin: 0 16px;
     cursor: pointer;
   }
@@ -316,7 +337,7 @@ const IconContainer = styled.div`
     svg {
       width: 100%;
       height: 100%;
-      color: ${colors.gray500};
+      color: ${colors.gray300};
     }
   }
 `;
@@ -377,29 +398,24 @@ const ProgressPercentage = styled.div.attrs((props) => ({
   transition: all 0.2s linear;
 `;
 
-const Button = styled.button`
-  width: 50px;
-  margin-bottom: -2px;
-  margin-left: 16px;
-  border: none;
-  outline: none;
-  padding: 2px 4px;
-  border-radius: 4px;
-  color: ${colors.white};
-  background: ${({ isAchievementCheck }) =>
-    isAchievementCheck ? '#ccc' : colors.primary};
-  font-size: 12px;
-
-  cursor: pointer;
-`;
-
 const DateBox = styled.div`
   width: 100%;
   margin-top: 8px;
-  padding: 4px;
+  /* padding: 4px;
   border-radius: 4px;
-  background-color: ${colors.gray50};
+  background-color: ${colors.gray50}; */
   display: flex;
   align-items: stretch;
   word-break: keep-all;
+`;
+
+const CheckContainer = styled.div`
+  width: 20px;
+  height: 20px;
+  max-width: 20px;
+  max-height: 20px;
+  box-sizing: border-box;
+  margin: 2px 10px 2px 2px;
+  border-radius: 50%;
+  border: 2px solid ${colors.gray300};
 `;

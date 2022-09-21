@@ -21,7 +21,7 @@ const SettingPage = () => {
     isError,
     error,
     data: userInfo,
-  } = useQuery('getUserInfo', userApi.getUserInfo, {
+  } = useQuery(['userInfo'], userApi.getUserInfo, {
     onSuccess: (data) => {
       setEditUserInfo({
         ...editUserInfo,
@@ -47,7 +47,8 @@ const SettingPage = () => {
 
   const updateUserStatusMutation = useMutation(userApi.updateUserStatus, {
     onSuccess: () => {
-      queryClient.invalidateQueries('getUserInfo');
+      queryClient.invalidateQueries('myCalendar');
+      queryClient.invalidateQueries('userInfo');
     },
   });
 
