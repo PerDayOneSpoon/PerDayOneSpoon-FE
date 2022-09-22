@@ -3,7 +3,7 @@ import BottomSheetModal from '../global/BottomSheetModal';
 import CommonText from '../elements/CommonText';
 import { colors } from '../../theme/theme';
 import { useRecoilState } from 'recoil';
-import { modalState } from '../../recoil/modalAtom';
+import { bottomModalState } from '../../recoil/common';
 
 const GoalForm = ({
   form,
@@ -19,7 +19,7 @@ const GoalForm = ({
   startDate,
   character,
 }) => {
-  const [modal, setModal] = useRecoilState(modalState);
+  const [bottomModal, setBottomModal] = useRecoilState(bottomModalState);
 
   const dayArr = [3, 7];
   const privateArr = ['친구 공개', '나만 보기'];
@@ -93,7 +93,9 @@ const GoalForm = ({
           </FlexContainer>
         </SetForm>
         <SetForm isPointer={true}>
-          <FlexContainer onClick={() => setModal({ open: true, type: 'time' })}>
+          <FlexContainer
+            onClick={() => setBottomModal({ open: true, type: 'time' })}
+          >
             <CommonText isSubhead={true}>시간 설정</CommonText>
             <CommonText isSentence2={true} fc={colors.gray500}>
               {form.time.split(':')[0]}시간 {form.time.split(':')[1]}분
@@ -102,7 +104,7 @@ const GoalForm = ({
         </SetForm>
         <SetForm isPointer={true}>
           <FlexContainer
-            onClick={() => setModal({ open: true, type: 'private' })}
+            onClick={() => setBottomModal({ open: true, type: 'private' })}
           >
             <CommonText isSubhead={true}>공개 설정</CommonText>
             <CommonText isSentence2={true} fc={colors.gray500}>
@@ -132,12 +134,14 @@ const GoalForm = ({
       {/* 모달 */}
       <BottomSheetModal
         isHeader={
-          modal.type === 'private' || modal.type === 'character' ? false : true
+          bottomModal.type === 'private' || bottomModal.type === 'character'
+            ? false
+            : true
         }
-        title={modal.type === 'time' ? '시간' : null}
+        title={bottomModal.type === 'time' ? '시간' : null}
         handleOkClick={handleTimeOkClick}
       >
-        {modal.type === 'time' && (
+        {bottomModal.type === 'time' && (
           <TimeContainer>
             <TimeDiv>
               {hours.map((hour, i) => (
@@ -180,7 +184,7 @@ const GoalForm = ({
             </TimeDiv>
           </TimeContainer>
         )}
-        {modal.type === 'private' && (
+        {bottomModal.type === 'private' && (
           <PrivateUl>
             {privateArr.map((pri, i) => (
               <PrivateLi key={i} onClick={() => handlePrivateClick(pri)}>

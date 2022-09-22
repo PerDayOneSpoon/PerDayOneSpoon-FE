@@ -15,13 +15,13 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { goalApi } from '../api/goalApi';
 import { useRecoilState } from 'recoil';
-import { modalState } from '../recoil/modalAtom';
+import { bottomModalState } from '../recoil/common';
 import dayjs from 'dayjs';
 
 const CreatePage = () => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-  const [modal, setModal] = useRecoilState(modalState);
+  const [bottomModal, setBottomModal] = useRecoilState(bottomModalState);
   const [toast, setToast] = useState(true);
   const [toastMessage, setToastMessage] = useState('');
 
@@ -100,7 +100,7 @@ const CreatePage = () => {
   const handlePrivateClick = (pri) => {
     if (pri === '친구 공개') setForm({ ...form, privateCheck: false });
     if (pri === '나만 보기') setForm({ ...form, privateCheck: true });
-    setModal({ open: false, type: 'private' });
+    setBottomModal({ open: false, type: 'private' });
   };
 
   const handleColorClick = (color) => {
@@ -139,9 +139,9 @@ const CreatePage = () => {
   };
 
   const handleTimeOkClick = () => {
-    if (modal.type === 'time') {
+    if (bottomModal.type === 'time') {
       setForm({ ...form, time: `${selectTime.hour}:${selectTime.minute}` });
-      setModal({ open: false, type: 'time' });
+      setBottomModal({ open: false, type: 'time' });
     }
   };
 
@@ -159,6 +159,9 @@ const CreatePage = () => {
       <GoalForm
         form={form}
         selectTime={selectTime}
+        startDate={startDate}
+        endDate={endDate}
+        character={character}
         handleHourClick={handleHourClick}
         handleMinuteClick={handleMinuteClick}
         handleTitleChange={handleTitleChange}
@@ -166,9 +169,6 @@ const CreatePage = () => {
         handleTimeOkClick={handleTimeOkClick}
         handlePrivateClick={handlePrivateClick}
         handleColorClick={handleColorClick}
-        startDate={startDate}
-        endDate={endDate}
-        character={character}
       />
       {toastMessage !== '' ? (
         <ToastModal toastMessage={toastMessage} displayNone={toast} />

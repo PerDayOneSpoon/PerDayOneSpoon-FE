@@ -1,7 +1,6 @@
 import { atom, atomFamily, selector, selectorFamily } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
 import { goalApi } from '../api/goalApi';
-import { DefaultValue } from 'recoil';
 
 const { persistAtom } = recoilPersist();
 let i = 0;
