@@ -28,11 +28,7 @@ const Calendar = () => {
     },
   });
 
-  const {
-    isLoading: searchDateLoading,
-    isFetching: searchDateFetching,
-    data: getSearchDate,
-  } = useQuery(
+  const { isLoading: searchDateLoading, data: getSearchDate } = useQuery(
     ['friendDateSearch', searchDate, userId],
     () =>
       calendarApi.getCalendarDate({
@@ -87,7 +83,7 @@ const Calendar = () => {
     return <Loading />;
   }
 
-  if (searchDateLoading || searchDateFetching) {
+  if (searchDateLoading) {
     return <Loading />;
   }
 

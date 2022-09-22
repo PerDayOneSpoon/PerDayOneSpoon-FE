@@ -3,23 +3,21 @@ import styled, { css, keyframes } from 'styled-components';
 import { isMobile } from 'react-device-detect';
 import { ReactComponent as IconClose } from '../../assets/icons/icon-close.svg';
 import { useRecoilState } from 'recoil';
-import { modalState } from '../../recoil/modalAtom';
+import { bottomModalState } from '../../recoil/common';
 import { colors } from '../../theme/theme';
 import CommonText from '../elements/CommonText';
 
 const BottomSheetModal = ({ children, isHeader, title, handleOkClick }) => {
-  const [modal, setModal] = useRecoilState(modalState);
+  const [bottomModal, setBottomModal] = useRecoilState(bottomModalState);
   const [isOpen, setIsOpen] = useState('openModal');
 
   const handleModalClose = () => {
-    // setModal({ open: false });
-
     setIsOpen('closeModal');
-    setTimeout(() => setModal({ ...modal, open: false }), 500);
+    setTimeout(() => setBottomModal({ ...bottomModal, open: false }), 500);
   };
 
   useEffect(() => {
-    if (modal.open) {
+    if (bottomModal.open) {
       setTimeout(() => {
         setIsOpen('');
       }, 500);
@@ -36,9 +34,9 @@ const BottomSheetModal = ({ children, isHeader, title, handleOkClick }) => {
     } else {
       setIsOpen('openModal');
     }
-  }, [modal.open]);
+  }, [bottomModal.open]);
 
-  if (!modal.open) return null;
+  if (!bottomModal.open) return null;
 
   return (
     // modal.open && (
@@ -78,7 +76,7 @@ const ModalContainer = styled.div`
   height: 100vh;
   height: -webkit-fill-available;
   height: fill-available;
-  margin-right: -16px;
+
   ${({ isOpen }) =>
     isOpen === 'openModal'
       ? css`

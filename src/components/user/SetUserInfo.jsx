@@ -6,6 +6,9 @@ import { colors } from '../../theme/theme';
 import { ReactComponent as IconCamera } from '../../assets/icons/icon-camera.svg';
 import { ReactComponent as IconCopy } from '../../assets/icons/icon-copy.svg';
 import CommonText from '../elements/CommonText';
+import Modal from '../global/Modal';
+import { useRecoilState } from 'recoil';
+import { modalState } from '../../recoil/common';
 
 const SetUserInfo = ({
   onlyView,
@@ -16,6 +19,8 @@ const SetUserInfo = ({
   const queryClient = useQueryClient();
 
   const profileImg = useRef();
+
+  const [modal, setModal] = useRecoilState(modalState);
 
   const updateUserImgMutation = useMutation(userApi.updateUserImg, {
     onSuccess: (data) => {
@@ -94,7 +99,7 @@ const SetUserInfo = ({
             <IconCopyContainer
               onClick={() => {
                 navigator.clipboard.writeText(userInfo.data.socialCode);
-                alert('검색 코드를 복사했습니다.');
+                setModal({ open: true, type: 'alert' });
               }}
             >
               <IconCopy />
@@ -102,6 +107,12 @@ const SetUserInfo = ({
           </FormInput>
         </SettingForm>
       </Middle>
+      {modal.open && (
+        <Modal
+          modalText='검색 코드를 복사했습니다.'
+          handleModalOk={() => setModal({ open: false })}
+        />
+      )}
     </Container>
   );
 };

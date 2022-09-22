@@ -3,6 +3,22 @@ import { recoilPersist } from 'recoil-persist';
 
 const { persistAtom } = recoilPersist();
 
+export const modalState = atom({
+  key: 'modalState',
+  default: {
+    open: false,
+    type: 'delete',
+  },
+});
+
+export const bottomModalState = atom({
+  key: 'bottomModalState',
+  default: {
+    open: false,
+    type: '',
+  },
+});
+
 export const userInfoState = atom({
   key: 'userInfoState',
   default: {
@@ -13,7 +29,7 @@ export const userInfoState = atom({
 
 export const navBarState = atom({
   key: 'navBarState',
-  default: '홈',
+  default: '달성',
   effects_UNSTABLE: [persistAtom],
 });
 

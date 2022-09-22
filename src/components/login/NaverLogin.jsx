@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { API } from '../../api/api';
 import axios from 'axios';
 import { setToken } from '../../shared/localStorage';
+import LoginLoading from './LoginLoading';
 
 const NaverLogin = () => {
   const navigate = useNavigate();
@@ -10,13 +11,14 @@ const NaverLogin = () => {
   let code = new URL(window.location.href).searchParams.get('code');
   let state = new URL(window.location.href).searchParams.get('state');
 
-  console.log('code!!!!', code);
+  // console.log('code!!!!', code);
 
   useEffect(() => {
     axios
       .get(`${API.NAVER_LOGIN}?code=${code}&state=${state}`)
       .then((res) => {
-        console.log('네이버로그인 성공', res);
+        // console.log('네이버로그인 성공', res);
+        console.log('네이버로그인 성공');
 
         if (res.data.code === 200) {
           setToken(res.headers.authorization, res.headers.refreshtoken);
@@ -30,7 +32,7 @@ const NaverLogin = () => {
       });
   }, [code, state, navigate]);
 
-  return <div></div>;
+  return <LoginLoading />;
 };
 
 export default NaverLogin;

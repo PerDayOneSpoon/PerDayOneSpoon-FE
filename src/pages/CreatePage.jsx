@@ -3,6 +3,7 @@ import Layout from '../layout/Layout';
 import Header from '../components/global/Header';
 import GoalForm from '../components/goal/GoalForm';
 import ToastModal from '../components/global/ToastModal';
+import Modal from '../components/global/Modal';
 import character1 from '../assets/imgs/character1.png';
 import character2 from '../assets/imgs/character2.png';
 import character3 from '../assets/imgs/character3.png';
@@ -15,13 +16,17 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { goalApi } from '../api/goalApi';
 import { useRecoilState } from 'recoil';
-import { modalState } from '../recoil/modalAtom';
+import { bottomModalState } from '../recoil/common';
+import { modalState } from '../recoil/common';
 import dayjs from 'dayjs';
 
 const CreatePage = () => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+
+  const [bottomModal, setBottomModal] = useRecoilState(bottomModalState);
   const [modal, setModal] = useRecoilState(modalState);
+  const [resMessage, setResMessage] = useState('');
   const [toast, setToast] = useState(true);
   const [toastMessage, setToastMessage] = useState('');
 
@@ -50,7 +55,9 @@ const CreatePage = () => {
       navigate('/');
     },
     onError: ({ response }) => {
-      alert(response.data.errorMessage);
+      setResMessage(response.data.errorMessage);
+      setModal({ open: true, type: 'alert' });
+      // alert(response.data.errorMessage);
     },
   });
 
@@ -70,15 +77,16 @@ const CreatePage = () => {
       setTimeout(() => setToast(true), 3000);
       // return alert('설정한 습관의 타이머를 유효한 값으로 수정해주세요');
     } else {
-      if (
-        window.confirm(
-          '한 번 추가하신 습관은 수정이 불가능합니다. 추가하시겠습니까?'
-        )
-      ) {
-        addGoalMutation.mutate(form);
-      } else {
-        return;
-      }
+      setModal({ open: true, type: 'confirm' });
+      // if (
+      //   window.confirm(
+      //     '한 번 추가하신 습관은 수정이 불가능합니다. 추가하시겠습니까?'
+      //   )
+      // ) {
+      //   addGoalMutation.mutate(form);
+      // } else {
+      //   return;
+      // }
     }
   };
 
@@ -100,7 +108,7 @@ const CreatePage = () => {
   const handlePrivateClick = (pri) => {
     if (pri === '친구 공개') setForm({ ...form, privateCheck: false });
     if (pri === '나만 보기') setForm({ ...form, privateCheck: true });
-    setModal({ open: false, type: 'private' });
+    setBottomModal({ open: false, type: 'private' });
   };
 
   const handleColorClick = (color) => {
@@ -139,10 +147,15 @@ const CreatePage = () => {
   };
 
   const handleTimeOkClick = () => {
-    if (modal.type === 'time') {
+    if (bottomModal.type === 'time') {
       setForm({ ...form, time: `${selectTime.hour}:${selectTime.minute}` });
-      setModal({ open: false, type: 'time' });
+      setBottomModal({ open: false, type: 'time' });
     }
+  };
+
+  const handleModalAdd = () => {
+    addGoalMutation.mutate(form);
+    setModal({ open: false });
   };
 
   // console.log('form 전송 데이터', form);
@@ -159,6 +172,9 @@ const CreatePage = () => {
       <GoalForm
         form={form}
         selectTime={selectTime}
+        startDate={startDate}
+        endDate={endDate}
+        character={character}
         handleHourClick={handleHourClick}
         handleMinuteClick={handleMinuteClick}
         handleTitleChange={handleTitleChange}
@@ -166,13 +182,22 @@ const CreatePage = () => {
         handleTimeOkClick={handleTimeOkClick}
         handlePrivateClick={handlePrivateClick}
         handleColorClick={handleColorClick}
-        startDate={startDate}
-        endDate={endDate}
-        character={character}
       />
       {toastMessage !== '' ? (
         <ToastModal toastMessage={toastMessage} displayNone={toast} />
       ) : null}
+      {modal.open && modal.type === 'confirm' && (
+        <Modal
+          modalText='한 번 추가하신 습관은 수정이 불가능합니다. 추가하시겠습니까?'
+          handleModalOk={handleModalAdd}
+        />
+      )}
+      {modal.open && modal.type === 'alert' && (
+        <Modal
+          modalText={resMessage}
+          handleModalOk={() => setModal({ open: false })}
+        />
+      )}
     </Layout>
   );
 };
