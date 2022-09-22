@@ -167,7 +167,7 @@ const Goal = ({ item }) => {
                 <Character src={characterUrl} alt='캐릭터 이미지' />
               </ChracterContainer>
 
-              <div>
+              <TextBox>
                 <CommonText isCallout={true}>{title}</CommonText>
                 <DateBox>
                   <IconContainer className='calendar-icon'>
@@ -177,7 +177,7 @@ const Goal = ({ item }) => {
                     {startDate} ~ {endDate}
                   </CommonText>
                 </DateBox>
-              </div>
+              </TextBox>
             </RightContent>
             <LikeContent>
               <IconContainer>
@@ -288,6 +288,7 @@ const Contents = styled.div`
 `;
 
 const RightContent = styled.div`
+  width: 100%;
   display: flex;
   align-items: center;
   font-size: 14px;
@@ -396,6 +397,10 @@ const ProgressPercentage = styled.div.attrs((props) => ({
   background-color: ${({ isAchievementCheck }) =>
     isAchievementCheck ? '#ccc' : colors.primary};
   transition: all 0.2s linear;
+`;
+
+const TextBox = styled.div`
+  width: 100%;
 `;
 
 const DateBox = styled.div`

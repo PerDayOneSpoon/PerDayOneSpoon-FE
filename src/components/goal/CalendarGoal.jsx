@@ -34,7 +34,7 @@ const CalendarGoal = ({ item, isMe }) => {
               <Character src={characterUrl} alt='캐릭터 이미지' />
             </ChracterContainer>
 
-            <div>
+            <TextBox>
               <CommonText isCallout={true}>{title}</CommonText>
               <DateBox>
                 <IconContainer className='calendar-icon'>
@@ -44,7 +44,7 @@ const CalendarGoal = ({ item, isMe }) => {
                   {startDate} - {endDate}
                 </CommonText>
               </DateBox>
-            </div>
+            </TextBox>
           </RightContent>
           <LikeContent>
             {isMe ? (
@@ -94,6 +94,7 @@ const Contents = styled.div`
   justify-content: space-between;
 `;
 const RightContent = styled.div`
+  width: 100%;
   display: flex;
   align-items: center;
   font-size: 14px;
@@ -142,6 +143,10 @@ const IconContainer = styled.div`
       color: ${colors.gray300};
     }
   }
+`;
+
+const TextBox = styled.div`
+  width: 100%;
 `;
 
 const DateBox = styled.div`

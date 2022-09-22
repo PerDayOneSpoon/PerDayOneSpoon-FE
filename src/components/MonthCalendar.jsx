@@ -74,8 +74,8 @@ const CutomCalendar = styled(Calendar)`
   }
 
   .react-calendar__viewContainer {
-    margin-left: -8px;
-    margin-right: -8px;
+    margin-left: -16px;
+    margin-right: -16px;
   }
 
   .react-calendar__month-view__days__day--weekend {
@@ -150,7 +150,7 @@ const CutomCalendar = styled(Calendar)`
     font-size: 20px;
     line-height: 25px;
     font-weight: 500;
-    padding-top: 0;
+    padding: 0;
   }
 
   .react-calendar__month-view__weekdays {
