@@ -146,6 +146,7 @@ const IconContainer = styled.div`
 `;
 
 const TextBox = styled.div`
+  word-break: break-all;
   width: 100%;
 `;
 

@@ -12,8 +12,6 @@ const BottomSheetModal = ({ children, isHeader, title, handleOkClick }) => {
   const [isOpen, setIsOpen] = useState('openModal');
 
   const handleModalClose = () => {
-    // setModal({ open: false });
-
     setIsOpen('closeModal');
     setTimeout(() => setBottomModal({ ...bottomModal, open: false }), 500);
   };
@@ -78,7 +76,7 @@ const ModalContainer = styled.div`
   height: 100vh;
   height: -webkit-fill-available;
   height: fill-available;
-  margin-right: -16px;
+
   ${({ isOpen }) =>
     isOpen === 'openModal'
       ? css`

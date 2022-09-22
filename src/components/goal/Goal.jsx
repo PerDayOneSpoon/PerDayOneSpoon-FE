@@ -14,19 +14,13 @@ import useInterval from '../../hooks/useInterval';
 
 import { useRecoilState } from 'recoil';
 import { goalTimeFamily } from '../../recoil/goal';
+import { modalState } from '../../recoil/common';
 
-const Goal = ({ item }) => {
+const Goal = ({ item, handleAchiveCheck, handleGoalDelete }) => {
   const queryClient = useQueryClient();
 
   const [isTimer, setIsTimer] = useState(false);
-
-  const deleteGoalMutation = useMutation(goalApi.deleteGoal, {
-    onSuccess: (data) => {
-      queryClient.invalidateQueries('goalInfo');
-      queryClient.invalidateQueries('friendDateSearch');
-      queryClient.invalidateQueries('friendGoal');
-    },
-  });
+  const [modal, setModal] = useRecoilState(modalState);
 
   const achieveGoalMutation = useMutation(goalApi.achieveGoal, {
     onSuccess: (data) => {
@@ -122,16 +116,6 @@ const Goal = ({ item }) => {
     });
   };
 
-  const handleGoalDelete = (deleteId) => {
-    if (
-      window.confirm('모든 날짜의 해당 습관이 삭제됩니다. 삭제하시겠습니까?')
-    ) {
-      deleteGoalMutation.mutate({ goalFlag: deleteId });
-    } else {
-      return;
-    }
-  };
-
   useEffect(() => {
     if (testTime.hh === 0 && testTime.mm === 0 && testTime.ss === 0) {
       clearInterval(startProgress);
@@ -157,7 +141,7 @@ const Goal = ({ item }) => {
             <IconCheck style={{ color: colors.orange500 }} />
           </IconContainer>
         ) : (
-          <CheckContainer onClick={() => alert('타이머를 완료해 주세요')} />
+          <CheckContainer onClick={handleAchiveCheck} />
         )}
 
         <Container onClick={() => setIsTimer(!isTimer)}>
@@ -400,6 +384,7 @@ const ProgressPercentage = styled.div.attrs((props) => ({
 `;
 
 const TextBox = styled.div`
+  word-break: break-all;
   width: 100%;
 `;
 

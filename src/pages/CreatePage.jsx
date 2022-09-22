@@ -3,6 +3,7 @@ import Layout from '../layout/Layout';
 import Header from '../components/global/Header';
 import GoalForm from '../components/goal/GoalForm';
 import ToastModal from '../components/global/ToastModal';
+import Modal from '../components/global/Modal';
 import character1 from '../assets/imgs/character1.png';
 import character2 from '../assets/imgs/character2.png';
 import character3 from '../assets/imgs/character3.png';
@@ -16,12 +17,16 @@ import { useNavigate } from 'react-router-dom';
 import { goalApi } from '../api/goalApi';
 import { useRecoilState } from 'recoil';
 import { bottomModalState } from '../recoil/common';
+import { modalState } from '../recoil/common';
 import dayjs from 'dayjs';
 
 const CreatePage = () => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+
   const [bottomModal, setBottomModal] = useRecoilState(bottomModalState);
+  const [modal, setModal] = useRecoilState(modalState);
+  const [resMessage, setResMessage] = useState('');
   const [toast, setToast] = useState(true);
   const [toastMessage, setToastMessage] = useState('');
 
@@ -50,7 +55,9 @@ const CreatePage = () => {
       navigate('/');
     },
     onError: ({ response }) => {
-      alert(response.data.errorMessage);
+      setResMessage(response.data.errorMessage);
+      setModal({ open: true, type: 'alert' });
+      // alert(response.data.errorMessage);
     },
   });
 
@@ -70,15 +77,16 @@ const CreatePage = () => {
       setTimeout(() => setToast(true), 3000);
       // return alert('설정한 습관의 타이머를 유효한 값으로 수정해주세요');
     } else {
-      if (
-        window.confirm(
-          '한 번 추가하신 습관은 수정이 불가능합니다. 추가하시겠습니까?'
-        )
-      ) {
-        addGoalMutation.mutate(form);
-      } else {
-        return;
-      }
+      setModal({ open: true, type: 'confirm' });
+      // if (
+      //   window.confirm(
+      //     '한 번 추가하신 습관은 수정이 불가능합니다. 추가하시겠습니까?'
+      //   )
+      // ) {
+      //   addGoalMutation.mutate(form);
+      // } else {
+      //   return;
+      // }
     }
   };
 
@@ -145,6 +153,11 @@ const CreatePage = () => {
     }
   };
 
+  const handleModalAdd = () => {
+    addGoalMutation.mutate(form);
+    setModal({ open: false });
+  };
+
   // console.log('form 전송 데이터', form);
 
   return (
@@ -173,6 +186,18 @@ const CreatePage = () => {
       {toastMessage !== '' ? (
         <ToastModal toastMessage={toastMessage} displayNone={toast} />
       ) : null}
+      {modal.open && modal.type === 'confirm' && (
+        <Modal
+          modalText='한 번 추가하신 습관은 수정이 불가능합니다. 추가하시겠습니까?'
+          handleModalOk={handleModalAdd}
+        />
+      )}
+      {modal.open && modal.type === 'alert' && (
+        <Modal
+          modalText={resMessage}
+          handleModalOk={() => setModal({ open: false })}
+        />
+      )}
     </Layout>
   );
 };

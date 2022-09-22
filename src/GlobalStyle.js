@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
+import { isMobile } from 'react-device-detect';
 import reset from 'styled-reset';
 
 const GlobalStyles = createGlobalStyle`   
@@ -11,9 +12,7 @@ const GlobalStyles = createGlobalStyle`
    }
    
    body {
-    width: 100%;
-    /* height: 100%; */
-    height: 100vh;
+    width: 100%;        
     height: calc(var(--vh, 1vh) * 100);
     overflow-y: scroll;    
     font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
@@ -23,6 +22,10 @@ const GlobalStyles = createGlobalStyle`
     &::-webkit-scrollbar {
       display: none;
     }  
+
+    @media (min-width: 1025px) {
+      height: 100vh;
+    }
   
   @supports (-webkit-touch-callout: none) {
     min-height: -webkit-fill-available;

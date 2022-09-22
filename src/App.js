@@ -50,20 +50,6 @@ const ResponsiveContainer = styled.div`
     background-color: ${colors.wallPaper};
     display: flex;
     align-items: center;
-    justify-content: center;
-    /* 
-    & > img {
-      display: block;
-      width: 100%;
-      height: 100%;
-      position: relative;
-      right: -200px;
-      bottom: 0;
-      z-index: 1;
-    } */
-
-    & > div {
-    }
   }
 `;
 
@@ -88,7 +74,6 @@ const ImgContainer = styled.div`
   display: none;
   width: 897px;
   height: 100vh;
-  /* border: 1px solid red; */
 
   @media (min-width: 1025px) {
     display: block;

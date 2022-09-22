@@ -10,7 +10,10 @@ const Friend = ({ person, focusUser, handleUserClick }) => {
   return (
     <Container onClick={handleUserClick}>
       <ProfileContainer focusUser={person.id === userId}>
-        <ProfileImg src={person.profileImage} />
+        <ProfileImg
+          src={person.profileImage}
+          focusUser={person.id === userId}
+        />
       </ProfileContainer>
       <CommonText isFootnote1={true} fc={colors.gray500}>
         {person.nickname}
@@ -41,15 +44,23 @@ const ProfileContainer = styled.div`
   margin-bottom: 8px;
   overflow: hidden;
   box-sizing: border-box;
-
-  ${({ focusUser }) =>
-    focusUser &&
-    css`
-      border: 3px solid ${colors.orange500};
-    `}
 `;
+
 const ProfileImg = styled.img`
+  display: inline-block;
+
+  box-sizing: border-box;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border-radius: 50%;
+
+  ${({ focusUser }) =>
+    focusUser
+      ? css`
+          border: 3px solid ${colors.orange500};
+        `
+      : css`
+          border: 3px solid transparent;
+        `}
 `;

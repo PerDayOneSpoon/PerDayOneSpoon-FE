@@ -3,11 +3,11 @@ import { recoilPersist } from 'recoil-persist';
 
 const { persistAtom } = recoilPersist();
 
-const modalState = atom({
+export const modalState = atom({
   key: 'modalState',
   default: {
     open: false,
-    type: '',
+    type: 'delete',
   },
 });
 

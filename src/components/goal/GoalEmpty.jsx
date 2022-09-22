@@ -9,7 +9,7 @@ const GoalEmpty = () => {
       <ImgContainer>
         <EmptyImg src={emptyImg} />
       </ImgContainer>
-      <CommonText isSentece2={true} fc={colors.text} wd='164px'>
+      <CommonText isSentece2={true} fc={colors.gray500} wd='164px' lh='22px'>
         추가하신 습관이 없습니다 습관을 추가해 주세요!
       </CommonText>
     </Container>
