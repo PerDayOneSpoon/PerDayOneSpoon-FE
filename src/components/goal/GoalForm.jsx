@@ -4,6 +4,7 @@ import CommonText from '../elements/CommonText';
 import { colors } from '../../theme/theme';
 import { useRecoilState } from 'recoil';
 import { bottomModalState } from '../../recoil/common';
+import { useState } from 'react';
 
 const GoalForm = ({
   form,
@@ -21,6 +22,7 @@ const GoalForm = ({
 }) => {
   const [bottomModal, setBottomModal] = useRecoilState(bottomModalState);
 
+  const [characterClick, setCharacterClick] = useState(false);
   const dayArr = [3, 7];
   const privateArr = ['친구 공개', '나만 보기'];
   const colorsArr = [
@@ -40,7 +42,10 @@ const GoalForm = ({
   return (
     <>
       <Container>
-        <SetForm className='character-box'>
+        <SetForm
+          className='character-box'
+          onClick={() => setCharacterClick(true)}
+        >
           <FlexContainer isIcon={true}>
             <IconContainer>
               <Icon src={character} />
@@ -50,6 +55,26 @@ const GoalForm = ({
             캐릭터를 선택해 주세요
           </CommonText>
         </SetForm>
+        {characterClick && (
+          <SetForm>
+            <FlexContainer>
+              <CommonText isSubhead={true}>캐릭터 설정</CommonText>
+              <CharacterUl>
+                {colorsArr.map((color, i) => (
+                  <CharacterLi
+                    key={i}
+                    bgColor={color}
+                    onClick={() => handleColorClick(color)}
+                    className={
+                      form.characterId === i + 1 && color.replace('#', '')
+                    }
+                  ></CharacterLi>
+                ))}
+              </CharacterUl>
+            </FlexContainer>
+          </SetForm>
+        )}
+
         <SetForm>
           <CommonText isSubhead={true}>지킬 습관</CommonText>
           <TitleInput
@@ -110,23 +135,6 @@ const GoalForm = ({
             <CommonText isSentence2={true} fc={colors.gray500}>
               {form.privateCheck ? '나만 보기' : '친구 공개'}
             </CommonText>
-          </FlexContainer>
-        </SetForm>
-        <SetForm>
-          <FlexContainer>
-            <CommonText isSubhead={true}>캐릭터 설정</CommonText>
-            <CharacterUl>
-              {colorsArr.map((color, i) => (
-                <CharacterLi
-                  key={i}
-                  bgColor={color}
-                  onClick={() => handleColorClick(color)}
-                  className={
-                    form.characterId === i + 1 && color.replace('#', '')
-                  }
-                ></CharacterLi>
-              ))}
-            </CharacterUl>
           </FlexContainer>
         </SetForm>
       </Container>
@@ -257,6 +265,7 @@ const SetForm = styled.div`
   &.character-box {
     padding: 30px 16px;
     text-align: center;
+    cursor: pointer;
   }
 `;
 
