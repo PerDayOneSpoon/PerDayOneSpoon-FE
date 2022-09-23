@@ -17,15 +17,8 @@ export const userApi = {
     return instance.get('/confirm/profile');
   },
 
-  updateUserStatus: (data) => {
-    return instance.patch('/change/status', {
-      nickname: data.nickname,
-      status: data.status,
-    });
-  },
-
-  updateUserImg: (formData) => {
-    return instance.patch('/change/image', formData, {
+  updateUserProfile: (formData) => {
+    return instance.patch('/change/profile', formData, {
       headers: {
         'Content-type': 'multipart/form-data',
       },

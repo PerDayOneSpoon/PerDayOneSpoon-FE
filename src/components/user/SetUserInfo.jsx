@@ -14,31 +14,11 @@ const SetUserInfo = ({
   onlyView,
   userInfo,
   editUserInfo,
+  previewImg,
   handleInputChange,
+  handleChangeImg,
 }) => {
-  const queryClient = useQueryClient();
-
-  const profileImg = useRef();
-
   const [modal, setModal] = useRecoilState(modalState);
-
-  const updateUserImgMutation = useMutation(userApi.updateUserImg, {
-    onSuccess: (data) => {
-      queryClient.invalidateQueries('myCalendar');
-      queryClient.invalidateQueries('userInfo');
-    },
-  });
-
-  const handleClickImageUpload = () => {
-    profileImg.current.click();
-  };
-
-  const handleChangeProfile = (e) => {
-    const formData = new FormData();
-    formData.append('multipartFile', e.target.files[0]);
-
-    updateUserImgMutation.mutate(formData);
-  };
 
   return (
     <Container>
@@ -51,15 +31,24 @@ const SetUserInfo = ({
           ) : (
             <>
               <ProfileImgContainerInner>
-                <ProfileImg src={userInfo.data.profileImage} />
+                <ProfileImg
+                  src={
+                    previewImg === '' ? userInfo.data.profileImage : previewImg
+                  }
+                />
               </ProfileImgContainerInner>
-              <IconContainer onClick={handleClickImageUpload}>
+              <IconContainer htmlFor='profile-img'>
                 <IconCamera />
+                <input
+                  type='file'
+                  accept='.png, .jpg, .jpeg'
+                  id='profile-img'
+                  onChange={handleChangeImg}
+                />
               </IconContainer>
             </>
           )}
         </ProfileImgContainer>
-        <ImgInput type='file' ref={profileImg} onChange={handleChangeProfile} />
         <CommonText isCallout={true} mg='0 0 8px 0'>
           {userInfo.data.nickname}
         </CommonText>
@@ -194,10 +183,10 @@ const InputRight = styled.input`
 `;
 
 const ImgInput = styled.input`
-  display: none;
+  /* display: none; */
 `;
 
-const IconContainer = styled.div`
+const IconContainer = styled.label`
   position: absolute;
   right: 0;
   bottom: -20px;
@@ -213,6 +202,10 @@ const IconContainer = styled.div`
   transform: translateY(-50%);
 
   cursor: pointer;
+
+  input {
+    display: none;
+  }
 `;
 
 const IconCopyContainer = styled.div`
