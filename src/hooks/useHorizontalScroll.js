@@ -1,6 +1,6 @@
 import { useRef, useEffect } from 'react';
 
-export function useHorizontalScroll() {
+export const useHorizontalScroll = () => {
   const elRef = useRef();
   useEffect(() => {
     const el = elRef.current;
@@ -26,4 +26,4 @@ export function useHorizontalScroll() {
     }
   }, []);
   return elRef;
-}
+};
