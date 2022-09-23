@@ -58,13 +58,14 @@ const Contents = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  height: 100%;
+  height: calc(var(--vh, 1vh) * 100);
   background-color: ${(props) => props.theme.mainColor};
   position: relative;
   z-index: 2;
 
   @media (min-width: 1025px) {
     width: 32rem;
+    height: 100vh;
     box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
   }
 `;
