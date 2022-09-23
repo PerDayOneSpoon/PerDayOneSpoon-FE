@@ -2,9 +2,13 @@ import styled from 'styled-components';
 import Friend from './Friend';
 import { useHorizontalScroll } from '../../hooks/useHorizontalScroll';
 import { colors } from '../../theme/theme';
+import { useRef } from 'react';
 
 const FriendsList = ({ peopleList, handleUserClick }) => {
   const scrollRef = useHorizontalScroll();
+  const focusRef = useRef();
+
+  console.log(focusRef.current);
 
   return (
     <Container ref={scrollRef}>
@@ -12,7 +16,11 @@ const FriendsList = ({ peopleList, handleUserClick }) => {
         <Friend
           key={person.id}
           person={person}
-          handleUserClick={() => handleUserClick(person.id)}
+          focusRef={focusRef}
+          handleUserClick={() => {
+            focusRef.current.focus();
+            handleUserClick(person.id);
+          }}
         />
       ))}
     </Container>

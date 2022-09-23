@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { API } from '../../api/api';
 import axios from 'axios';
 import { setToken } from '../../shared/localStorage';
+import Layout from '../../layout/Layout';
 import LoginLoading from './LoginLoading';
 
 const NaverLogin = () => {
@@ -32,7 +33,11 @@ const NaverLogin = () => {
       });
   }, [code, state, navigate]);
 
-  return <LoginLoading />;
+  return (
+    <Layout>
+      <LoginLoading />
+    </Layout>
+  );
 };
 
 export default NaverLogin;

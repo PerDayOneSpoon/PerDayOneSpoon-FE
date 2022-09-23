@@ -3,13 +3,14 @@ import { colors } from '../../theme/theme';
 import CommonText from '../elements/CommonText';
 import { useRecoilValue } from 'recoil';
 import { calendarUserIdState } from '../../recoil/common';
+import { useRef } from 'react';
 
-const Friend = ({ person, focusUser, handleUserClick }) => {
+const Friend = ({ person, focusUser, focusRef, handleUserClick }) => {
   const userId = useRecoilValue(calendarUserIdState);
 
   return (
     <Container onClick={handleUserClick}>
-      <ProfileContainer focusUser={person.id === userId}>
+      <ProfileContainer focusUser={person.id === userId} ref={focusRef}>
         <ProfileImg
           src={person.profileImage}
           focusUser={person.id === userId}

@@ -4,6 +4,7 @@ import { API } from '../../api/api';
 import axios from 'axios';
 import { setToken } from '../../shared/localStorage';
 import LoginLoading from './LoginLoading';
+import Layout from '../../layout/Layout';
 
 const KakaoLogin = () => {
   const navigate = useNavigate();
@@ -31,7 +32,11 @@ const KakaoLogin = () => {
       });
   }, [code, navigate]);
 
-  return <LoginLoading />;
+  return (
+    <Layout>
+      <LoginLoading />
+    </Layout>
+  );
 };
 
 export default KakaoLogin;

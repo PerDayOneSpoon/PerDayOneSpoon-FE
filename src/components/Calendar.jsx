@@ -6,7 +6,7 @@ import Loading from './global/Loading';
 import dayjs from 'dayjs';
 import { useQuery } from 'react-query';
 import { calendarApi } from '../api/calendarApi';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { friendsApi } from '../api/friendsApi';
 import { useRecoilState } from 'recoil';
 import { calendarUserIdState } from '../recoil/common';
@@ -43,7 +43,7 @@ const Calendar = () => {
   );
 
   const getSearchMonth = useQuery(
-    ['friendDateSearch', month, userId],
+    ['monthSearch', month, userId],
     () =>
       calendarApi.getCalendarMonth({
         calendarMonth: month,
@@ -89,6 +89,113 @@ const Calendar = () => {
 
   const { monthCalenderDtoList, peopleList, todayGoalsDtoList, me } =
     calendarData.data;
+
+  // const testObj = [
+  //   {
+  //     id: 62,
+  //     nickname: '소연123456',
+  //     profileImage:
+  //       'https://perday-onespoon.s3.ap-northeast-2.amazonaws.com/8135a4a0-a838-4570-9ffe-729afd1300c1test.jpg',
+  //     socialId: null,
+  //     status: null,
+  //   },
+  //   {
+  //     id: 61,
+  //     nickname: '소연123456',
+  //     profileImage:
+  //       'https://perday-onespoon.s3.ap-northeast-2.amazonaws.com/8135a4a0-a838-4570-9ffe-729afd1300c1test.jpg',
+  //     socialId: null,
+  //     status: null,
+  //   },
+  //   {
+  //     id: 60,
+  //     nickname: '소연123456',
+  //     profileImage:
+  //       'https://perday-onespoon.s3.ap-northeast-2.amazonaws.com/8135a4a0-a838-4570-9ffe-729afd1300c1test.jpg',
+  //     socialId: null,
+  //     status: null,
+  //   },
+  //   {
+  //     id: 59,
+  //     nickname: '소연123456',
+  //     profileImage:
+  //       'https://perday-onespoon.s3.ap-northeast-2.amazonaws.com/8135a4a0-a838-4570-9ffe-729afd1300c1test.jpg',
+  //     socialId: null,
+  //     status: null,
+  //   },
+  //   {
+  //     id: 58,
+  //     nickname: '소연123456',
+  //     profileImage:
+  //       'https://perday-onespoon.s3.ap-northeast-2.amazonaws.com/8135a4a0-a838-4570-9ffe-729afd1300c1test.jpg',
+  //     socialId: null,
+  //     status: null,
+  //   },
+  //   {
+  //     id: 57,
+  //     nickname: '소연123456',
+  //     profileImage:
+  //       'https://perday-onespoon.s3.ap-northeast-2.amazonaws.com/8135a4a0-a838-4570-9ffe-729afd1300c1test.jpg',
+  //     socialId: null,
+  //     status: null,
+  //   },
+  //   {
+  //     id: 56,
+  //     nickname: '소연123456',
+  //     profileImage:
+  //       'https://perday-onespoon.s3.ap-northeast-2.amazonaws.com/8135a4a0-a838-4570-9ffe-729afd1300c1test.jpg',
+  //     socialId: null,
+  //     status: null,
+  //   },
+  //   {
+  //     id: 55,
+  //     nickname: '소연123456',
+  //     profileImage:
+  //       'https://perday-onespoon.s3.ap-northeast-2.amazonaws.com/8135a4a0-a838-4570-9ffe-729afd1300c1test.jpg',
+  //     socialId: null,
+  //     status: null,
+  //   },
+  //   {
+  //     id: 54,
+  //     nickname: '소연123456',
+  //     profileImage:
+  //       'https://perday-onespoon.s3.ap-northeast-2.amazonaws.com/8135a4a0-a838-4570-9ffe-729afd1300c1test.jpg',
+  //     socialId: null,
+  //     status: null,
+  //   },
+  //   {
+  //     id: 53,
+  //     nickname: '소연123456',
+  //     profileImage:
+  //       'https://perday-onespoon.s3.ap-northeast-2.amazonaws.com/8135a4a0-a838-4570-9ffe-729afd1300c1test.jpg',
+  //     socialId: null,
+  //     status: null,
+  //   },
+  //   {
+  //     id: 52,
+  //     nickname: '소연123456',
+  //     profileImage:
+  //       'https://perday-onespoon.s3.ap-northeast-2.amazonaws.com/8135a4a0-a838-4570-9ffe-729afd1300c1test.jpg',
+  //     socialId: null,
+  //     status: null,
+  //   },
+  //   {
+  //     id: 51,
+  //     nickname: '소연123456',
+  //     profileImage:
+  //       'https://perday-onespoon.s3.ap-northeast-2.amazonaws.com/8135a4a0-a838-4570-9ffe-729afd1300c1test.jpg',
+  //     socialId: null,
+  //     status: null,
+  //   },
+  //   {
+  //     id: 40,
+  //     nickname: '소연123456',
+  //     profileImage:
+  //       'https://perday-onespoon.s3.ap-northeast-2.amazonaws.com/8135a4a0-a838-4570-9ffe-729afd1300c1test.jpg',
+  //     socialId: null,
+  //     status: null,
+  //   },
+  // ];
 
   return (
     <>
