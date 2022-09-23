@@ -3,9 +3,12 @@ import { colors } from '../../theme/theme';
 import CommonText from '../elements/CommonText';
 import { useRecoilValue } from 'recoil';
 import { calendarUserIdState } from '../../recoil/common';
+import React, { forwardRef, useEffect } from 'react';
 
-const Friend = ({ person, focusUser, handleUserClick }) => {
+const Friend = ({ person, focusUser, handleUserClick }, ref) => {
   const userId = useRecoilValue(calendarUserIdState);
+
+  // console.log('ref', ref);
 
   return (
     <Container onClick={handleUserClick}>
@@ -22,7 +25,7 @@ const Friend = ({ person, focusUser, handleUserClick }) => {
   );
 };
 
-export default Friend;
+export default forwardRef(Friend);
 
 const Container = styled.div`
   display: flex;

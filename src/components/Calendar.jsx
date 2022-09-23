@@ -6,7 +6,7 @@ import Loading from './global/Loading';
 import dayjs from 'dayjs';
 import { useQuery } from 'react-query';
 import { calendarApi } from '../api/calendarApi';
-import { useEffect, useState } from 'react';
+import { useRef, useState } from 'react';
 import { friendsApi } from '../api/friendsApi';
 import { useRecoilState } from 'recoil';
 import { calendarUserIdState } from '../recoil/common';
@@ -43,10 +43,10 @@ const Calendar = () => {
   );
 
   const getSearchMonth = useQuery(
-    ['friendDateSearch', month, userId],
+    ['monthSearch', month, userId],
     () =>
       calendarApi.getCalendarMonth({
-        calendarMonth: month,
+        calenderYearAndMonth: month,
         memberId: Number(userId),
       }),
     {
@@ -72,8 +72,11 @@ const Calendar = () => {
   const handleGetMonth = ({ action, activeStartDate, value, view }) => {
     if (view === 'month') {
       setMonth(dayjs(activeStartDate).format('MM'));
+      // setMonth(dayjs(activeStartDate).format('MM'));
     }
   };
+
+  console.log(month);
 
   const handleUserClick = (id) => {
     setUserId(id);
