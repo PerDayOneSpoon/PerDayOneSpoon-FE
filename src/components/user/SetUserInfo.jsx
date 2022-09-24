@@ -1,7 +1,4 @@
 import styled from 'styled-components';
-import { useRef } from 'react';
-import { useMutation, useQueryClient } from 'react-query';
-import { userApi } from '../../api/userApi';
 import { colors } from '../../theme/theme';
 import { ReactComponent as IconCamera } from '../../assets/icons/icon-camera.svg';
 import { ReactComponent as IconCopy } from '../../assets/icons/icon-copy.svg';
@@ -41,7 +38,7 @@ const SetUserInfo = ({
                 <IconCamera />
                 <input
                   type='file'
-                  accept='.png, .jpg, .jpeg'
+                  accept='image/jpeg,image/jpg,image/png'
                   id='profile-img'
                   onChange={handleChangeImg}
                 />

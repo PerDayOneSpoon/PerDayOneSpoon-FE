@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { getAccessToken } from '../shared/localStorage';
 import { useRecoilState } from 'recoil';
 import { userInfoState } from '../recoil/common';
+import imageCompression from 'browser-image-compression';
 
 const SettingPage = () => {
   const navigate = useNavigate();
@@ -39,8 +40,8 @@ const SettingPage = () => {
   const { isLoading: isUpdateLoading, mutate: updateUserProfileMutation } =
     useMutation(userApi.updateUserProfile, {
       onSuccess: () => {
-        queryClient.invalidateQueries('userInfo');
-        queryClient.invalidateQueries('myCalendar');
+        queryClient.invalidateQueries(['userInfo']);
+        queryClient.invalidateQueries(['myCalendar']);
       },
       onError: (error) => {
         console.log('updateUserProfile ERROR', error);
@@ -52,17 +53,35 @@ const SettingPage = () => {
     setEditUserInfo({ ...editUserInfo, [name]: value });
   };
 
-  const handleChangeImg = (e) => {
-    // const formData = new FormData();
-    // formData.append('multipartFile', e.target.files[0]);
-    setFile(e.target.files[0]);
+  const handleChangeImg = async (e) => {
+    const imageFile = e.target.files[0];
 
-    const readerImg = new FileReader();
-    readerImg.readAsDataURL(e.target.files[0]);
-    readerImg.onload = () => {
-      const previewImgUrl = readerImg.result;
-      setPreviewImg(previewImgUrl);
+    const acceptImageFiles = ['image/png', 'image/jpeg', 'image/jpg'];
+
+    if (!acceptImageFiles.includes(imageFile.type))
+      return alert('지원하지 않는 파일 형식입니다.');
+
+    if (imageFile.size > 11000000)
+      return alert('10MB 이하의 이미지만 올릴 수 있습니다.');
+
+    const options = {
+      maxSizeMB: 10,
+      maxWidthOrHeight: 3000,
+      useWebWorker: true,
     };
+
+    try {
+      const compressedFile = await imageCompression(imageFile, options);
+      setFile(compressedFile);
+
+      const reader = new FileReader();
+      reader.readAsDataURL(compressedFile);
+      reader.onload = () => {
+        setPreviewImg(reader.result);
+      };
+    } catch (error) {
+      alert('이미지를 불러올 수 없습니다.');
+    }
   };
 
   const handleRightButtonClick = (e) => {
