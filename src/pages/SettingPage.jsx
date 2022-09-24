@@ -32,7 +32,6 @@ const SettingPage = () => {
       });
     },
     staleTime: 60000,
-    refetchOnMount: false,
   });
 
   const [onlyView, setOnlyView] = useState(true);
@@ -76,8 +75,6 @@ const SettingPage = () => {
         nickname: editUserInfo.nickname,
         status: editUserInfo.status,
       };
-
-      console.log('NEW FORM', newForm);
 
       formData.append('multipartFile', file);
       formData.append(

@@ -8,9 +8,9 @@ import { colors } from '../theme/theme';
 
 const MonthCalendar = ({
   dateValue,
-  handleChangeDate,
-  handleGetMonth,
   monthCalenderDtoList,
+  handleGetMonth,
+  handleChangeDate,
 }) => {
   const dates = monthCalenderDtoList.map((item) => item.currentDate);
 
@@ -36,11 +36,12 @@ const MonthCalendar = ({
         value={dateValue}
         tileContent={tileContent}
         onChange={handleChangeDate}
+        onActiveStartDateChange={handleGetMonth}
         view={'month'}
         calendarType={'Hebrew'}
         nextLabel={<IconRight />}
         prevLabel={<IconLeft />}
-        onActiveStartDateChange={handleGetMonth}
+        // onActiveStartDateChange={handleGetMonth}
         formatDay={(locale, date) => dayjs(date).format('D')}
       />
     </Container>

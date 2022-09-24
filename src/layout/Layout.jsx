@@ -24,15 +24,6 @@ const Background = styled.div`
   align-items: center;
   position: relative;
   background-color: ${({ bgColor }) => bgColor};
-
-  /* ${({ isMobile }) =>
-    isMobile
-      ? css`
-          height: calc(var(--vh, 1vh) * 100);
-        `
-      : css`
-          height: 100vh;
-        `} */
   box-sizing: border-box;
 `;
 

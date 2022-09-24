@@ -45,6 +45,7 @@ export default App;
 const ResponsiveContainer = styled.div`
   width: 100%;
   height: 100%;
+  position: relative;
 
   @media (min-width: 1025px) {
     background-color: ${colors.wallPaper};
@@ -71,43 +72,41 @@ const Contents = styled.div`
 `;
 
 const ImgContainer = styled.div`
-  position: relative;
   display: none;
-  width: 897px;
-  height: 100vh;
+  /* width: 897px; */
+  /* height: 582px; */
 
   @media (min-width: 1025px) {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+    width: calc(100% - 50rem);
+    height: 100vh;
+    overflow: hidden;
   }
 `;
 
 const ImgContainerInner = styled.div`
-  width: 897px;
-  height: 582px;
-  position: absolute;
-  right: -6rem;
-  bottom: 4px;
-  z-index: 1;
+  width: 50vw;
 
   @media (min-width: 1025px) {
     & > img {
       width: 100%;
       height: 100%;
+      margin-left: 4rem;
     }
   }
 `;
 
 const TextBox = styled.div`
-  width: 100%;
-  height: 100%;
-  font-size: 50px;
-  line-height: 70px;
+  width: 90%;
+  font-size: 2.5vw;
+  line-height: 3vw;
   letter-spacing: 1px;
   font-weight: 700;
   text-align: center;
-  position: relative;
-  padding-top: 18vh;
-  padding-left: 10rem;
+  padding-top: 16vh;
   box-sizing: border-box;
 
   > span {

@@ -9,45 +9,13 @@ const FriendsList = ({ peopleList, handleUserClick }) => {
 
   const focusRefs = useRef(peopleList.map(() => createRef()));
 
-  // const focusRefs = Array.from({ length: peopleList.length }, () =>
-  //   createRef()
-  // );
-
-  // const addRefs = (el) => {
-  //   if (el && !focusRefs.current.includes(el)) {
-  //     focusRefs.current.push(el);
-  //   }
-  //   console.log(focusRefs.current);
-  // };
-
-  // const fixMyRef = () =>
-  //   myRef.current.scrollIntoView({
-  //     behavior: 'smooth',
-  //     block: 'end',
-  //     inline: 'nearest',
-  //   });
-
-  // useEffect(() => {
-  //   fixMyRef();
-  // }, []);
-
-  console.log(focusRefs);
-
   return (
     <Container ref={scrollRef}>
       {peopleList.map((person, i) => (
-        // <div key={i} ref={focusRefs.current[i]}>
-        //   {console.log(focusRefs.current[i])}
-        // </div>
         <Friend
           key={person.id}
           person={person}
-          ref={focusRefs.current[i]}
           handleUserClick={() => {
-            // focusRefs.current.scrollIntoView({ behavior: 'smooth' });
-            // focusRefs.current.forEach((ref) => {
-            //   ref.current.scrollIntoView({ behavior: 'smooth' });
-            // });
             handleUserClick(person.id);
           }}
         />

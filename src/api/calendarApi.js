@@ -11,13 +11,15 @@ export const calendarApi = {
     );
   },
 
-  getCalendarMonth: ({ calendarYearAndMonth, memberId }) => {
+  getCalendarMonth: (data) => {
     return instance.get(
-      `/confirm/calendar/month/${calendarYearAndMonth}?memberId=${memberId}`
+      `/confirm/calendar/month/${data.calendarYearAndMonth}?memberId=${data.memberId}`
     );
+  },
+
+  getCalendarPersonGoal: (userId) => {
+    return instance.get(`/confirm/calendar/friend/${userId}`);
   },
 };
 
-// {calendarYearAndMonth}
-
-// /confirm/calendar/month/{calendarYearAndMonth}?calendarYearAndMonth=2022-05&memberId=62
+// /confirm/calendar/month/{calendarYearAndMonth}
