@@ -76,8 +76,6 @@ const SettingPage = () => {
         status: editUserInfo.status,
       };
 
-      console.log('NEW FORM', newForm);
-
       formData.append('multipartFile', file);
       formData.append(
         'dto',

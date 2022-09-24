@@ -120,7 +120,10 @@ const Calendar = () => {
       <CommonText isCallout={true} mg={'24px 0 0 0'}>
         {dayjs(dateValue).format('MM월 DD일')}의 습관
       </CommonText>
-      <GoalList data={peopleSearchDate.data.todayGoalsDtoList} />
+      <GoalList
+        data={peopleSearchDate.data.todayGoalsDtoList}
+        isMe={userId === peopleList[0].id ? true : false}
+      />
     </>
   );
 };
