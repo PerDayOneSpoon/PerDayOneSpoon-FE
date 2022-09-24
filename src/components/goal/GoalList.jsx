@@ -18,9 +18,11 @@ const GoalList = ({ isMain, data, isMe }) => {
 
   const deleteGoalMutation = useMutation(goalApi.deleteGoal, {
     onSuccess: (data) => {
-      queryClient.invalidateQueries('goalInfo');
-      queryClient.invalidateQueries('friendDateSearch');
-      queryClient.invalidateQueries('friendGoal');
+      queryClient.invalidateQueries(['myCalendar']);
+      queryClient.invalidateQueries(['goalInfo']);
+      queryClient.invalidateQueries(['peopleSearchDate']);
+      queryClient.invalidateQueries(['peopleSearchMonth']);
+      queryClient.invalidateQueries(['personGoal']);
     },
   });
 

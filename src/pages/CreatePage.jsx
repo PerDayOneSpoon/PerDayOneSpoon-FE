@@ -50,8 +50,11 @@ const CreatePage = () => {
 
   const addGoalMutation = useMutation(goalApi.addGoal, {
     onSuccess: (data) => {
-      queryClient.invalidateQueries(['goalInfo']);
       queryClient.invalidateQueries(['myCalendar']);
+      queryClient.invalidateQueries(['goalInfo']);
+      queryClient.invalidateQueries(['peopleSearchDate']);
+      queryClient.invalidateQueries(['peopleSearchMonth']);
+      queryClient.invalidateQueries(['personGoal']);
       navigate('/');
     },
     onError: ({ response }) => {
@@ -70,23 +73,12 @@ const CreatePage = () => {
       setToast(false);
       setToastMessage('캐릭터를 선택해 주세요');
       setTimeout(() => setToast(true), 3000);
-      // return alert('캐릭터를 선택해 주세요');
     } else if (form.time === '00:00') {
       setToast(false);
       setToastMessage('설정한 습관의 타이머를 유효한 값으로 수정해주세요');
       setTimeout(() => setToast(true), 3000);
-      // return alert('설정한 습관의 타이머를 유효한 값으로 수정해주세요');
     } else {
       setModal({ open: true, type: 'confirm' });
-      // if (
-      //   window.confirm(
-      //     '한 번 추가하신 습관은 수정이 불가능합니다. 추가하시겠습니까?'
-      //   )
-      // ) {
-      //   addGoalMutation.mutate(form);
-      // } else {
-      //   return;
-      // }
     }
   };
 
@@ -157,8 +149,6 @@ const CreatePage = () => {
     addGoalMutation.mutate(form);
     setModal({ open: false });
   };
-
-  // console.log('form 전송 데이터', form);
 
   return (
     <Layout bgColor={colors.bgColor} hasNavBar={false}>

@@ -32,7 +32,6 @@ const SettingPage = () => {
       });
     },
     staleTime: 60000,
-    refetchOnMount: false,
   });
 
   const [onlyView, setOnlyView] = useState(true);

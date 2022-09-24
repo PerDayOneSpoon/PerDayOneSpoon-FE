@@ -9,9 +9,12 @@ import { colors } from '../theme/theme';
 import { removeToken } from '../shared/localStorage';
 import { userApi } from '../api/userApi';
 import { NAV_BAR_HEIGHT } from '../constants/common';
+import { useSetRecoilState } from 'recoil';
+import { userInfoState } from '../recoil/common';
 
 const MyInfo = () => {
   const navigate = useNavigate();
+  const setUserInfoState = useSetRecoilState(userInfoState);
 
   const {
     isLoading,
@@ -19,7 +22,12 @@ const MyInfo = () => {
     error,
     data: userInfo,
   } = useQuery(['userInfo'], userApi.getUserInfo, {
-    onSuccess: (data) => {},
+    onSuccess: (data) => {
+      setUserInfoState({
+        nickname: data.data.nickname,
+        status: data.data.status,
+      });
+    },
   });
 
   const { mutate: logoutMutation } = useMutation(userApi.logout, {

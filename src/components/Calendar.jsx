@@ -6,16 +6,15 @@ import Loading from './global/Loading';
 import dayjs from 'dayjs';
 import { useQuery } from 'react-query';
 import { calendarApi } from '../api/calendarApi';
-import { useRef, useState } from 'react';
-import { friendsApi } from '../api/friendsApi';
+import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { calendarUserIdState } from '../recoil/common';
 
 const Calendar = () => {
   const [dateValue, setDateValue] = useState(new Date());
-  const [month, setMonth] = useState('');
-  const searchDate = dayjs(dateValue).format('YYYY-MM-DD');
+  const [month, setMonth] = useState(dayjs(new Date()).format('YYYY-MM'));
   const [userId, setUserId] = useRecoilState(calendarUserIdState);
+  const searchDate = dayjs(dateValue).format('YYYY-MM-DD');
 
   const {
     isLoading,
@@ -26,114 +25,102 @@ const Calendar = () => {
     onSuccess: (data) => {
       setUserId(data.data.peopleList[0].id);
     },
+    // refetchOnMount: false,
+    // staleTime: Infinity,
   });
 
-  const { isLoading: searchDateLoading, data: getSearchDate } = useQuery(
-    ['friendDateSearch', searchDate, userId],
+  const { isLoading: isDateLoading, data: peopleSearchDate } = useQuery(
+    ['peopleSearchDate', searchDate, userId],
     () =>
       calendarApi.getCalendarDate({
         calendarDate: searchDate,
         memberId: Number(userId),
       }),
     {
-      onSuccess: () => {},
-      enabled: !!dateValue,
+      // refetchOnMount: false,
+      // enabled: false,
+      // staleTime: Infinity,
+      // keepPreviousData: true,
+
       staleTime: Infinity,
+      cacheTime: Infinity,
+      enabled: !!dateValue,
+      keepPreviousData: true,
     }
   );
 
-  const getSearchMonth = useQuery(
-    ['monthSearch', month, userId],
+  const { isLoading: isMonthLoading, data: peopleSearchMonth } = useQuery(
+    ['peopleSearchMonth', month, userId],
     () =>
       calendarApi.getCalendarMonth({
-        calenderYearAndMonth: month,
+        calendarYearAndMonth: month,
         memberId: Number(userId),
       }),
     {
-      onSuccess: () => {},
+      // refetchOnMount: false,
+      // staleTime: Infinity,
+      // enabled: !!month,
+      // keepPreviousData: true,
+
+      staleTime: Infinity,
+      cacheTime: Infinity,
       enabled: !!month,
-      staleTime: Infinity,
+      keepPreviousData: true,
     }
   );
 
-  const getUserData = useQuery(
-    ['friendGoal', userId],
-    () => friendsApi.getFriendGoal(userId),
+  const { isLoading: isPersonGoal, data: personGoal } = useQuery(
+    ['personGoal', userId],
+    () => calendarApi.getCalendarPersonGoal(userId),
     {
-      enabled: !!userId,
+      refetchOnMount: false,
       staleTime: Infinity,
+      enabled: false,
+      keepPreviousData: true,
     }
   );
 
+  // 캘린더에서 년월 변경
+  const handleGetMonth = (view, activeStartDate) => {
+    setMonth(dayjs(activeStartDate).format('YYYY-MM'));
+  };
+
+  // 캘린더 날짜 변경
   const handleChangeDate = (date) => {
     setDateValue(date);
   };
 
-  const handleGetMonth = ({ action, activeStartDate, value, view }) => {
-    if (view === 'month') {
-      setMonth(dayjs(activeStartDate).format('MM'));
-      // setMonth(dayjs(activeStartDate).format('MM'));
-    }
-  };
-
-  console.log(month);
-
+  // 친구리스트에서 유저 선택
   const handleUserClick = (id) => {
     setUserId(id);
   };
 
-  if (isLoading) {
+  if (isLoading || isDateLoading || isMonthLoading || isPersonGoal) {
     return <Loading />;
   }
 
-  if (searchDateLoading) {
-    return <Loading />;
-  }
+  const { peopleList } = calendarData.data;
 
-  const { monthCalenderDtoList, peopleList, todayGoalsDtoList, me } =
-    calendarData.data;
+  // console.log('calendarData.data', calendarData.data);
+  // console.log('peopleSearchDate', peopleSearchDate);
+  // console.log('peopleSearchMonth', peopleSearchMonth);
+  // console.log('personGoal', personGoal);
 
   return (
     <>
-      <FriendsList
-        peopleList={peopleList}
-        handleUserClick={(id) => handleUserClick(id)}
-      />
+      <FriendsList peopleList={peopleList} handleUserClick={handleUserClick} />
       <MonthCalendar
-        dateValue={dateValue}
+        monthCalenderDtoList={peopleSearchMonth.data.monthCalenderDtoList}
         handleChangeDate={handleChangeDate}
-        handleGetMonth={handleGetMonth}
-        monthCalenderDtoList={
-          getUserData.data === undefined
-            ? monthCalenderDtoList
-            : getSearchMonth.data === undefined
-            ? getUserData.data.data.monthCalenderDtoList
-            : getSearchMonth.data.data.monthCalenderDtoList
-        }
+        dateValue={dateValue}
+        handleGetMonth={({ action, activeStartDate, value, view }) => {
+          handleGetMonth(view, activeStartDate);
+        }}
       />
       <CommonText isCallout={true} mg={'24px 0 0 0'}>
         {dayjs(dateValue).format('MM월 DD일')}의 습관
       </CommonText>
-      {me ? (
-        getSearchDate === undefined ? (
-          <GoalList
-            isMain={false}
-            data={todayGoalsDtoList}
-            isMe={getUserData?.data?.data.me}
-          />
-        ) : (
-          <GoalList
-            isMain={false}
-            data={getSearchDate.data.todayGoalsDtoList}
-            isMe={getUserData?.data?.data.me}
-          />
-        )
-      ) : (
-        <GoalList
-          isMain={false}
-          data={getSearchDate.data.data.todayGoalsDtoList}
-        />
-      )}
+      <GoalList data={peopleSearchDate.data.todayGoalsDtoList} />
     </>
   );
 };

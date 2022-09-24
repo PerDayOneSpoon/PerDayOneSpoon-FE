@@ -24,18 +24,19 @@ const Goal = ({ item, handleAchiveCheck, handleGoalDelete }) => {
 
   const achieveGoalMutation = useMutation(goalApi.achieveGoal, {
     onSuccess: (data) => {
-      queryClient.invalidateQueries('goalInfo');
-      queryClient.invalidateQueries('friendDateSearch');
-      queryClient.invalidateQueries('friendGoal');
+      queryClient.invalidateQueries(['goalInfo']);
+      queryClient.invalidateQueries(['peopleSearchDate']);
+      queryClient.invalidateQueries(['personGoal']);
     },
     onError: (error) => {},
   });
 
   const changePrivateGoalMutaion = useMutation(goalApi.changePrivateGoal, {
     onSuccess: (data) => {
-      queryClient.invalidateQueries('goalInfo');
-      queryClient.invalidateQueries('friendDateSearch');
-      queryClient.invalidateQueries('friendGoal');
+      queryClient.invalidateQueries(['goalInfo']);
+      queryClient.invalidateQueries(['peopleSearchDate']);
+      queryClient.invalidateQueries(['peopleSearchMonth']);
+      queryClient.invalidateQueries(['personGoal']);
     },
     onError: (error) => {},
   });
