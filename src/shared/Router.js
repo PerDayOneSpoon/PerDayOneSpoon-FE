@@ -13,6 +13,7 @@ import GoogleLogin from '../components/login/GoogleLogin';
 import SettingPage from '../pages/SettingPage';
 import NaverLogin from '../components/login/NaverLogin';
 import ScrollToTop from './ScrollToTop';
+import ChattingPage from '../pages/ChattingPage';
 
 const Router = () => {
   return (
@@ -32,6 +33,7 @@ const Router = () => {
           <Route path='/setting' element={<SettingPage />} />
           <Route path='/following' element={<FollowingListPage />} />
           <Route path='/follower' element={<FollowerListPage />} />
+          <Route path='/chatting' element={<ChattingPage />} />
         </Routes>
       </ScrollToTop>
     </BrowserRouter>
