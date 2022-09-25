@@ -5,8 +5,12 @@ import { ReactComponent as IconCalendar } from '../../assets/icons/icon-calendar
 import { ReactComponent as IconCheck } from '../../assets/icons/icon-check.svg';
 import { colors } from '../../theme/theme';
 import CommonText from '../elements/CommonText';
+import { useMutation, useQueryClient } from 'react-query';
+import { goalApi } from '../../api/goalApi';
 
 const CalendarGoal = ({ item, isMe }) => {
+  const queryClient = useQueryClient();
+
   const {
     id,
     title,
@@ -16,7 +20,30 @@ const CalendarGoal = ({ item, isMe }) => {
     heartCnt,
     achievementCheck,
     privateCheck,
+    heartCheck,
+    goalFlag,
   } = item;
+
+  const { mutate: likeMutation } = useMutation(goalApi.likeGoal, {
+    onMutate: async (newGoal) => {
+      await queryClient.cancelQueries(['personGoal']);
+      const oldData = queryClient.getQueryData(['personGoal']);
+
+      queryClient.setQueriesData(['personGoal'], newGoal);
+
+      return { oldData, newGoal };
+    },
+    onError: (error, newGoal, context) => {
+      queryClient.setQueryData(['personGoal'], context.oldData);
+    },
+    onSettled: (newGoal) => {
+      queryClient.invalidateQueries(['personGoal']);
+    },
+  });
+
+  const handleLikeButton = (goalFlag) => {
+    likeMutation({ goalFlag: goalFlag });
+  };
 
   return (
     <GoalContainer>
@@ -51,9 +78,23 @@ const CalendarGoal = ({ item, isMe }) => {
               <IconContainer>
                 <IconHeartFill onClick={(e) => e.stopPropagation()} />
               </IconContainer>
+            ) : heartCheck ? (
+              <IconContainer>
+                <IconHeartFill
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleLikeButton(goalFlag);
+                  }}
+                />
+              </IconContainer>
             ) : (
               <IconContainer>
-                <IconHeartEmpty onClick={(e) => e.stopPropagation()} />
+                <IconHeartEmpty
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleLikeButton(goalFlag);
+                  }}
+                />
               </IconContainer>
             )}
 

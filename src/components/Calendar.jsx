@@ -122,7 +122,8 @@ const Calendar = () => {
       </CommonText>
       <GoalList
         data={peopleSearchDate.data.todayGoalsDtoList}
-        isMe={userId === peopleList[0].id ? true : false}
+        // isMe={userId === peopleList[0].id ? true : false}
+        isMe={peopleSearchDate.data.me}
       />
     </>
   );
