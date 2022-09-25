@@ -5,8 +5,12 @@ import { ReactComponent as IconCalendar } from '../../assets/icons/icon-calendar
 import { ReactComponent as IconCheck } from '../../assets/icons/icon-check.svg';
 import { colors } from '../../theme/theme';
 import CommonText from '../elements/CommonText';
+import { useMutation, useQueryClient } from 'react-query';
+import { goalApi } from '../../api/goalApi';
 
 const CalendarGoal = ({ item, isMe }) => {
+  const queryClient = useQueryClient();
+
   const {
     id,
     title,
@@ -16,7 +20,35 @@ const CalendarGoal = ({ item, isMe }) => {
     heartCnt,
     achievementCheck,
     privateCheck,
+    heartCheck,
+    goalFlag,
   } = item;
+
+  const { mutate: likeMutation } = useMutation(goalApi.likeGoal, {
+    // optimistic update
+    onMutate: async () => {
+      const oldData = queryClient.getQueryData(['peopleSearchDate']);
+
+      if (oldData) {
+        await queryClient.cancelQueries(['peopleSearchDate']);
+        queryClient.setQueriesData(['peopleSearchDate'], () => {
+          return { ...oldData };
+        });
+      }
+
+      return () => queryClient.setQueryData(['peopleSearchDate'], oldData);
+    },
+    onError: (error, values, context) => {
+      queryClient.setQueryData(['peopleSearchDate'], context.oldData);
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries(['peopleSearchDate']);
+    },
+  });
+
+  const handleLikeButton = (goalFlag) => {
+    likeMutation({ goalFlag: goalFlag });
+  };
 
   return (
     <GoalContainer>
@@ -51,9 +83,23 @@ const CalendarGoal = ({ item, isMe }) => {
               <IconContainer>
                 <IconHeartFill onClick={(e) => e.stopPropagation()} />
               </IconContainer>
+            ) : heartCheck ? (
+              <IconContainer>
+                <IconHeartFill
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleLikeButton(goalFlag);
+                  }}
+                />
+              </IconContainer>
             ) : (
               <IconContainer>
-                <IconHeartEmpty onClick={(e) => e.stopPropagation()} />
+                <IconHeartEmpty
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleLikeButton(goalFlag);
+                  }}
+                />
               </IconContainer>
             )}
 

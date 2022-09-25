@@ -1,3 +1,4 @@
+// Goal copy  연결
 import { atom, atomFamily, selector, selectorFamily } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
 import { goalApi } from '../api/goalApi';
@@ -28,3 +29,8 @@ export const goalTimeFamily = atomFamily({
   }),
   // effects_UNSTABLE: [persistAtom],
 });
+
+// export const goalTimeFamily = atomFamily({
+//   key: 'goalTimeFamily',
+//   default: ['00:00:00'],
+// });

@@ -21,5 +21,3 @@ export const calendarApi = {
     return instance.get(`/confirm/calendar/friend/${userId}`);
   },
 };
-
-// /confirm/calendar/month/{calendarYearAndMonth}
