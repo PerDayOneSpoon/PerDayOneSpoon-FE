@@ -25,19 +25,24 @@ const CalendarGoal = ({ item, isMe }) => {
   } = item;
 
   const { mutate: likeMutation } = useMutation(goalApi.likeGoal, {
-    onMutate: async (newGoal) => {
-      await queryClient.cancelQueries(['personGoal']);
-      const oldData = queryClient.getQueryData(['personGoal']);
+    // optimistic update
+    onMutate: async () => {
+      const oldData = queryClient.getQueryData(['peopleSearchDate']);
 
-      queryClient.setQueriesData(['personGoal'], newGoal);
+      if (oldData) {
+        await queryClient.cancelQueries(['peopleSearchDate']);
+        queryClient.setQueriesData(['peopleSearchDate'], () => {
+          return { ...oldData };
+        });
+      }
 
-      return { oldData, newGoal };
+      return () => queryClient.setQueryData(['peopleSearchDate'], oldData);
     },
-    onError: (error, newGoal, context) => {
-      queryClient.setQueryData(['personGoal'], context.oldData);
+    onError: (error, values, context) => {
+      queryClient.setQueryData(['peopleSearchDate'], context.oldData);
     },
-    onSettled: (newGoal) => {
-      queryClient.invalidateQueries(['personGoal']);
+    onSettled: () => {
+      queryClient.invalidateQueries(['peopleSearchDate']);
     },
   });
 
