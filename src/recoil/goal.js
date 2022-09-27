@@ -5,7 +5,9 @@ import { goalApi } from '../api/goalApi';
 import useInterval from '../hooks/useInterval';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 
-const { persistAtom } = recoilPersist();
+const { persistAtom } = recoilPersist({
+  key: 'goals',
+});
 // let i = 0;
 
 // export const goalTimeFamily = atomFamily({
@@ -43,6 +45,26 @@ const { persistAtom } = recoilPersist();
 //     }
 //   };
 
+// export const goalTimeFamily = atom({
+//   key: 'goalTimeFamily',
+//   default: (id) => {
+//     return {
+//       id,
+//       time: '',
+//       isPlay: false,
+//       totalTime: 0,
+//       currentTime: 0,
+//       percentage: 0,
+//     };
+//   },
+//   effects_UNSTABLE: [persistAtom],
+// });
+
+export const clickedGoalId = atom({
+  key: 'clickedGoalId',
+  default: '',
+});
+
 export const goalTimeFamily = atomFamily({
   key: 'goalTimeFamily',
   default: (id) => {
@@ -50,8 +72,8 @@ export const goalTimeFamily = atomFamily({
       id,
       time: '',
       isPlay: false,
-      totalTime: 0,
       currentTime: 0,
+      totalTime: 0,
       percentage: 0,
     };
   },

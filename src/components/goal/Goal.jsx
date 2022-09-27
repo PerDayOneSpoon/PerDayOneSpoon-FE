@@ -10,6 +10,7 @@ import { goalApi } from '../../api/goalApi';
 import { colors } from '../../theme/theme';
 import CommonText from '../elements/CommonText';
 import CommonButton from '../elements/CommonButton';
+import { timerFormat } from '../../utils/timeFormat';
 import useInterval from '../../hooks/useInterval';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
@@ -27,15 +28,6 @@ const Goal = ({
 
   const [isTimer, setIsTimer] = useState(false);
   const [modal, setModal] = useRecoilState(modalState);
-
-  const achieveGoalMutation = useMutation(goalApi.achieveGoal, {
-    onSuccess: (data) => {
-      queryClient.invalidateQueries(['goalInfo']);
-      queryClient.invalidateQueries(['peopleSearchDate']);
-      queryClient.invalidateQueries(['personGoal']);
-    },
-    onError: (error) => {},
-  });
 
   const changePrivateGoalMutaion = useMutation(goalApi.changePrivateGoal, {
     onSuccess: (data) => {
@@ -77,6 +69,25 @@ const Goal = ({
     });
   };
 
+  // useEffect(() => {
+  //   // 마운트하자마자 리코일에 값 담아주기
+  //   let totalTime = 0;
+  //   time.split(':').forEach((time, i) => {
+  //     if (i === 0) totalTime += parseInt(time) * 60 * 60;
+  //     if (i === 1) totalTime += parseInt(time) * 60;
+  //     if (i === 2) totalTime += parseInt(time);
+  //   });
+
+  //   setChangeTime({ ...changeTime, time: time, totalTime: totalTime });
+
+  //   const newLocalData = {
+  //     ...changeTime,
+  //     totalTime: changeTime.totalTime,
+  //   };
+
+  //   localStorage.setItem(`recoil-persist${id}`, JSON.stringify(newLocalData));
+  // }, [localStorage.getItem(`recoil-persist${id}`)]);
+
   useEffect(() => {
     // 마운트하자마자 리코일에 값 담아주기
     let totalTime = 0;
@@ -88,6 +99,12 @@ const Goal = ({
 
     setChangeTime({ ...changeTime, time: time, totalTime: totalTime });
   }, []);
+
+  let localTime;
+
+  useEffect(() => {
+    localTime = JSON.parse(localStorage.getItem(`goals${id}`))?.currentTime;
+  }, [JSON.parse(localStorage.getItem(`goals${id}`))?.currentTime]);
 
   return (
     <GoalContainer isTimer={isTimer}>
@@ -151,7 +168,19 @@ const Goal = ({
                   </ProgressBar>
                   <Time isFootnote2={true} fc={colors.gray500}>
                     {/* {`${HH}:${MM}:${SS} `} */}
-                    {changeTime.time || ''}
+                    {/* {localStorage.getItem(`goalst${id}`) === null
+                      ? changeTime.time
+                      : JSON.parse(localStorage.getItem(`goals${id}`))
+                          .totalTime} */}
+                    토탈시간
+                    {JSON.parse(localStorage.getItem(`goals${id}`))?.totalTime}
+                    <br />
+                    현재시간
+                    {
+                      JSON.parse(localStorage.getItem(`goals${id}`))
+                        ?.currentTime
+                    }
+                    {/* {localTime} */}
                   </Time>
                 </Timer>
                 <CommonButton

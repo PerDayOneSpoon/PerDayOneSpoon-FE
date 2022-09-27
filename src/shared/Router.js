@@ -16,6 +16,11 @@ import ScrollToTop from './ScrollToTop';
 import ChattingPage from '../pages/ChattingPage';
 import { useMutation, useQueryClient } from 'react-query';
 import { goalApi } from '../api/goalApi';
+import { useEffect } from 'react';
+import { goalTimeFamily } from '../recoil/goal';
+import { useRecoilState } from 'recoil';
+import { clickedGoalId } from '../recoil/goal';
+import { useRecoilCallback } from 'recoil';
 
 const Router = () => {
   const queryClient = useQueryClient();
@@ -32,25 +37,26 @@ const Router = () => {
   const handleTimerStartCilck = (id) => {
     console.log(id, '시작');
 
-    const localStorageData = JSON.parse(localStorage.getItem('recoil-persist'))[
+    const localStorageData = JSON.parse(localStorage.getItem('goals'))[
       `goalTimeFamily__${id}`
     ];
     console.log('localStorageData!!', localStorageData.totalTime);
 
     const startTimer = setInterval(() => {
-      localStorageData.totalTime -= 1;
+      localStorageData.currentTime += 1;
 
       const newLocalData = {
         ...localStorageData,
-        totalTime: localStorageData.totalTime,
+        currentTime: localStorageData.currentTime,
       };
 
-      localStorage.setItem(`recoil-persist${id}`, JSON.stringify(newLocalData));
+      localStorage.setItem(`goals${id}`, JSON.stringify(newLocalData));
 
       // const percentage = (localStorageData.totalTime / )
 
       if (
-        JSON.parse(localStorage.getItem(`recoil-persist${id}`)).totalTime === 0
+        JSON.parse(localStorage.getItem(`goals${id}`)).currentTime ===
+        JSON.parse(localStorage.getItem(`goals${id}`)).totalTime
       ) {
         clearInterval(startTimer);
         const data = {
@@ -58,15 +64,35 @@ const Router = () => {
           achivement: true,
         };
         achieveGoalMutation.mutate(data);
-        localStorage.removeItem(`recoil-persist${id}`);
+        // localStorage.removeItem(`goals${id}`);
       }
     }, 1000);
+
+    return id;
   };
+
+  useEffect(() => {
+    const localStorageData = JSON.parse(localStorage.getItem('goals'));
+    const localDataArr = [];
+
+    for (let key in localStorageData) {
+      localDataArr.push(localStorageData[key]);
+    }
+
+    console.log(localDataArr);
+
+    localDataArr.map((item) => {
+      if (localStorage.getItem(`goals${item.id}`) === null) {
+        localStorage.setItem(`goals${item.id}`, JSON.stringify({ ...item }));
+      }
+    });
+
+    // localStorage.setItem(`goals${id}`, JSON.stringify(newLocalData));
+  }, []);
 
   // const goalId = handleTimerStartCilck();
 
   // const [changeTime, setChangeTime] = useRecoilState(goalId);
-
   const startProgress = () => {
     // testTime.isPlay && setCurrentTime((s) => s + 1);
     // changeTime.isPlay &&
