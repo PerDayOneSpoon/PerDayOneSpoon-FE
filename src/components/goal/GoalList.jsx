@@ -9,7 +9,7 @@ import { modalState } from '../../recoil/common';
 import { useMutation, useQueryClient } from 'react-query';
 import { goalApi } from '../../api/goalApi';
 
-const GoalList = ({ isMain, data, isMe }) => {
+const GoalList = ({ isMain, data, isMe, handleTimerStartCilck }) => {
   const queryClient = useQueryClient();
 
   const [modal, setModal] = useRecoilState(modalState);
@@ -56,6 +56,7 @@ const GoalList = ({ isMain, data, isMe }) => {
               item={item}
               handleAchiveCheck={() => handleAchiveCheck()}
               handleGoalDelete={(deleteId) => handleGoalDelete(deleteId)}
+              handleTimerStartCilck={handleTimerStartCilck}
             />
           ))}
         {modal.open && modal.type === 'confirm' && (

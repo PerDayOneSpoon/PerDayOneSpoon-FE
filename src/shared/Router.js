@@ -14,13 +14,93 @@ import SettingPage from '../pages/SettingPage';
 import NaverLogin from '../components/login/NaverLogin';
 import ScrollToTop from './ScrollToTop';
 import ChattingPage from '../pages/ChattingPage';
+import { useMutation, useQueryClient } from 'react-query';
+import { goalApi } from '../api/goalApi';
 
 const Router = () => {
+  const queryClient = useQueryClient();
+
+  const achieveGoalMutation = useMutation(goalApi.achieveGoal, {
+    onSuccess: (data) => {
+      queryClient.invalidateQueries(['goalInfo']);
+      queryClient.invalidateQueries(['peopleSearchDate']);
+      queryClient.invalidateQueries(['personGoal']);
+    },
+    onError: (error) => {},
+  });
+
+  const handleTimerStartCilck = (id) => {
+    console.log(id, '시작');
+
+    const localStorageData = JSON.parse(localStorage.getItem('recoil-persist'))[
+      `goalTimeFamily__${id}`
+    ];
+    console.log('localStorageData!!', localStorageData.totalTime);
+
+    const startTimer = setInterval(() => {
+      localStorageData.totalTime -= 1;
+
+      const newLocalData = {
+        ...localStorageData,
+        totalTime: localStorageData.totalTime,
+      };
+
+      localStorage.setItem(`recoil-persist${id}`, JSON.stringify(newLocalData));
+
+      // const percentage = (localStorageData.totalTime / )
+
+      if (
+        JSON.parse(localStorage.getItem(`recoil-persist${id}`)).totalTime === 0
+      ) {
+        clearInterval(startTimer);
+        const data = {
+          goalId: id,
+          achivement: true,
+        };
+        achieveGoalMutation.mutate(data);
+        localStorage.removeItem(`recoil-persist${id}`);
+      }
+    }, 1000);
+  };
+
+  // const goalId = handleTimerStartCilck();
+
+  // const [changeTime, setChangeTime] = useRecoilState(goalId);
+
+  const startProgress = () => {
+    // testTime.isPlay && setCurrentTime((s) => s + 1);
+    // changeTime.isPlay &&
+    //   setChangeTime((prev) => ({ ...prev, currentTime: prev.currentTime + 1 }));
+    // if (changeTime.ss > 0) {
+    //   setChangeTime((prev) => ({ ...prev, ss: prev.ss - 1 }));
+    // }
+    // if (changeTime.ss === 0) {
+    //   if (changeTime.mm === 0) {
+    //     if (changeTime.hh === 0) {
+    //       // setIsPlay(false);
+    //       setChangeTime((prev) => ({ ...prev, isPlay: false }));
+    //     } else {
+    //       setChangeTime((prev) => ({ ...prev, hh: prev.hh - 1 }));
+    //       setChangeTime((prev) => ({ ...prev, mm: 59 }));
+    //       setChangeTime((prev) => ({ ...prev, ss: 59 }));
+    //     }
+    //   } else {
+    //     setChangeTime((prev) => ({ ...prev, mm: prev.mm - 1 }));
+    //     setChangeTime((prev) => ({ ...prev, ss: 59 }));
+    //   }
+    // }
+  };
+
+  // console.log('changeTime!', changeTime);
+
   return (
     <BrowserRouter>
       <ScrollToTop>
         <Routes>
-          <Route path='/' element={<MainPage />} />
+          <Route
+            path='/'
+            element={<MainPage handleTimerStartCilck={handleTimerStartCilck} />}
+          />
           <Route path='/login' element={<LoginPage />} />
           <Route path='/user/login/callback' element={<KakaoLogin />} />
           <Route path='/user/login/google' element={<GoogleLogin />} />

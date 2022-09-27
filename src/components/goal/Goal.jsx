@@ -12,11 +12,17 @@ import CommonText from '../elements/CommonText';
 import CommonButton from '../elements/CommonButton';
 import useInterval from '../../hooks/useInterval';
 
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { goalTimeFamily } from '../../recoil/goal';
 import { modalState } from '../../recoil/common';
+import dayjs from 'dayjs';
 
-const Goal = ({ item, handleAchiveCheck, handleGoalDelete }) => {
+const Goal = ({
+  item,
+  handleAchiveCheck,
+  handleGoalDelete,
+  handleTimerStartCilck,
+}) => {
   const queryClient = useQueryClient();
 
   const [isTimer, setIsTimer] = useState(false);
@@ -53,62 +59,16 @@ const Goal = ({ item, handleAchiveCheck, handleGoalDelete }) => {
     goalFlag,
   } = item;
 
-  let totalTime = 0;
+  const [changeTime, setChangeTime] = useRecoilState(goalTimeFamily(id));
 
-  time.split(':').forEach((time, i) => {
-    if (i === 0) totalTime += parseInt(time) * 60 * 60;
-    if (i === 1) totalTime += parseInt(time) * 60;
-    if (i === 2) totalTime += parseInt(time);
-  });
-
-  const [testTime, setTestTime] = useRecoilState(goalTimeFamily(id));
-  const [timerInterval, setTimerInterval] = useState(0);
-
-  const percentage =
-    Math.floor((testTime.currentTime / totalTime) * 10000) / 100;
-
-  // 화면에 보여질 부분
-  const HH = String(testTime.hh).padStart(2, '0');
-  const MM = String(testTime.mm).padStart(2, '0');
-  const SS = String(testTime.ss).padStart(2, '0');
-
-  const startProgress = () => {
-    // testTime.isPlay && setCurrentTime((s) => s + 1);
-    testTime.isPlay &&
-      setTestTime((prev) => ({ ...prev, currentTime: prev.currentTime + 1 }));
-
-    if (testTime.ss > 0) {
-      setTestTime((prev) => ({ ...prev, ss: prev.ss - 1 }));
-    }
-
-    if (testTime.ss === 0) {
-      if (testTime.mm === 0) {
-        if (testTime.hh === 0) {
-          // setIsPlay(false);
-          setTestTime((prev) => ({ ...prev, isPlay: false }));
-        } else {
-          setTestTime((prev) => ({ ...prev, hh: prev.hh - 1 }));
-          setTestTime((prev) => ({ ...prev, mm: 59 }));
-          setTestTime((prev) => ({ ...prev, ss: 59 }));
-        }
-      } else {
-        setTestTime((prev) => ({ ...prev, mm: prev.mm - 1 }));
-        setTestTime((prev) => ({ ...prev, ss: 59 }));
-      }
-    }
-  };
-
-  const customInterval = useInterval(
-    () => {
-      startProgress();
-    },
-    testTime.isPlay ? 1000 : null
-  );
-
-  const handleStartCilck = () => {
-    setTestTime((prev) => ({ ...prev, isPlay: true }));
-    // setIsPlay(true);
-  };
+  // const handleTimerStartCilck = () => {
+  //   // setTestTime((prev) => ({ ...prev, isPlay: !isPlay }));
+  //   // setIsPlay(true);
+  //   console.log('시작 클릭');
+  //   setChangeTime((prev) => {
+  //     return { ...prev, isPlay: true };
+  //   });
+  // };
 
   const handleLockClick = (check) => {
     changePrivateGoalMutaion.mutate({
@@ -118,21 +78,16 @@ const Goal = ({ item, handleAchiveCheck, handleGoalDelete }) => {
   };
 
   useEffect(() => {
-    if (testTime.hh === 0 && testTime.mm === 0 && testTime.ss === 0) {
-      clearInterval(startProgress);
-      const data = {
-        goalId: id,
-        achivement: true,
-      };
-      achieveGoalMutation.mutate(data);
-    }
-  }, [testTime.hh, testTime.mm, testTime.ss]);
+    // 마운트하자마자 리코일에 값 담아주기
+    let totalTime = 0;
+    time.split(':').forEach((time, i) => {
+      if (i === 0) totalTime += parseInt(time) * 60 * 60;
+      if (i === 1) totalTime += parseInt(time) * 60;
+      if (i === 2) totalTime += parseInt(time);
+    });
 
-  useEffect(() => {
-    if (testTime.isPlay) {
-      setTimerInterval(customInterval);
-    }
-  }, [testTime.isPlay]);
+    setChangeTime({ ...changeTime, time: time, totalTime: totalTime });
+  }, []);
 
   return (
     <GoalContainer isTimer={isTimer}>
@@ -190,18 +145,19 @@ const Goal = ({ item, handleAchiveCheck, handleGoalDelete }) => {
                 <Timer>
                   <ProgressBar>
                     <ProgressPercentage
-                      percentage={percentage}
+                      // percentage={percentage}
                       isAchievementCheck={achievementCheck}
                     />
                   </ProgressBar>
                   <Time isFootnote2={true} fc={colors.gray500}>
-                    {`${HH}:${MM}:${SS} `}
+                    {/* {`${HH}:${MM}:${SS} `} */}
+                    {changeTime.time || ''}
                   </Time>
                 </Timer>
                 <CommonButton
                   handleButtonClick={(e) => {
                     e.stopPropagation();
-                    handleStartCilck();
+                    handleTimerStartCilck(id);
                   }}
                   wd='50px'
                   mg='-4px 0 0 16px'
