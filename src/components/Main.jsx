@@ -6,7 +6,7 @@ import { goalApi } from '../api/goalApi';
 import { colors } from '../theme/theme';
 import Loading from './global/Loading';
 
-const Main = ({ handleTimerStartCilck }) => {
+const Main = ({ handleStartCilck }) => {
   const {
     isLoading,
     isError,
@@ -45,7 +45,7 @@ const Main = ({ handleTimerStartCilck }) => {
       <GoalList
         isMain={true}
         data={todayGoalsDtoList}
-        handleTimerStartCilck={handleTimerStartCilck}
+        handleStartCilck={handleStartCilck}
       />
     </>
   );

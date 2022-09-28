@@ -9,12 +9,13 @@ import { modalState } from '../../recoil/common';
 import { useMutation, useQueryClient } from 'react-query';
 import { goalApi } from '../../api/goalApi';
 
-const GoalList = ({ isMain, data, isMe, handleTimerStartCilck }) => {
+const GoalList = ({ isMain, data, isMe, handleStartCilck }) => {
   const queryClient = useQueryClient();
 
   const [modal, setModal] = useRecoilState(modalState);
   const [modalText, setModalText] = useState('');
   const [deleteItem, setDeleteItem] = useState('');
+  const [kindOfModal, setKindOfModal] = useState('');
 
   const deleteGoalMutation = useMutation(goalApi.deleteGoal, {
     onSuccess: (data) => {
@@ -32,9 +33,18 @@ const GoalList = ({ isMain, data, isMe, handleTimerStartCilck }) => {
   };
 
   const handleGoalDelete = (deleteId) => {
+    setKindOfModal('delete');
     setModalText('모든 날짜의 해당 습관이 삭제됩니다. 삭제하시겠습니까?');
     setModal({ open: true, type: 'confirm' });
     setDeleteItem(deleteId);
+  };
+
+  const handleTimerClick = () => {
+    setKindOfModal('timer');
+    setModalText(
+      '한 번 시작한 습관은 다른 습관과 동시에 시작할 수 없습니다. 타이머를 시작하시겠습니까?'
+    );
+    setModal({ open: true, type: 'confirm' });
   };
 
   const handleDelete = () => {
@@ -56,11 +66,23 @@ const GoalList = ({ isMain, data, isMe, handleTimerStartCilck }) => {
               item={item}
               handleAchiveCheck={() => handleAchiveCheck()}
               handleGoalDelete={(deleteId) => handleGoalDelete(deleteId)}
-              handleTimerStartCilck={handleTimerStartCilck}
+              handleStartCilck={() => {
+                handleTimerClick();
+                // handleStartCilck()
+              }}
             />
           ))}
-        {modal.open && modal.type === 'confirm' && (
+        {modal.open && modal.type === 'confirm' && kindOfModal === 'delete' && (
           <Modal modalText={modalText} handleModalOk={handleDelete} />
+        )}
+        {modal.open && modal.type === 'confirm' && kindOfModal === 'timer' && (
+          <Modal
+            modalText={modalText}
+            handleModalOk={() => {
+              setModal({ open: false });
+              handleStartCilck();
+            }}
+          />
         )}
         {modal.open && modal.type === 'alert' && (
           <Modal

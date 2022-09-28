@@ -14,16 +14,29 @@ import SettingPage from '../pages/SettingPage';
 import NaverLogin from '../components/login/NaverLogin';
 import ScrollToTop from './ScrollToTop';
 import ChattingPage from '../pages/ChattingPage';
+import useInterval from '../hooks/useInterval';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import { useRecoilState } from 'recoil';
+import { goalTimeFamily } from '../recoil/goal';
+import { goalTimeId } from '../recoil/goal';
 import { useMutation, useQueryClient } from 'react-query';
 import { goalApi } from '../api/goalApi';
-import { useEffect } from 'react';
-import { goalTimeFamily } from '../recoil/goal';
-import { useRecoilState } from 'recoil';
-import { clickedGoalId } from '../recoil/goal';
-import { useRecoilCallback } from 'recoil';
 
 const Router = () => {
   const queryClient = useQueryClient();
+
+  const [timerInterval, setTimerInterval] = useState(0);
+  const [clickedId, setClickedId] = useRecoilState(goalTimeId);
+  const [testTime, setTestTime] = useRecoilState(goalTimeFamily(clickedId));
+
+  const handleStartCilck = (id) => {
+    console.log(id, 'click!');
+    console.log('testTime', testTime);
+
+    setTestTime((prev) => ({ ...prev, isPlay: true }));
+    setTimerInterval(customInterval);
+  };
 
   const achieveGoalMutation = useMutation(goalApi.achieveGoal, {
     onSuccess: (data) => {
@@ -34,90 +47,49 @@ const Router = () => {
     onError: (error) => {},
   });
 
-  const handleTimerStartCilck = (id) => {
-    console.log(id, '시작');
+  const startProgress = () => {
+    setTestTime((prev) => ({
+      ...prev,
+      currentTime: prev.currentTime + 1,
+      displayTime: prev.displayTime - 1,
+    }));
 
-    const localStorageData = JSON.parse(localStorage.getItem('goals'))[
-      `goalTimeFamily__${id}`
-    ];
-    console.log('localStorageData!!', localStorageData.totalTime);
-
-    const startTimer = setInterval(() => {
-      localStorageData.currentTime += 1;
-
-      const newLocalData = {
-        ...localStorageData,
-        currentTime: localStorageData.currentTime,
+    if (testTime.displayTime === 1) {
+      setTestTime((prev) => ({
+        ...prev,
+        isPlay: false,
+      }));
+      clearInterval(customInterval);
+      const data = {
+        goalId: clickedId,
+        achivement: true,
       };
-
-      localStorage.setItem(`goals${id}`, JSON.stringify(newLocalData));
-
-      // const percentage = (localStorageData.totalTime / )
-
-      if (
-        JSON.parse(localStorage.getItem(`goals${id}`)).currentTime ===
-        JSON.parse(localStorage.getItem(`goals${id}`)).totalTime
-      ) {
-        clearInterval(startTimer);
-        const data = {
-          goalId: id,
-          achivement: true,
-        };
-        achieveGoalMutation.mutate(data);
-        // localStorage.removeItem(`goals${id}`);
-      }
-    }, 1000);
-
-    return id;
+      achieveGoalMutation.mutate(data);
+    }
   };
+
+  const customInterval = useInterval(
+    () => {
+      if (
+        testTime.isDone === (false || undefined) &&
+        testTime.displayTime === 0
+      ) {
+        alert('오류가 발생했습니다. 다시 시도해 주세요.');
+        setTestTime({ ...testTime, isPlay: false });
+        window.location.reload();
+      }
+      if (testTime.isPlay) {
+        startProgress();
+      }
+    },
+    testTime.isPlay ? 1000 : null
+  );
 
   useEffect(() => {
-    const localStorageData = JSON.parse(localStorage.getItem('goals'));
-    const localDataArr = [];
-
-    for (let key in localStorageData) {
-      localDataArr.push(localStorageData[key]);
+    if (testTime.isPlay) {
+      setTimerInterval(customInterval);
     }
-
-    console.log(localDataArr);
-
-    localDataArr.map((item) => {
-      if (localStorage.getItem(`goals${item.id}`) === null) {
-        localStorage.setItem(`goals${item.id}`, JSON.stringify({ ...item }));
-      }
-    });
-
-    // localStorage.setItem(`goals${id}`, JSON.stringify(newLocalData));
-  }, []);
-
-  // const goalId = handleTimerStartCilck();
-
-  // const [changeTime, setChangeTime] = useRecoilState(goalId);
-  const startProgress = () => {
-    // testTime.isPlay && setCurrentTime((s) => s + 1);
-    // changeTime.isPlay &&
-    //   setChangeTime((prev) => ({ ...prev, currentTime: prev.currentTime + 1 }));
-    // if (changeTime.ss > 0) {
-    //   setChangeTime((prev) => ({ ...prev, ss: prev.ss - 1 }));
-    // }
-    // if (changeTime.ss === 0) {
-    //   if (changeTime.mm === 0) {
-    //     if (changeTime.hh === 0) {
-    //       // setIsPlay(false);
-    //       setChangeTime((prev) => ({ ...prev, isPlay: false }));
-    //     } else {
-    //       setChangeTime((prev) => ({ ...prev, hh: prev.hh - 1 }));
-    //       setChangeTime((prev) => ({ ...prev, mm: 59 }));
-    //       setChangeTime((prev) => ({ ...prev, ss: 59 }));
-    //     }
-    //   } else {
-    //     setChangeTime((prev) => ({ ...prev, mm: prev.mm - 1 }));
-    //     setChangeTime((prev) => ({ ...prev, ss: 59 }));
-    //   }
-    // }
-  };
-
-  // console.log('changeTime!', changeTime);
+  }, [testTime.isPlay]);
 
   return (
     <BrowserRouter>
@@ -125,7 +97,7 @@ const Router = () => {
         <Routes>
           <Route
             path='/'
-            element={<MainPage handleTimerStartCilck={handleTimerStartCilck} />}
+            element={<MainPage handleStartCilck={handleStartCilck} />}
           />
           <Route path='/login' element={<LoginPage />} />
           <Route path='/user/login/callback' element={<KakaoLogin />} />

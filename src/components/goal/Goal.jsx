@@ -10,24 +10,31 @@ import { goalApi } from '../../api/goalApi';
 import { colors } from '../../theme/theme';
 import CommonText from '../elements/CommonText';
 import CommonButton from '../elements/CommonButton';
-import { timerFormat } from '../../utils/timeFormat';
-import useInterval from '../../hooks/useInterval';
-
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { goalTimeFamily } from '../../recoil/goal';
-import { modalState } from '../../recoil/common';
-import dayjs from 'dayjs';
+import { goalTimeId } from '../../recoil/goal';
+import { timeToString } from '../../utils/timeToStringt';
 
 const Goal = ({
   item,
   handleAchiveCheck,
   handleGoalDelete,
-  handleTimerStartCilck,
+  handleStartCilck,
 }) => {
   const queryClient = useQueryClient();
 
   const [isTimer, setIsTimer] = useState(false);
-  const [modal, setModal] = useRecoilState(modalState);
+
+  const [clickedGoalId, setClickedGoalId] = useRecoilState(goalTimeId);
+
+  const achieveGoalMutation = useMutation(goalApi.achieveGoal, {
+    onSuccess: (data) => {
+      queryClient.invalidateQueries(['goalInfo']);
+      queryClient.invalidateQueries(['peopleSearchDate']);
+      queryClient.invalidateQueries(['personGoal']);
+    },
+    onError: (error) => {},
+  });
 
   const changePrivateGoalMutaion = useMutation(goalApi.changePrivateGoal, {
     onSuccess: (data) => {
@@ -51,16 +58,10 @@ const Goal = ({
     goalFlag,
   } = item;
 
-  const [changeTime, setChangeTime] = useRecoilState(goalTimeFamily(id));
+  const [testTime, setTestTime] = useRecoilState(goalTimeFamily(id));
 
-  // const handleTimerStartCilck = () => {
-  //   // setTestTime((prev) => ({ ...prev, isPlay: !isPlay }));
-  //   // setIsPlay(true);
-  //   console.log('시작 클릭');
-  //   setChangeTime((prev) => {
-  //     return { ...prev, isPlay: true };
-  //   });
-  // };
+  const percentage =
+    Math.floor((testTime.currentTime / testTime.totalTime) * 10000) / 100;
 
   const handleLockClick = (check) => {
     changePrivateGoalMutaion.mutate({
@@ -68,43 +69,6 @@ const Goal = ({
       privateCheck: !check,
     });
   };
-
-  // useEffect(() => {
-  //   // 마운트하자마자 리코일에 값 담아주기
-  //   let totalTime = 0;
-  //   time.split(':').forEach((time, i) => {
-  //     if (i === 0) totalTime += parseInt(time) * 60 * 60;
-  //     if (i === 1) totalTime += parseInt(time) * 60;
-  //     if (i === 2) totalTime += parseInt(time);
-  //   });
-
-  //   setChangeTime({ ...changeTime, time: time, totalTime: totalTime });
-
-  //   const newLocalData = {
-  //     ...changeTime,
-  //     totalTime: changeTime.totalTime,
-  //   };
-
-  //   localStorage.setItem(`recoil-persist${id}`, JSON.stringify(newLocalData));
-  // }, [localStorage.getItem(`recoil-persist${id}`)]);
-
-  useEffect(() => {
-    // 마운트하자마자 리코일에 값 담아주기
-    let totalTime = 0;
-    time.split(':').forEach((time, i) => {
-      if (i === 0) totalTime += parseInt(time) * 60 * 60;
-      if (i === 1) totalTime += parseInt(time) * 60;
-      if (i === 2) totalTime += parseInt(time);
-    });
-
-    setChangeTime({ ...changeTime, time: time, totalTime: totalTime });
-  }, []);
-
-  let localTime;
-
-  useEffect(() => {
-    localTime = JSON.parse(localStorage.getItem(`goals${id}`))?.currentTime;
-  }, [JSON.parse(localStorage.getItem(`goals${id}`))?.currentTime]);
 
   return (
     <GoalContainer isTimer={isTimer}>
@@ -117,7 +81,13 @@ const Goal = ({
           <CheckContainer onClick={handleAchiveCheck} />
         )}
 
-        <Container onClick={() => setIsTimer(!isTimer)}>
+        <Container
+          onClick={() => {
+            setIsTimer(!isTimer);
+            setClickedGoalId(id);
+            console.log('골 컴포넌트 testTime', testTime);
+          }}
+        >
           <Contents>
             <RightContent>
               <ChracterContainer>
@@ -162,44 +132,41 @@ const Goal = ({
                 <Timer>
                   <ProgressBar>
                     <ProgressPercentage
-                      // percentage={percentage}
+                      percentage={percentage}
                       isAchievementCheck={achievementCheck}
                     />
                   </ProgressBar>
                   <Time isFootnote2={true} fc={colors.gray500}>
-                    {/* {`${HH}:${MM}:${SS} `} */}
-                    {/* {localStorage.getItem(`goalst${id}`) === null
-                      ? changeTime.time
-                      : JSON.parse(localStorage.getItem(`goals${id}`))
-                          .totalTime} */}
-                    토탈시간
-                    {JSON.parse(localStorage.getItem(`goals${id}`))?.totalTime}
-                    <br />
-                    현재시간
-                    {
-                      JSON.parse(localStorage.getItem(`goals${id}`))
-                        ?.currentTime
-                    }
-                    {/* {localTime} */}
+                    {timeToString(testTime.displayTime)}
                   </Time>
                 </Timer>
                 <CommonButton
                   handleButtonClick={(e) => {
                     e.stopPropagation();
-                    handleTimerStartCilck(id);
+                    handleStartCilck(id);
                   }}
                   wd='50px'
                   mg='-4px 0 0 16px'
                   pd='6px 4px'
                   bdrs='20px'
                   bd='none'
-                  bg={achievementCheck ? '#ccc' : colors.primary}
+                  bg={
+                    achievementCheck || testTime.isPlay
+                      ? '#ccc'
+                      : colors.primary
+                  }
                   fc={colors.white}
                   fz='12px'
                   lh='16px'
-                  text={achievementCheck ? '완료' : '시작'}
+                  text={
+                    achievementCheck
+                      ? '완료'
+                      : testTime.isPlay
+                      ? '진행중'
+                      : '시작'
+                  }
                   flexBasis='50px'
-                  disabled={achievementCheck}
+                  disabled={achievementCheck || testTime.isPlay}
                 ></CommonButton>
               </TimerContainer>
             </>

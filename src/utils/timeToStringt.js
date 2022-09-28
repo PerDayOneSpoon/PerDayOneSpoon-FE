@@ -1,4 +1,4 @@
-export const timerFormat = (time) => {
+export const timeToString = (time) => {
   const format = (num) => (num < 10 ? `0${num}` : String(num));
 
   const sec = time;
