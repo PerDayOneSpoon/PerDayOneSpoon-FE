@@ -1,85 +1,84 @@
 import styled from 'styled-components';
 import CollectionBadge from './CollectionBadge';
+import BottomSheetModal from '../global/BottomSheetModal';
+import { collectionApi } from '../../api/collectionApi';
+import { useQuery } from 'react-query';
+import Loading from '../global/Loading';
+import { useRecoilState } from 'recoil';
+import { bottomModalState } from '../../recoil/common';
+import CommonText from '../elements/CommonText';
+import { colors } from '../../theme/theme';
 
 const CollectionList = () => {
-  const data = [
-    {
-      id: 1,
-      badge: '웰컴 뱃지',
-      hasBadge: false,
-      date: '2022. 08. 31',
-    },
-    {
-      id: 2,
-      badge: '인싸 뱃지',
-      hasBadge: false,
-      date: '2022. 08. 31',
-    },
-    {
-      id: 3,
-      badge: '퐁당퐁당 뱃지',
-      hasBadge: false,
-      date: '2022. 08. 31',
-    },
-    {
-      id: 4,
-      badge: '얼리버드 뱃지',
-      hasBadge: false,
-      date: '2022. 08. 31',
-    },
-    {
-      id: 5,
-      badge: '올빼미 뱃지',
-      hasBadge: false,
-      date: '2022. 08. 31',
-    },
-    {
-      id: 6,
-      badge: '단타 뱃지',
-      hasBadge: false,
-      date: '2022. 08. 31',
-    },
-    {
-      id: 7,
-      badge: '장타 뱃지',
-      hasBadge: false,
-      date: '2022. 08. 31',
-    },
-    {
-      id: 8,
-      badge: '뱃지 이름',
-      hasBadge: false,
-      date: '2022. 08. 31',
-    },
-    {
-      id: 9,
-      badge: '뱃지 이름',
-      hasBadge: false,
-      date: '2022. 08. 31',
-    },
-    {
-      id: 10,
-      badge: '뱃지 이름',
-      hasBadge: false,
-      date: '2022. 08. 31',
-    },
-    {
-      id: 11,
-      badge: '뱃지 이름',
-      hasBadge: false,
-      date: '2022. 08. 31',
-    },
-  ];
+  const [bottomModal, setBottomModal] = useRecoilState(bottomModalState);
+
+  const {
+    isLoading,
+    isError,
+    error,
+    data: badgeData,
+  } = useQuery(['myCalendar'], collectionApi.getBadge, {
+    onSuccess: (data) => {},
+    onError: (error) => {},
+  });
+
+  const handleBadgeClick = (id) => {
+    setBottomModal({ open: true, type: id });
+  };
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
-    <Container>
-      <Title>뱃지 컬렉션</Title>
-      <BadgeContainer>
-        {data.map((badge) => (
-          <CollectionBadge key={badge.id} badge={badge} />
-        ))}
-      </BadgeContainer>
-    </Container>
+    <>
+      <Container>
+        <BadgeContainer>
+          {badgeData?.data?.badgeResponseDtoList?.map((badge) => (
+            <CollectionBadge
+              key={badge.badgeNumber}
+              badge={badge}
+              handleBadgeClick={handleBadgeClick}
+            />
+          ))}
+        </BadgeContainer>
+      </Container>
+      <BottomSheetModal>
+        {badgeData?.data?.badgeResponseDtoList?.map(
+          (item, index) =>
+            item.badgeNumber === bottomModal.type && (
+              <ModalContainer>
+                <ModalContainerInner>
+                  <ImgContainer>
+                    <img src={item.badgeUrl} alt='뱃지 이미지' />
+                  </ImgContainer>
+
+                  <CommonText isBody={true} mg='12px 0 0 0'>
+                    {item.badgeName}
+                  </CommonText>
+
+                  {item.createdAt !== null && (
+                    <CommonText
+                      isFootnote1={true}
+                      fc={colors.gray500}
+                      mg='4px 0 0 0'
+                    >
+                      획득일: {item.createdAt}
+                    </CommonText>
+                  )}
+                  <CommonText
+                    isSentence2={true}
+                    mg='12px 0 0 0'
+                    fc={colors.gray700}
+                  >
+                    {item.badgeInfo}
+                  </CommonText>
+                </ModalContainerInner>
+              </ModalContainer>
+            )
+        )}
+      </BottomSheetModal>
+    </>
   );
 };
 
@@ -90,16 +89,33 @@ const Container = styled.div`
   padding-bottom: 50px;
 `;
 
-const Title = styled.h2`
-  display: inline-block;
-  padding-bottom: 8px;
-  margin-bottom: 16px;
-  line-height: 24px;
-  border-bottom: 2px solid black;
-`;
-
 const BadgeContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-  gap: 10px;
+  gap: 20px 10px;
+`;
+
+const ModalContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 0 20px;
+`;
+
+const ModalContainerInner = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+const ImgContainer = styled.div`
+  width: 120px;
+  height: 120px;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 `;

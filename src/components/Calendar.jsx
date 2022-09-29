@@ -99,7 +99,7 @@ const Calendar = () => {
     return <Loading />;
   }
 
-  const { peopleList } = calendarData.data;
+  // const { peopleList } = calendarData.data;
 
   // console.log('calendarData.data', calendarData.data);
   // console.log('peopleSearchDate', peopleSearchDate);
@@ -108,9 +108,12 @@ const Calendar = () => {
 
   return (
     <>
-      <FriendsList peopleList={peopleList} handleUserClick={handleUserClick} />
+      <FriendsList
+        peopleList={calendarData?.data?.peopleList}
+        handleUserClick={handleUserClick}
+      />
       <MonthCalendar
-        monthCalenderDtoList={peopleSearchMonth.data.monthCalenderDtoList}
+        monthCalenderDtoList={peopleSearchMonth?.data?.monthCalenderDtoList}
         handleChangeDate={handleChangeDate}
         dateValue={dateValue}
         handleGetMonth={({ action, activeStartDate, value, view }) => {
@@ -121,9 +124,9 @@ const Calendar = () => {
         {dayjs(dateValue).format('MM월 DD일')}의 습관
       </CommonText>
       <GoalList
-        data={peopleSearchDate.data.todayGoalsDtoList}
+        data={peopleSearchDate?.data?.todayGoalsDtoList}
         // isMe={userId === peopleList[0].id ? true : false}
-        isMe={peopleSearchDate.data.me}
+        isMe={peopleSearchDate?.data?.me}
       />
     </>
   );

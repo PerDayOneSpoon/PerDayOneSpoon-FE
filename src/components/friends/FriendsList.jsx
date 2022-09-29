@@ -7,11 +7,9 @@ import React, { useRef, createRef } from 'react';
 const FriendsList = ({ peopleList, handleUserClick }) => {
   const scrollRef = useHorizontalScroll();
 
-  const focusRefs = useRef(peopleList.map(() => createRef()));
-
   return (
     <Container ref={scrollRef}>
-      {peopleList.map((person, i) => (
+      {peopleList?.map((person, i) => (
         <Friend
           key={person.id}
           person={person}
@@ -20,7 +18,6 @@ const FriendsList = ({ peopleList, handleUserClick }) => {
           }}
         />
       ))}
-      {/* <div ref={myRef} /> */}
     </Container>
   );
 };

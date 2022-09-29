@@ -6,7 +6,7 @@ import { goalApi } from '../api/goalApi';
 import { colors } from '../theme/theme';
 import Loading from './global/Loading';
 
-const Main = ({ handleStartCilck }) => {
+const Main = () => {
   const {
     isLoading,
     isError,
@@ -42,11 +42,7 @@ const Main = ({ handleStartCilck }) => {
       <CommonText isFootnote1={true} fc={colors.gray500}>
         {currentDate}
       </CommonText>
-      <GoalList
-        isMain={true}
-        data={todayGoalsDtoList}
-        handleStartCilck={handleStartCilck}
-      />
+      <GoalList isMain={true} data={todayGoalsDtoList} />
     </>
   );
 };

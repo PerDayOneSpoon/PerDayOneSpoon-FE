@@ -3,16 +3,16 @@ import { colors } from '../../theme/theme';
 import badgeTestImg from '../../assets/imgs/character-question-mark.png';
 import CommonText from '../elements/CommonText';
 
-const CollectionBadge = ({ badge }) => {
+const CollectionBadge = ({ badge, handleBadgeClick }) => {
   return (
-    <Container>
+    <Container onClick={() => handleBadgeClick(badge.badgeNumber)}>
       <BadgeImgContainer>
-        <BadgeImg src={badgeTestImg} />
+        <BadgeImg src={badge.badgeUrl} />
       </BadgeImgContainer>
-      <CommonText isCallout={true}>{badge.badge}</CommonText>
-      <CommonText isCallout={true} fc={colors.text}>
+      <CommonText isCallout={true}>{badge.badgeName}</CommonText>
+      {/* <CommonText isCallout={true} fc={colors.text}>
         {badge.date}
-      </CommonText>
+      </CommonText> */}
     </Container>
   );
 };
@@ -24,18 +24,18 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  cursor: pointer;
 `;
 
 const BadgeImgContainer = styled.div`
   width: 100%;
   aspect-ratio: 1/1;
   border-radius: 20px;
-  margin-bottom: 6px;
   display: flex;
   align-items: center;
   justify-content: center;
 `;
 const BadgeImg = styled.img`
-  width: 80%;
-  height: 80%;
+  width: 90%;
+  height: 90%;
 `;

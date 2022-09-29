@@ -5,9 +5,12 @@ import axios from 'axios';
 import { setToken } from '../../shared/localStorage';
 import LoginLoading from './LoginLoading';
 import Layout from '../../layout/Layout';
+import { useSetRecoilState } from 'recoil';
+import { loginState } from '../../recoil/common';
 
 const KakaoLogin = () => {
   const navigate = useNavigate();
+  const setIsLogin = useSetRecoilState(loginState);
 
   let code = new URL(window.location.href).searchParams.get('code');
 
@@ -23,6 +26,7 @@ const KakaoLogin = () => {
         if (res.data.code === 200) {
           setToken(res.headers.authorization, res.headers.refreshtoken);
           navigate('/');
+          setIsLogin(true);
         } else {
           navigate('/login');
         }

@@ -10,22 +10,17 @@ import { goalApi } from '../../api/goalApi';
 import { colors } from '../../theme/theme';
 import CommonText from '../elements/CommonText';
 import CommonButton from '../elements/CommonButton';
+import useInterval from '../../hooks/useInterval';
+
 import { useRecoilState } from 'recoil';
 import { goalTimeFamily } from '../../recoil/goal';
-import { goalTimeId } from '../../recoil/goal';
-import { timeToString } from '../../utils/timeToStringt';
+import { modalState } from '../../recoil/common';
 
-const Goal = ({
-  item,
-  handleAchiveCheck,
-  handleGoalDelete,
-  handleStartCilck,
-}) => {
+const Goal = ({ item, handleAchiveCheck, handleGoalDelete }) => {
   const queryClient = useQueryClient();
 
   const [isTimer, setIsTimer] = useState(false);
-
-  const [clickedGoalId, setClickedGoalId] = useRecoilState(goalTimeId);
+  const [modal, setModal] = useRecoilState(modalState);
 
   const achieveGoalMutation = useMutation(goalApi.achieveGoal, {
     onSuccess: (data) => {
@@ -58,10 +53,62 @@ const Goal = ({
     goalFlag,
   } = item;
 
+  let totalTime = 0;
+
+  time.split(':').forEach((time, i) => {
+    if (i === 0) totalTime += parseInt(time) * 60 * 60;
+    if (i === 1) totalTime += parseInt(time) * 60;
+    if (i === 2) totalTime += parseInt(time);
+  });
+
   const [testTime, setTestTime] = useRecoilState(goalTimeFamily(id));
+  const [timerInterval, setTimerInterval] = useState(0);
 
   const percentage =
-    Math.floor((testTime.currentTime / testTime.totalTime) * 10000) / 100;
+    Math.floor((testTime.currentTime / totalTime) * 10000) / 100;
+
+  // 화면에 보여질 부분
+  const HH = String(testTime.hh).padStart(2, '0');
+  const MM = String(testTime.mm).padStart(2, '0');
+  const SS = String(testTime.ss).padStart(2, '0');
+
+  const startProgress = () => {
+    // testTime.isPlay && setCurrentTime((s) => s + 1);
+    testTime.isPlay &&
+      setTestTime((prev) => ({ ...prev, currentTime: prev.currentTime + 1 }));
+
+    if (testTime.ss > 0) {
+      setTestTime((prev) => ({ ...prev, ss: prev.ss - 1 }));
+    }
+
+    if (testTime.ss === 0) {
+      if (testTime.mm === 0) {
+        if (testTime.hh === 0) {
+          // setIsPlay(false);
+          setTestTime((prev) => ({ ...prev, isPlay: false }));
+        } else {
+          setTestTime((prev) => ({ ...prev, hh: prev.hh - 1 }));
+          setTestTime((prev) => ({ ...prev, mm: 59 }));
+          setTestTime((prev) => ({ ...prev, ss: 59 }));
+        }
+      } else {
+        setTestTime((prev) => ({ ...prev, mm: prev.mm - 1 }));
+        setTestTime((prev) => ({ ...prev, ss: 59 }));
+      }
+    }
+  };
+
+  const customInterval = useInterval(
+    () => {
+      startProgress();
+    },
+    testTime.isPlay ? 1000 : null
+  );
+
+  const handleStartCilck = () => {
+    setTestTime((prev) => ({ ...prev, isPlay: true }));
+    // setIsPlay(true);
+  };
 
   const handleLockClick = (check) => {
     changePrivateGoalMutaion.mutate({
@@ -69,6 +116,23 @@ const Goal = ({
       privateCheck: !check,
     });
   };
+
+  useEffect(() => {
+    if (testTime.hh === 0 && testTime.mm === 0 && testTime.ss === 0) {
+      clearInterval(startProgress);
+      const data = {
+        goalId: id,
+        achivement: true,
+      };
+      achieveGoalMutation.mutate(data);
+    }
+  }, [testTime.hh, testTime.mm, testTime.ss]);
+
+  useEffect(() => {
+    if (testTime.isPlay) {
+      setTimerInterval(customInterval);
+    }
+  }, [testTime.isPlay]);
 
   return (
     <GoalContainer isTimer={isTimer}>
@@ -81,13 +145,7 @@ const Goal = ({
           <CheckContainer onClick={handleAchiveCheck} />
         )}
 
-        <Container
-          onClick={() => {
-            setIsTimer(!isTimer);
-            setClickedGoalId(id);
-            console.log('골 컴포넌트 testTime', testTime);
-          }}
-        >
+        <Container onClick={() => setIsTimer(!isTimer)}>
           <Contents>
             <RightContent>
               <ChracterContainer>
@@ -137,36 +195,26 @@ const Goal = ({
                     />
                   </ProgressBar>
                   <Time isFootnote2={true} fc={colors.gray500}>
-                    {timeToString(testTime.displayTime)}
+                    {`${HH}:${MM}:${SS} `}
                   </Time>
                 </Timer>
                 <CommonButton
                   handleButtonClick={(e) => {
                     e.stopPropagation();
-                    handleStartCilck(id);
+                    handleStartCilck();
                   }}
                   wd='50px'
                   mg='-4px 0 0 16px'
                   pd='6px 4px'
                   bdrs='20px'
                   bd='none'
-                  bg={
-                    achievementCheck || testTime.isPlay
-                      ? '#ccc'
-                      : colors.primary
-                  }
+                  bg={achievementCheck ? '#ccc' : colors.primary}
                   fc={colors.white}
                   fz='12px'
                   lh='16px'
-                  text={
-                    achievementCheck
-                      ? '완료'
-                      : testTime.isPlay
-                      ? '진행중'
-                      : '시작'
-                  }
+                  text={achievementCheck ? '완료' : '시작'}
                   flexBasis='50px'
-                  disabled={achievementCheck || testTime.isPlay}
+                  disabled={achievementCheck}
                 ></CommonButton>
               </TimerContainer>
             </>

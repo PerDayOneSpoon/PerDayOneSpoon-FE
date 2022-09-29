@@ -10,17 +10,27 @@ import { goalApi } from '../../api/goalApi';
 import { colors } from '../../theme/theme';
 import CommonText from '../elements/CommonText';
 import CommonButton from '../elements/CommonButton';
-import useInterval from '../../hooks/useInterval';
-
 import { useRecoilState } from 'recoil';
 import { goalTimeFamily } from '../../recoil/goal';
-import { modalState } from '../../recoil/common';
+import { goalTimeId } from '../../recoil/goal';
+import { timeToString } from '../../utils/timeToStringt';
+import { stringToTime } from '../../utils/stringToTime';
+import useInterval from '../../hooks/useInterval';
+import { goalTimerSelectorFamily } from '../../recoil/goal';
 
-const Goal = ({ item, handleAchiveCheck, handleGoalDelete }) => {
+const Goal = ({
+  item,
+  handleAchiveCheck,
+  handleGoalDelete,
+  // handleStartCilck,
+}) => {
   const queryClient = useQueryClient();
 
   const [isTimer, setIsTimer] = useState(false);
-  const [modal, setModal] = useRecoilState(modalState);
+
+  const [timerInterval, setTimerInterval] = useState(0);
+
+  const [clickedGoalId, setClickedGoalId] = useRecoilState(goalTimeId);
 
   const achieveGoalMutation = useMutation(goalApi.achieveGoal, {
     onSuccess: (data) => {
@@ -53,61 +63,45 @@ const Goal = ({ item, handleAchiveCheck, handleGoalDelete }) => {
     goalFlag,
   } = item;
 
-  let totalTime = 0;
+  const [goalTimer, setGoalTimer] = useRecoilState(goalTimerSelectorFamily(id));
+  console.log('goalTimer!!!', goalTimer);
 
-  time.split(':').forEach((time, i) => {
-    if (i === 0) totalTime += parseInt(time) * 60 * 60;
-    if (i === 1) totalTime += parseInt(time) * 60;
-    if (i === 2) totalTime += parseInt(time);
-  });
+  // useInterval(
+  //   JSON.parse(localStorage.getItem(`timer${id}`))?.id,
+  //   JSON.parse(localStorage.getItem(`timer${id}`))?.isPlay,
+  //   JSON.parse(localStorage.getItem(`timer${id}`))?.displayTime
+  // );
 
-  const [testTime, setTestTime] = useRecoilState(goalTimeFamily(id));
-  const [timerInterval, setTimerInterval] = useState(0);
+  // console.log(JSON.parse(localStorage.getItem(`timer${id}`)).id);
 
-  const percentage =
-    Math.floor((testTime.currentTime / totalTime) * 10000) / 100;
+  // const [testTime, setTestTime] = useRecoilState(goalTimeFamily(id));
+  // console.log(testTime);
 
-  // 화면에 보여질 부분
-  const HH = String(testTime.hh).padStart(2, '0');
-  const MM = String(testTime.mm).padStart(2, '0');
-  const SS = String(testTime.ss).padStart(2, '0');
+  // const percentage =
+  //   Math.floor((testTime.currentTime / testTime.totalTime) * 10000) / 100;
 
   const startProgress = () => {
     // testTime.isPlay && setCurrentTime((s) => s + 1);
-    testTime.isPlay &&
-      setTestTime((prev) => ({ ...prev, currentTime: prev.currentTime + 1 }));
-
-    if (testTime.ss > 0) {
-      setTestTime((prev) => ({ ...prev, ss: prev.ss - 1 }));
-    }
-
-    if (testTime.ss === 0) {
-      if (testTime.mm === 0) {
-        if (testTime.hh === 0) {
-          // setIsPlay(false);
-          setTestTime((prev) => ({ ...prev, isPlay: false }));
-        } else {
-          setTestTime((prev) => ({ ...prev, hh: prev.hh - 1 }));
-          setTestTime((prev) => ({ ...prev, mm: 59 }));
-          setTestTime((prev) => ({ ...prev, ss: 59 }));
-        }
-      } else {
-        setTestTime((prev) => ({ ...prev, mm: prev.mm - 1 }));
-        setTestTime((prev) => ({ ...prev, ss: 59 }));
-      }
-    }
-  };
-
-  const customInterval = useInterval(
-    () => {
-      startProgress();
-    },
-    testTime.isPlay ? 1000 : null
-  );
-
-  const handleStartCilck = () => {
-    setTestTime((prev) => ({ ...prev, isPlay: true }));
-    // setIsPlay(true);
+    // goalTimer.isPlay &&
+    //   setGoalTimer((prev) => ({ ...prev, displayTime: prev.displayTime - 1 }));
+    // if (testTime.ss > 0) {
+    //   setTestTime((prev) => ({ ...prev, ss: prev.ss - 1 }));
+    // }
+    // if (testTime.ss === 0) {
+    //   if (testTime.mm === 0) {
+    //     if (testTime.hh === 0) {
+    //       // setIsPlay(false);
+    //       setTestTime((prev) => ({ ...prev, isPlay: false }));
+    //     } else {
+    //       setTestTime((prev) => ({ ...prev, hh: prev.hh - 1 }));
+    //       setTestTime((prev) => ({ ...prev, mm: 59 }));
+    //       setTestTime((prev) => ({ ...prev, ss: 59 }));
+    //     }
+    //   } else {
+    //     setTestTime((prev) => ({ ...prev, mm: prev.mm - 1 }));
+    //     setTestTime((prev) => ({ ...prev, ss: 59 }));
+    //   }
+    // }
   };
 
   const handleLockClick = (check) => {
@@ -117,22 +111,51 @@ const Goal = ({ item, handleAchiveCheck, handleGoalDelete }) => {
     });
   };
 
-  useEffect(() => {
-    if (testTime.hh === 0 && testTime.mm === 0 && testTime.ss === 0) {
-      clearInterval(startProgress);
-      const data = {
-        goalId: id,
-        achivement: true,
-      };
-      achieveGoalMutation.mutate(data);
-    }
-  }, [testTime.hh, testTime.mm, testTime.ss]);
+  // const customInterval = useInterval(
+  //   () => {
+  //     // setGoalTimer((prev) => ({ ...prev, displayTime: prev.displayTime - 1 }));
+  //     startProgress();
+  //   },
+  //   goalTimer.isPlay ? 1000 : null
+  // );
 
-  useEffect(() => {
-    if (testTime.isPlay) {
-      setTimerInterval(customInterval);
-    }
-  }, [testTime.isPlay]);
+  // useEffect(() => {
+  //   if (goalTimer.isPlay) {
+  //     setTimerInterval(customInterval);
+  //   }
+  // }, [goalTimer.isPlay]);
+
+  const handleStartClick = () => {
+    setGoalTimer((prev) => {
+      return {
+        ...prev,
+        isPlay: true,
+        totalTime: stringToTime(time),
+        displayTime: stringToTime(time) - 1,
+      };
+    });
+  };
+
+  // const handleStartCilck = (id) => {
+  //   const data = JSON.parse(localStorage.getItem(`timer${id}`));
+  //   const newData = { ...data, isPlay: true };
+
+  //   localStorage.setItem(`timer${id}`, JSON.stringify(newData));
+  // };
+
+  // const handleLocalStorage = () => {
+  //   const value = {
+  //     id: id,
+  //     totalTime: stringToTime(time),
+  //     displayTime: stringToTime(time),
+  //     currentTime: 0,
+  //     isPlay: false,
+  //     isDone: achievementCheck,
+  //   };
+  //   localStorage.setItem(`timer${id}`, JSON.stringify(value));
+  // };
+
+  // console.log('goalTimer!!', goalTimer);
 
   return (
     <GoalContainer isTimer={isTimer}>
@@ -145,7 +168,14 @@ const Goal = ({ item, handleAchiveCheck, handleGoalDelete }) => {
           <CheckContainer onClick={handleAchiveCheck} />
         )}
 
-        <Container onClick={() => setIsTimer(!isTimer)}>
+        <Container
+          onClick={() => {
+            setIsTimer(!isTimer);
+            // handleLocalStorage();
+            // setClickedGoalId(id);
+            // console.log('골 컴포넌트 testTime', testTime);
+          }}
+        >
           <Contents>
             <RightContent>
               <ChracterContainer>
@@ -190,18 +220,25 @@ const Goal = ({ item, handleAchiveCheck, handleGoalDelete }) => {
                 <Timer>
                   <ProgressBar>
                     <ProgressPercentage
-                      percentage={percentage}
+                      // percentage={percentage}
                       isAchievementCheck={achievementCheck}
                     />
                   </ProgressBar>
                   <Time isFootnote2={true} fc={colors.gray500}>
-                    {`${HH}:${MM}:${SS} `}
+                    {/* {timeToString(
+                      JSON.parse(localStorage.getItem(`timer${id}`)).displayTime
+                    )} */}
+                    {/* {goalTimer.isPlay
+                      ? timeToString(goalTimer.displayTime)
+                      : time} */}
                   </Time>
                 </Timer>
                 <CommonButton
                   handleButtonClick={(e) => {
                     e.stopPropagation();
-                    handleStartCilck();
+                    setClickedGoalId(id);
+
+                    handleStartClick();
                   }}
                   wd='50px'
                   mg='-4px 0 0 16px'

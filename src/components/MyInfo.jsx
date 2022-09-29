@@ -3,7 +3,7 @@ import UserInfo from './user/UserInfo';
 import Achievement from './user/Achievement';
 import CommonButton from './elements/CommonButton';
 import Loading from './global/Loading';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useQuery, useMutation } from 'react-query';
 import { colors } from '../theme/theme';
 import { removeToken } from '../shared/localStorage';
@@ -11,10 +11,16 @@ import { userApi } from '../api/userApi';
 import { NAV_BAR_HEIGHT } from '../constants/common';
 import { useSetRecoilState } from 'recoil';
 import { userInfoState } from '../recoil/common';
+import { loginState } from '../recoil/common';
+import { ReactComponent as IconFeedback } from '../assets/icons/icon-feedback.svg';
+import { navBarState } from '../recoil/common';
 
 const MyInfo = () => {
   const navigate = useNavigate();
   const setUserInfoState = useSetRecoilState(userInfoState);
+  const setIsLogin = useSetRecoilState(loginState);
+
+  const setNavBar = useSetRecoilState(navBarState);
 
   const {
     isLoading,
@@ -35,6 +41,7 @@ const MyInfo = () => {
       removeToken();
       localStorage.removeItem('recoil-persist');
       navigate('/login');
+      setIsLogin(false);
     },
   });
 
@@ -43,6 +50,7 @@ const MyInfo = () => {
       removeToken();
       localStorage.removeItem('recoil-persist');
       navigate('/login');
+      setIsLogin(false);
     },
   });
 
@@ -58,10 +66,12 @@ const MyInfo = () => {
           <FlexContainer>
             <Achievement title='이룬 습관' num={userInfo.data.goalCnt} />
             <Achievement
-              isBadge={true}
               title='획득한 뱃지'
-              totalNum='20'
-              num='5'
+              num={userInfo.data.badgeCnt}
+              handleAchiveClick={() => {
+                navigate('/collection');
+                setNavBar('뱃지');
+              }}
             />
           </FlexContainer>
           <FlexContainer>
@@ -80,32 +90,48 @@ const MyInfo = () => {
           </FlexContainer>
         </BoxContainer>
       </Info>
-      <ButtonGroup>
-        <CommonButton
-          handleButtonClick={() => logoutMutation()}
-          text='로그아웃'
-          wd='116px'
-          pd='8px 0'
-          bg={colors.white}
-          fc={colors.gray700}
-          fz='15px'
-          fw='600'
-          bdrs='22px'
-          bd={`1px solid ${colors.gray300}`}
-        />
-        <CommonButton
-          handleButtonClick={() => unregisterMutation()}
-          text='계정 삭제하기'
-          wd='116px'
-          pd='8px 0'
-          bg={colors.white}
-          fc={colors.danger}
-          fz='15px'
-          fw='600'
-          bdrs='22px'
-          bd={`1px solid ${colors.softDanger}`}
-        />
-      </ButtonGroup>
+      <div>
+        <LinkButtonContainer>
+          <LinkButton>
+            <a
+              href='https://docs.google.com/forms/d/e/1FAIpQLSfruf4XRxmHZ2rfO6q3TmV5W8P4fOFvfhhoaHT6nNBt3jheyA/viewform'
+              target='_blank'
+              rel='noreferrer'
+            >
+              피드백 보내기
+            </a>
+            <IconContainer>
+              <IconFeedback />
+            </IconContainer>
+          </LinkButton>
+        </LinkButtonContainer>
+        <ButtonGroup>
+          <CommonButton
+            handleButtonClick={() => logoutMutation()}
+            text='로그아웃'
+            wd='116px'
+            pd='8px 0'
+            bg={colors.white}
+            fc={colors.gray700}
+            fz='15px'
+            fw='600'
+            bdrs='22px'
+            bd={`1px solid ${colors.gray300}`}
+          />
+          <CommonButton
+            handleButtonClick={() => unregisterMutation()}
+            text='계정 삭제하기'
+            wd='116px'
+            pd='8px 0'
+            bg={colors.white}
+            fc={colors.danger}
+            fz='15px'
+            fw='600'
+            bdrs='22px'
+            bd={`1px solid ${colors.softDanger}`}
+          />
+        </ButtonGroup>
+      </div>
     </Container>
   );
 };
@@ -138,9 +164,49 @@ const ButtonGroup = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  padding-bottom: 40px;
+  padding-bottom: 24px;
 
   > div + div {
     margin-left: 16px;
+  }
+`;
+
+const LinkButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+`;
+
+const LinkButton = styled.div`
+  width: fit-content;
+  margin-bottom: 20px;
+  position: relative;
+
+  a {
+    text-align: center;
+    display: inline-block;
+    width: 232px;
+    /* border: 1px solid ${colors.gray300}; */
+    background-color: ${colors.orange500};
+    text-decoration: none;
+    color: ${colors.white};
+    padding: 12px 0;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 22px;
+  }
+`;
+
+const IconContainer = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 20%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+
+  svg {
+    width: 100%;
+    height: 100%;
   }
 `;

@@ -14,25 +14,25 @@ const CollectionPage = () => {
   const setModal = useSetRecoilState(modalState);
   const setNavBar = useSetRecoilState(navBarState);
 
-  const handleModalOk = () => {
-    navigate('/');
-    setNavBar('달성');
-    setModal({ open: false });
-  };
+  // const handleModalOk = () => {
+  //   navigate('/');
+  //   setNavBar('달성');
+  //   setModal({ open: false });
+  // };
 
-  useEffect(() => {
-    setModal({ open: true, type: 'alert' });
-  }, []);
+  // useEffect(() => {
+  //   setModal({ open: true, type: 'alert' });
+  // }, []);
 
   return (
     <Layout hasNavBar={true}>
       <Header title='뱃지 컬렉션' />
       <CollectionList />
-      <Modal
+      {/* <Modal
         bgTransparent={false}
         handleModalOk={() => handleModalOk()}
         modalText='뱃지 페이지는 현재 준비 중입니다😀'
-      />
+      /> */}
     </Layout>
   );
 };
