@@ -26,7 +26,7 @@ instance.interceptors.request.use(
   },
   (error) => {
     // console.log('axios 파일 request error', error);
-    // window.location('/login');
+    window.location('/login');
     return Promise.reject(error);
   }
 );
@@ -51,7 +51,7 @@ instance.interceptors.response.use(
     // message: "변조된 토큰입니다."
     if (responseData.code === '401') {
       removeToken();
-      window.location.replace('/');
+      // window.location.replace('/');
     }
 
     // "message": "만료된 토큰 입니다."
@@ -69,7 +69,7 @@ instance.interceptors.response.use(
           return instance(originalRequest);
         } catch (err) {
           removeToken();
-          window.location.replace('/');
+          // window.location.replace('/');
         }
       }
     }

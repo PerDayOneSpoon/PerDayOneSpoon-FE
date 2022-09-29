@@ -86,7 +86,7 @@ const TextWrap = styled.div`
   padding: 0 24px;
   text-align: center;
   box-sizing: border-box;
-  word-break: keep-all;
+  word-break: break-all;
 `;
 
 const ButtonGroup = styled.div`

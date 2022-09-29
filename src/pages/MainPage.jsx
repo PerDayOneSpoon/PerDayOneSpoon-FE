@@ -2,7 +2,6 @@ import Layout from '../layout/Layout';
 import Header from '../components/global/Header';
 import AddButton from '../components/elements/AddButton';
 import Main from '../components/Main';
-import LoginLoading from '../components/login/LoginLoading';
 import { colors } from '../theme/theme';
 import { useNavigate } from 'react-router-dom';
 
