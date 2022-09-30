@@ -34,7 +34,12 @@ const GlobalStyles = createGlobalStyle`
   @supports (-webkit-appearance:none) and (stroke-color: transparent) {
   min-height: -webkit-fill-available;
 }
-  }
+   }
+
+   input:matches([type='button'], [type='submit'], [type='reset'])
+   ,button {
+    color: black;
+   }
 
   /* input, textarea, button {
     appearance: none;

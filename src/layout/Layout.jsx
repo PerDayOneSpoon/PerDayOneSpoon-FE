@@ -16,7 +16,7 @@ export default Layout;
 
 const Background = styled.div`
   width: 100%;
-  height: 100%;
+  height: calc(var(--vh, 1vh) * 100);
   max-width: 768px;
   display: flex;
   flex-direction: column;
