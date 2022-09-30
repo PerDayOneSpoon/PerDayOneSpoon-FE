@@ -69,6 +69,7 @@ const CollectionList = () => {
                   <CommonText
                     isSentence2={true}
                     mg='12px 0 0 0'
+                    pd='0 40px'
                     fc={colors.gray700}
                   >
                     {item.badgeInfo}
@@ -107,6 +108,8 @@ const ModalContainerInner = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  text-align: center;
+  word-break: keep-all;
 `;
 
 const ImgContainer = styled.div`

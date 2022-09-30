@@ -3,6 +3,8 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ReactComponent as IconLeft } from '../../assets/icons/icon-left.svg';
 import { ReactComponent as IconFriend } from '../../assets/icons/icon-addfriend.svg';
+import { ReactComponent as IconNotification } from '../../assets/icons/icon-notification.svg';
+import { ReactComponent as IconNotificationAlram } from '../../assets/icons/icon-notification-alram.svg';
 import { getAccessToken } from '../../shared/localStorage';
 import CommonText from '../elements/CommonText';
 import { colors } from '../../theme/theme';
@@ -21,6 +23,12 @@ const Header = ({
   const handleIcons = (icon) => {
     if (icon === 'addFriend') {
       return <IconFriend onClick={() => navigate('/search')} />;
+    }
+    if (icon === 'notification') {
+      return <IconNotification onClick={() => navigate('/notice')} />;
+    }
+    if (icon === 'notificationAlram') {
+      return <IconNotificationAlram onClick={() => navigate('/notice')} />;
     }
   };
 

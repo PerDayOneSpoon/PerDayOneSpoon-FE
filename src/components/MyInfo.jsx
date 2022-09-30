@@ -72,6 +72,7 @@ const MyInfo = () => {
                 navigate('/collection');
                 setNavBar('뱃지');
               }}
+              cursor='true'
             />
           </FlexContainer>
           <FlexContainer>

@@ -67,7 +67,6 @@ const Goal = ({
   const [timeInfo, setTimeInfo] = useRecoilStateLoadable(goalTimeFamily(id));
 
   const goalTimeInfo = timeInfo.contents;
-  console.log('goalTimeInfo!!!', goalTimeInfo);
 
   const [timerInterval, setTimerInterval] = useState(0);
 
@@ -104,7 +103,11 @@ const Goal = ({
   };
 
   useEffect(() => {
-    if (goalTimeInfo.displayTime === 0 && goalTimeInfo.currentTime !== 0) {
+    if (
+      goalTimeInfo.displayTime === 0 &&
+      goalTimeInfo.currentTime !== 0 &&
+      achievementCheck === false
+    ) {
       clearInterval(startProgress);
       setIsStart(false);
 
