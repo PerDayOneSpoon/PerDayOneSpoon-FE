@@ -69,7 +69,7 @@ instance.interceptors.response.use(
           return instance(originalRequest);
         } catch (err) {
           removeToken();
-          window.location.replace('/login');
+          // window.location.replace('/login');
         }
       }
     }

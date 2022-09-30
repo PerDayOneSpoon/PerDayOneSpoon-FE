@@ -34,7 +34,7 @@ const GoogleLogin = () => {
       .catch(function (error) {
         console.log('error : ' + error);
       });
-  }, [code, navigate]);
+  }, []);
 
   return (
     <Layout>

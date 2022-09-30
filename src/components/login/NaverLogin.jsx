@@ -35,7 +35,7 @@ const NaverLogin = () => {
       .catch(function (error) {
         console.log('error : ' + error);
       });
-  }, [code, state, navigate]);
+  }, []);
 
   return (
     <Layout>
