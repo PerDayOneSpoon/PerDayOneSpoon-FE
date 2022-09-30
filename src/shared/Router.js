@@ -32,82 +32,72 @@ const Router = () => {
 
   /* 실시간 알림 */
   useEffect(() => {
-    let eventSource;
+    if (isLogin) {
+      let eventSource;
 
-    const fetchData = async () => {
-      try {
-        eventSource = new EventSource(
-          `${process.env.REACT_APP_BASE_URL}/sse/subscribe`,
-          {
-            headers: {
-              Authorization: getAccessToken(),
-            },
-            withCredentials: true,
-          }
-        );
-        console.log('EVENT_SOURCE 선언!', eventSource);
+      const fetchData = async () => {
+        try {
+          eventSource = new EventSource(
+            `${process.env.REACT_APP_BASE_URL}/sse/subscribe`,
+            {
+              headers: {
+                Authorization: getAccessToken(),
+              },
+              withCredentials: true,
+            }
+          );
+          console.log('EVENT_SOURCE 선언!', eventSource);
 
-        eventSource.onopen = async (event) => {
-          const result = await event;
-          console.log('connection opened', result);
-        };
+          eventSource.onopen = async (event) => {
+            const result = await event;
+            console.log('connection opened', result);
+          };
 
-        eventSource.onmessage = async (event) => {
-          const result = await event;
-          console.log('RESULT', result);
-          // setData((old) => [...old, event.data]);
-          // setValue(event.data);
-        };
+          eventSource.onmessage = async (event) => {
+            const result = await event;
+            console.log('RESULT', result);
+            // setData((old) => [...old, event.data]);
+            // setValue(event.data);
+          };
 
-        eventSource.onerror = async (event) => {
-          const result = await event;
-          console.log('ERROR', result);
-          // if (event.target.readyState === EventSource.CLOSED) {
-          //   console.log(
-          //     'EVENT_SOURCE closed (' + event.target.readyState + ')'
-          //   );
-          // }
-          // eventSource.close();
-        };
+          eventSource.onerror = async (event) => {
+            const result = await event;
+            console.log('ERROR', result);
+            // if (event.target.readyState === EventSource.CLOSED) {
+            //   console.log(
+            //     'EVENT_SOURCE closed (' + event.target.readyState + ')'
+            //   );
+            // }
+            // eventSource.close();
+          };
 
-        setListening(true);
-      } catch (error) {
-        console.log(error);
-      }
-    };
+          setListening(true);
+        } catch (error) {
+          console.log(error);
+        }
+      };
 
-    fetchData();
-    return () => {
-      eventSource.close();
-      console.log('eventsource closed');
-    };
+      fetchData();
+      return () => {
+        eventSource.close();
+        console.log('eventsource closed');
+      };
+    }
   }, []);
 
-  useUpdateEffect(() => {
-    console.log('data: ', data);
-  }, [data]);
+  // useUpdateEffect(() => {
+  //   console.log('data: ', data);
+  // }, [data]);
 
   return (
     <BrowserRouter>
       <ScrollToTop>
         <Routes>
           <Route path='/' element={<MainPage />} />
-          <Route
-            path='/login'
-            element={isLogin ? <Navigate to='/' /> : <LoginPage />}
-          />
-          <Route
-            path='/user/login/callback'
-            element={isLogin ? <Navigate to='/' /> : <KakaoLogin />}
-          />
-          <Route
-            path='/user/login/google'
-            element={isLogin ? <Navigate to='/' /> : <GoogleLogin />}
-          />
-          <Route
-            path='/user/login/naver'
-            element={isLogin ? <Navigate to='/' /> : <NaverLogin />}
-          />
+          <Route path='/login' element={<LoginPage />} />
+          <Route path='/user/login/callback' element={<KakaoLogin />} />
+          <Route path='/user/login/google' element={<GoogleLogin />} />
+          <Route path='/user/login/naver' element={<NaverLogin />} />
           <Route path='/collection' element={<CollectionPage />} />
           <Route path='/calendar' element={<CalendarPage />} />
           <Route path='/create' element={<CreatePage />} />
