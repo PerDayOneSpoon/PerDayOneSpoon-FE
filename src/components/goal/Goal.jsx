@@ -17,25 +17,27 @@ import { isStartState } from '../../recoil/goal';
 
 import { useRecoilState, useRecoilStateLoadable } from 'recoil';
 import { goalTimeFamily, goalTimeFamilyKey } from '../../recoil/goal';
+import { goalTimeId } from '../../recoil/goal';
 
 const Goal = ({
   item,
   handleAchiveCheck,
   handleGoalDelete,
   handleModalOpen,
-  clickedId,
 }) => {
   const queryClient = useQueryClient();
 
   const [isTimer, setIsTimer] = useState(false);
   const [isStart, setIsStart] = useRecoilState(isStartState);
   const [key, setKey] = useRecoilState(goalTimeFamilyKey);
+  const [clickedId, setClickedId] = useRecoilState(goalTimeId);
 
   const achieveGoalMutation = useMutation(goalApi.achieveGoal, {
     onSuccess: (data) => {
       queryClient.invalidateQueries(['goalInfo']);
       queryClient.invalidateQueries(['peopleSearchDate']);
       queryClient.invalidateQueries(['personGoal']);
+      setClickedId(0);
     },
     onError: (error) => {},
   });
@@ -63,8 +65,9 @@ const Goal = ({
   } = item;
 
   const [timeInfo, setTimeInfo] = useRecoilStateLoadable(goalTimeFamily(id));
-  // console.log(timeInfo.contents);
+
   const goalTimeInfo = timeInfo.contents;
+  console.log('goalTimeInfo!!!', goalTimeInfo);
 
   const [timerInterval, setTimerInterval] = useState(0);
 

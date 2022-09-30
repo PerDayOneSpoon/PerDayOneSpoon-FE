@@ -78,8 +78,6 @@ const GoalList = ({ isMain, data, isMe }) => {
               handleAchiveCheck={() => handleAchiveCheck()}
               handleGoalDelete={(deleteId) => handleGoalDelete(deleteId)}
               handleModalOpen={(id) => handleModalOpen(id)}
-              // isStart={isStart}
-              clickedId={clickedId}
             />
           ))}
         {modal.open && modal.type === 'confirm' && kindOfModal === 'delete' && (

@@ -58,7 +58,7 @@ const CreatePage = () => {
       navigate('/');
 
       /* recoil/goal.js에서 i값이 누적되어 넣어줌 더 나은 방법 찾기! */
-      window.location.reload();
+      // window.location.reload();
     },
     onError: ({ response }) => {
       setResMessage(response.data.errorMessage);

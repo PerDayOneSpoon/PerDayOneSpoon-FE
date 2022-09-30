@@ -13,35 +13,25 @@ export const goalTimeFamilyKey = atom({
   default: 0,
 });
 
-let i = 0;
-
 export const goalTimeFamily = atomFamily({
   key: 'goalTimeFamily',
   default: selectorFamily({
-    key: 'asyncGetGoalTime',
+    key: 'goalTimeFamily/selectorFamily',
     get:
       (id) =>
       async ({ get }) => {
         const { data } = await goalApi.getGoal();
+        const dataList = data.todayGoalsDtoList;
+        const target = dataList.find((v) => v.id === id);
 
-        const getTime = data?.todayGoalsDtoList?.map((item) => item.time);
-        const index = data?.todayGoalsDtoList?.map((item, i) => i);
-
-        const timeValue = {
-          id: id,
-          totalTime: stringToTime(getTime[i]),
-          displayTime: stringToTime(getTime[i]),
+        return {
+          id: target.id,
+          totalTime: stringToTime(target.time),
+          displayTime: stringToTime(target.time),
           isPlay: false,
           currentTime: 0,
         };
-
-        return timeValue;
       },
-    set: ({ set }, newValue) => {
-      console.log('newValue', newValue);
-      const key = newValue++;
-      set(goalTimeFamilyKey, key);
-    },
   }),
   effects_UNSTABLE: [persistAtom],
 });
