@@ -1,18 +1,19 @@
-import {
-  atom,
-  atomFamily,
-  DefaultValue,
-  selector,
-  selectorFamily,
-} from 'recoil';
+import { atom, atomFamily, selector, selectorFamily } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
 import { goalApi } from '../api/goalApi';
 import { stringToTime } from '../utils/stringToTime';
+import { useRef } from 'react';
 
 const { persistAtom } = recoilPersist({
-  key: 'goalId',
+  key: 'goals-info',
 });
-let i = -1;
+
+export const goalTimeFamilyKey = atom({
+  key: 'goalTimeFamilyKey',
+  default: 0,
+});
+
+let i = 0;
 
 export const goalTimeFamily = atomFamily({
   key: 'goalTimeFamily',
@@ -22,64 +23,37 @@ export const goalTimeFamily = atomFamily({
       (id) =>
       async ({ get }) => {
         const { data } = await goalApi.getGoal();
-        const getTime = data.todayGoalsDtoList.map((item) => item.time);
+
+        const getTime = data?.todayGoalsDtoList?.map((item) => item.time);
+        const index = data?.todayGoalsDtoList?.map((item, i) => i);
+
         const timeValue = {
           id: id,
-          hh: Number(getTime[i]?.split(':')[0]),
-          mm: Number(getTime[i]?.split(':')[1]),
-          ss: Number(getTime[i]?.split(':')[2]),
+          totalTime: stringToTime(getTime[i]),
+          displayTime: stringToTime(getTime[i]),
           isPlay: false,
           currentTime: 0,
         };
-        i++;
+
         return timeValue;
       },
+    set: ({ set }, newValue) => {
+      console.log('newValue', newValue);
+      const key = newValue++;
+      set(goalTimeFamilyKey, key);
+    },
   }),
-  // effects_UNSTABLE: [persistAtom],
+  effects_UNSTABLE: [persistAtom],
 });
-
-// =====================================================================
-// export const timerState = atom({
-//   key: 'timerState',
-//   default: 0,
-// });
 
 export const goalTimeId = atom({
   key: 'goalTimeId',
   default: 0,
+  effects_UNSTABLE: [persistAtom],
 });
 
-// export const goalTimerState = atomFamily({
-//   key: 'goalTimerState',
-//   default: (id) => ({
-//     id: id,
-//     displayTime: 0,
-//     totalTime: 0,
-//     isPlay: false,
-//     isDone: false,
-//   }),
-// });
-
-// export const goalTimerSelectorFamily = selectorFamily({
-//   key: 'goalTimerSelectorFamily',
-//   get:
-//     (id) =>
-//     ({ get }) =>
-//       get(goalTimerState(id)),
-
-//   set:
-//     (id) =>
-//     ({ get, set, reset }, info) => {
-//       if (info instanceof DefaultValue) {
-//         reset(goalTimerState(id));
-//         set(goalTimerState, (prev) => prev.filter((item) => item !== id));
-
-//         return;
-//       }
-
-//       console.log('info', info);
-
-//       set(goalTimerState(id), info);
-//       // set(goalTimerState, (prev) => Array.from(new Set([...prev, info.id])));
-//     },
-// });
+export const isStartState = atom({
+  key: 'isStartState',
+  default: false,
+  effects_UNSTABLE: [persistAtom],
+});

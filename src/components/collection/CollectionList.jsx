@@ -47,7 +47,7 @@ const CollectionList = () => {
         {badgeData?.data?.badgeResponseDtoList?.map(
           (item, index) =>
             item.badgeNumber === bottomModal.type && (
-              <ModalContainer>
+              <ModalContainer key={item.badgeNumber}>
                 <ModalContainerInner>
                   <ImgContainer>
                     <img src={item.badgeUrl} alt='뱃지 이미지' />

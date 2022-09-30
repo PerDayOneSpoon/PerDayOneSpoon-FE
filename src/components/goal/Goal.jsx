@@ -10,17 +10,26 @@ import { goalApi } from '../../api/goalApi';
 import { colors } from '../../theme/theme';
 import CommonText from '../elements/CommonText';
 import CommonButton from '../elements/CommonButton';
+import Loading from '../global/Loading';
 import useInterval from '../../hooks/useInterval';
+import { timeToString } from '../../utils/timeToString';
+import { isStartState } from '../../recoil/goal';
 
-import { useRecoilState } from 'recoil';
-import { goalTimeFamily } from '../../recoil/goal';
-import { modalState } from '../../recoil/common';
+import { useRecoilState, useRecoilStateLoadable } from 'recoil';
+import { goalTimeFamily, goalTimeFamilyKey } from '../../recoil/goal';
 
-const Goal = ({ item, handleAchiveCheck, handleGoalDelete }) => {
+const Goal = ({
+  item,
+  handleAchiveCheck,
+  handleGoalDelete,
+  handleModalOpen,
+  clickedId,
+}) => {
   const queryClient = useQueryClient();
 
   const [isTimer, setIsTimer] = useState(false);
-  const [modal, setModal] = useRecoilState(modalState);
+  const [isStart, setIsStart] = useRecoilState(isStartState);
+  const [key, setKey] = useRecoilState(goalTimeFamilyKey);
 
   const achieveGoalMutation = useMutation(goalApi.achieveGoal, {
     onSuccess: (data) => {
@@ -53,48 +62,27 @@ const Goal = ({ item, handleAchiveCheck, handleGoalDelete }) => {
     goalFlag,
   } = item;
 
-  let totalTime = 0;
+  const [timeInfo, setTimeInfo] = useRecoilStateLoadable(goalTimeFamily(id));
+  // console.log(timeInfo.contents);
+  const goalTimeInfo = timeInfo.contents;
 
-  time.split(':').forEach((time, i) => {
-    if (i === 0) totalTime += parseInt(time) * 60 * 60;
-    if (i === 1) totalTime += parseInt(time) * 60;
-    if (i === 2) totalTime += parseInt(time);
-  });
-
-  const [testTime, setTestTime] = useRecoilState(goalTimeFamily(id));
   const [timerInterval, setTimerInterval] = useState(0);
 
   const percentage =
-    Math.floor((testTime.currentTime / totalTime) * 10000) / 100;
-
-  // 화면에 보여질 부분
-  const HH = String(testTime.hh).padStart(2, '0');
-  const MM = String(testTime.mm).padStart(2, '0');
-  const SS = String(testTime.ss).padStart(2, '0');
+    Math.floor((goalTimeInfo.currentTime / goalTimeInfo.totalTime) * 10000) /
+    100;
 
   const startProgress = () => {
-    // testTime.isPlay && setCurrentTime((s) => s + 1);
-    testTime.isPlay &&
-      setTestTime((prev) => ({ ...prev, currentTime: prev.currentTime + 1 }));
+    goalTimeInfo.isPlay &&
+      setTimeInfo((prev) => ({ ...prev, currentTime: prev.currentTime + 1 }));
 
-    if (testTime.ss > 0) {
-      setTestTime((prev) => ({ ...prev, ss: prev.ss - 1 }));
+    if (goalTimeInfo.displayTime > 0) {
+      setTimeInfo((prev) => ({ ...prev, displayTime: prev.displayTime - 1 }));
     }
 
-    if (testTime.ss === 0) {
-      if (testTime.mm === 0) {
-        if (testTime.hh === 0) {
-          // setIsPlay(false);
-          setTestTime((prev) => ({ ...prev, isPlay: false }));
-        } else {
-          setTestTime((prev) => ({ ...prev, hh: prev.hh - 1 }));
-          setTestTime((prev) => ({ ...prev, mm: 59 }));
-          setTestTime((prev) => ({ ...prev, ss: 59 }));
-        }
-      } else {
-        setTestTime((prev) => ({ ...prev, mm: prev.mm - 1 }));
-        setTestTime((prev) => ({ ...prev, ss: 59 }));
-      }
+    if (goalTimeInfo.displayTime === 0) {
+      setIsStart(false);
+      setTimeInfo((prev) => ({ ...prev, isPlay: false }));
     }
   };
 
@@ -102,13 +90,8 @@ const Goal = ({ item, handleAchiveCheck, handleGoalDelete }) => {
     () => {
       startProgress();
     },
-    testTime.isPlay ? 1000 : null
+    goalTimeInfo.isPlay ? 1000 : null
   );
-
-  const handleStartCilck = () => {
-    setTestTime((prev) => ({ ...prev, isPlay: true }));
-    // setIsPlay(true);
-  };
 
   const handleLockClick = (check) => {
     changePrivateGoalMutaion.mutate({
@@ -118,121 +101,158 @@ const Goal = ({ item, handleAchiveCheck, handleGoalDelete }) => {
   };
 
   useEffect(() => {
-    if (testTime.hh === 0 && testTime.mm === 0 && testTime.ss === 0) {
+    if (goalTimeInfo.displayTime === 0 && goalTimeInfo.currentTime !== 0) {
       clearInterval(startProgress);
+      setIsStart(false);
+
       const data = {
         goalId: id,
         achivement: true,
       };
       achieveGoalMutation.mutate(data);
     }
-  }, [testTime.hh, testTime.mm, testTime.ss]);
+  }, [goalTimeInfo.displayTime]);
 
   useEffect(() => {
-    if (testTime.isPlay) {
+    if (goalTimeInfo.isPlay) {
       setTimerInterval(customInterval);
     }
-  }, [testTime.isPlay]);
+  }, [goalTimeInfo.isPlay]);
 
-  return (
-    <GoalContainer isTimer={isTimer}>
-      <GoalContainerInner>
-        {achievementCheck ? (
-          <IconContainer className='check-icon'>
-            <IconCheck style={{ color: colors.orange500 }} />
-          </IconContainer>
-        ) : (
-          <CheckContainer onClick={handleAchiveCheck} />
-        )}
+  useEffect(() => {
+    if (isStart && clickedId === id) {
+      setTimeInfo((prev) => ({ ...prev, isPlay: true }));
+    }
+  }, [isStart]);
 
-        <Container onClick={() => setIsTimer(!isTimer)}>
-          <Contents>
-            <RightContent>
-              <ChracterContainer>
-                <Character src={characterUrl} alt='캐릭터 이미지' />
-              </ChracterContainer>
-
-              <TextBox>
-                <CommonText isCallout={true}>{title}</CommonText>
-                <DateBox>
-                  <IconContainer className='calendar-icon'>
-                    <IconCalendar />
-                  </IconContainer>
-                  <CommonText isFootnote2={true} fc={colors.gray500}>
-                    {startDate} ~ {endDate}
-                  </CommonText>
-                </DateBox>
-              </TextBox>
-            </RightContent>
-            <LikeContent>
-              <IconContainer>
-                {privateCheck ? (
-                  <IconLock
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleLockClick(privateCheck);
-                    }}
-                  />
-                ) : (
-                  <IconUnlock
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleLockClick(privateCheck);
-                    }}
-                  />
-                )}
+  /* 리코일에서 서버상태를 가져오는 경우 로딩이 발생해
+      값이 제대로 뜨지 않아 loadable 적용 */
+  switch (timeInfo.state) {
+    case 'hasValue':
+      return (
+        <GoalContainer isTimer={isTimer}>
+          <GoalContainerInner>
+            {achievementCheck ? (
+              <IconContainer className='check-icon'>
+                <IconCheck style={{ color: colors.orange500 }} />
               </IconContainer>
-            </LikeContent>
-          </Contents>
+            ) : (
+              <CheckContainer onClick={handleAchiveCheck} />
+            )}
+
+            <Container onClick={() => setIsTimer(!isTimer)}>
+              <Contents>
+                <RightContent>
+                  <ChracterContainer>
+                    <Character src={characterUrl} alt='캐릭터 이미지' />
+                  </ChracterContainer>
+
+                  <TextBox>
+                    <CommonText isCallout={true}>{title}</CommonText>
+                    <DateBox>
+                      <IconContainer className='calendar-icon'>
+                        <IconCalendar />
+                      </IconContainer>
+                      <CommonText isFootnote2={true} fc={colors.gray500}>
+                        {startDate} ~ {endDate}
+                      </CommonText>
+                    </DateBox>
+                  </TextBox>
+                </RightContent>
+                <LikeContent>
+                  <IconContainer>
+                    {privateCheck ? (
+                      <IconLock
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleLockClick(privateCheck);
+                        }}
+                      />
+                    ) : (
+                      <IconUnlock
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleLockClick(privateCheck);
+                        }}
+                      />
+                    )}
+                  </IconContainer>
+                </LikeContent>
+              </Contents>
+              {isTimer && (
+                <>
+                  <TimerContainer>
+                    <Timer>
+                      <ProgressBar>
+                        <ProgressPercentage
+                          percentage={percentage}
+                          isAchievementCheck={achievementCheck}
+                        />
+                      </ProgressBar>
+                      <Time isFootnote2={true} fc={colors.gray500}>
+                        {/* {`${HH}:${MM}:${SS} `} */}
+                        {goalTimeInfo.isPlay
+                          ? timeToString(goalTimeInfo.displayTime)
+                          : timeToString(goalTimeInfo.totalTime)}
+                      </Time>
+                    </Timer>
+                    <CommonButton
+                      handleButtonClick={(e) => {
+                        e.stopPropagation();
+                        if (clickedId !== id && clickedId !== 0) {
+                          return alert('습관은 동시에 진행할 수 없습니다.');
+                        } else {
+                          handleModalOpen(id);
+                        }
+
+                        // handleStartCilck();
+                      }}
+                      wd='50px'
+                      mg='-4px 0 0 16px'
+                      pd='6px 4px'
+                      bdrs='20px'
+                      bd='none'
+                      bg={achievementCheck ? '#ccc' : colors.primary}
+                      fc={colors.white}
+                      fz='12px'
+                      lh='16px'
+                      text={
+                        achievementCheck
+                          ? '완료'
+                          : isStart && clickedId === id
+                          ? '진행중'
+                          : '시작'
+                      }
+                      flexBasis='50px'
+                      disabled={
+                        achievementCheck || (isStart && clickedId === id)
+                      }
+                    ></CommonButton>
+                  </TimerContainer>
+                </>
+              )}
+            </Container>
+          </GoalContainerInner>
           {isTimer && (
-            <>
-              <TimerContainer>
-                <Timer>
-                  <ProgressBar>
-                    <ProgressPercentage
-                      percentage={percentage}
-                      isAchievementCheck={achievementCheck}
-                    />
-                  </ProgressBar>
-                  <Time isFootnote2={true} fc={colors.gray500}>
-                    {`${HH}:${MM}:${SS} `}
-                  </Time>
-                </Timer>
-                <CommonButton
-                  handleButtonClick={(e) => {
-                    e.stopPropagation();
-                    handleStartCilck();
-                  }}
-                  wd='50px'
-                  mg='-4px 0 0 16px'
-                  pd='6px 4px'
-                  bdrs='20px'
-                  bd='none'
-                  bg={achievementCheck ? '#ccc' : colors.primary}
-                  fc={colors.white}
-                  fz='12px'
-                  lh='16px'
-                  text={achievementCheck ? '완료' : '시작'}
-                  flexBasis='50px'
-                  disabled={achievementCheck}
-                ></CommonButton>
-              </TimerContainer>
-            </>
+            <TrashIconContainer>
+              <IconContainer
+                className='trash-icon'
+                onClick={() => handleGoalDelete(goalFlag)}
+              >
+                <IconTrash />
+              </IconContainer>
+            </TrashIconContainer>
           )}
-        </Container>
-      </GoalContainerInner>
-      {isTimer && (
-        <TrashIconContainer>
-          <IconContainer
-            className='trash-icon'
-            onClick={() => handleGoalDelete(goalFlag)}
-          >
-            <IconTrash />
-          </IconContainer>
-        </TrashIconContainer>
-      )}
-    </GoalContainer>
-  );
+        </GoalContainer>
+      );
+
+    case 'loading':
+      return <Loading />;
+    case 'hasError':
+      return;
+    default:
+      return;
+  }
 };
 
 export default Goal;
