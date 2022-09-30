@@ -56,9 +56,6 @@ const CreatePage = () => {
       queryClient.invalidateQueries(['peopleSearchMonth']);
       queryClient.invalidateQueries(['personGoal']);
       navigate('/');
-
-      /* recoil/goal.js에서 i값이 누적되어 넣어줌 더 나은 방법 찾기! */
-      // window.location.reload();
     },
     onError: ({ response }) => {
       setResMessage(response.data.errorMessage);
@@ -70,6 +67,10 @@ const CreatePage = () => {
     if (form.title === '') {
       setToast(false);
       setToastMessage('제목을 입력해 주세요');
+      setTimeout(() => setToast(true), 3000);
+    } else if (form.title.length > 51) {
+      setToast(false);
+      setToastMessage('50자 이하로 작성해 주세요');
       setTimeout(() => setToast(true), 3000);
     } else if (form.characterId === 0) {
       setToast(false);

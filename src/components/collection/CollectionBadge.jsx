@@ -10,9 +10,6 @@ const CollectionBadge = ({ badge, handleBadgeClick }) => {
         <BadgeImg src={badge.badgeUrl} />
       </BadgeImgContainer>
       <CommonText isCallout={true}>{badge.badgeName}</CommonText>
-      {/* <CommonText isCallout={true} fc={colors.text}>
-        {badge.date}
-      </CommonText> */}
     </Container>
   );
 };

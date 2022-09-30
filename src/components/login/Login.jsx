@@ -103,7 +103,8 @@ const StMainDiv = styled.div`
   justify-content: center;
   align-items: center;
   border-radius: 20px;
-  background-color: ${colors.primary};
+  background: linear-gradient(180deg, #ffb55f 0%, #ff9f2e 100%);
+  box-shadow: 0px 4px 16px rgba(255, 181, 95, 0.46);
 `;
 
 const ChracterContainer = styled.div`

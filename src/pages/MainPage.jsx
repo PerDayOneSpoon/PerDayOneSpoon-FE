@@ -10,7 +10,12 @@ const MainPage = () => {
 
   return (
     <Layout hasNavBar={true} bgColor={colors.bgColor}>
-      <Header title='주간 습관 달성률' bgColor={colors.secondary} />
+      <Header
+        title='주간 습관 달성률'
+        bgColor={colors.secondary}
+        hasIcon={true}
+        icon={'notification'}
+      />
       <Main />
       <AddButton handleAddClick={() => navigate('/create')} />
     </Layout>
