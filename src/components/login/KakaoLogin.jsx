@@ -25,7 +25,8 @@ const KakaoLogin = () => {
 
         if (res.data.code === 200) {
           setToken(res.headers.authorization, res.headers.refreshtoken);
-          navigate('/');
+          // navigate('/');
+          window.location.replace('/');
           setIsLogin(true);
         } else {
           navigate('/login');
