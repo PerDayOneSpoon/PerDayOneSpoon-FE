@@ -20,6 +20,7 @@ import { useEffect, useState } from 'react';
 import { getAccessToken } from './localStorage';
 import useUpdateEffect from '../hooks/useUpdateEffect';
 import { useRecoilState } from 'recoil';
+
 import { realTimeNoticeState } from '../recoil/realTimeData';
 import { loginState } from '../recoil/common';
 
