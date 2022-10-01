@@ -1,4 +1,4 @@
-import { atom, atomFamily, selector, selectorFamily } from 'recoil';
+import { atom, atomFamily, selectorFamily } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
 import { goalApi } from '../api/goalApi';
 import { stringToTime } from '../utils/stringToTime';
