@@ -3,57 +3,17 @@
   "name": "하루 한 줌",
   "icons": [
     {
-      "src": "./icons/favicon.ico",
+      "src": "favicon.ico",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     },
     {
-      "src": "./icons/logo57.png",
-      "type": "image/png",
-      "sizes": "57x57"
-    },
-    {
-      "src": "./icons/logo60.png",
-      "type": "image/png",
-      "sizes": "60x60"
-    },
-    {
-      "src": "./icons/logo72.png",
-      "type": "image/png",
-      "sizes": "72x72"
-    },
-    {
-      "src": "./icons/logo76.png",
-      "type": "image/png",
-      "sizes": "76x76"
-    },
-    {
-      "src": "./icons/logo114.png",
-      "type": "image/png",
-      "sizes": "114x114"
-    },
-    {
-      "src": "./icons/logo120.png",
-      "type": "image/png",
-      "sizes": "120x120"
-    },
-    {
-      "src": "./icons/logo144.png",
-      "type": "image/png",
-      "sizes": "144x144"
-    },
-    {
-      "src": "./icons/logo152.png",
-      "type": "image/png",
-      "sizes": "152x152"
-    },
-    {
-      "src": "./icons/logo192.png",
+      "src": "logo192.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "./icons/logo512.png",
+      "src": "logo512.png",
       "type": "image/png",
       "sizes": "512x512"
     }
