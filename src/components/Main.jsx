@@ -5,6 +5,11 @@ import { useQuery } from 'react-query';
 import { goalApi } from '../api/goalApi';
 import { colors } from '../theme/theme';
 import Loading from './global/Loading';
+import { welcomeMessageState } from '../recoil/realTimeData';
+import { modalState } from '../recoil/common';
+import Modal from './global/Modal';
+import { useRecoilState } from 'recoil';
+import { useEffect } from 'react';
 
 const Main = () => {
   const {

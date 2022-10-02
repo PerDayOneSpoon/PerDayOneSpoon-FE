@@ -66,6 +66,9 @@ instance.interceptors.response.use(
             response.headers.authorization,
             response.headers.refreshtoken
           );
+          /* sse 연결 시 토큰이 만료되면 요청 실패.
+            따라서 새로고침으로 reissue 이후에 재연결을 위해 사용  */
+          window.location.reload();
           return instance(originalRequest);
         } catch (err) {
           removeToken();
