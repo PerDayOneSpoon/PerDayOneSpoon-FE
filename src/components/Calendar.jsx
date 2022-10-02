@@ -42,8 +42,8 @@ const Calendar = () => {
       // staleTime: Infinity,
       // keepPreviousData: true,
 
-      staleTime: Infinity,
-      cacheTime: Infinity,
+      // staleTime: Infinity,
+      // cacheTime: Infinity,
       enabled: !!dateValue,
       keepPreviousData: true,
     }
@@ -124,7 +124,7 @@ const Calendar = () => {
         {dayjs(dateValue).format('MM월 DD일')}의 습관
       </CommonText>
       <GoalList
-        data={peopleSearchDate?.data?.todayGoalsDtoList}
+        data={peopleSearchDate?.data?.specificGoalsDtoList}
         // isMe={userId === peopleList[0].id ? true : false}
         isMe={peopleSearchDate?.data?.me}
       />

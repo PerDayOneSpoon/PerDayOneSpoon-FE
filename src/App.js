@@ -2,10 +2,9 @@ import { useEffect } from 'react';
 import Router from './shared/Router';
 import GlobalStyles from './GlobalStyle';
 import styled from 'styled-components';
-import { isMobile } from 'react-device-detect';
 import { colors } from './theme/theme';
 import backgroundImg from './assets/imgs/background.png';
-import CommonText from './components/elements/CommonText';
+import RouteChangeTracker from './shared/RouteChangeTracker';
 
 function App() {
   const setScreenSize = () => {
@@ -33,6 +32,7 @@ function App() {
       </ImgContainer>
 
       <Contents>
+        <RouteChangeTracker />
         <GlobalStyles />
         <Router />
       </Contents>

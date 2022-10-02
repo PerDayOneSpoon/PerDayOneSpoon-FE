@@ -26,9 +26,6 @@ export const goalApi = {
   },
 
   likeGoal: ({ goalFlag }) => {
-    return instance.patch(
-      `/heart/${goalFlag}
-    `
-    );
+    return instance.patch(`/heart/${goalFlag}`);
   },
 };
