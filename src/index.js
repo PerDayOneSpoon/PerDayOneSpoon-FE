@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
-import Loading from './components/global/Loading';
+import ReactGA from 'react-ga';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { RecoilRoot } from 'recoil';
@@ -15,6 +15,9 @@ const queryClient = new QueryClient({
   //   },
   // },
 });
+
+const TRACKING_ID = process.env.REACT_APP_GOOGLE_ANALYTICS_TRACKING_ID;
+ReactGA.initialize(TRACKING_ID);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
