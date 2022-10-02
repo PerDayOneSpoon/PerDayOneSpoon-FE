@@ -10,13 +10,27 @@ import { useState } from 'react';
 import CommonText from '../elements/CommonText';
 import CommonButton from '../elements/CommonButton';
 import Comment from '../Comment';
+import { commentApi } from '../../api/commentApi';
+import { Form } from 'react-router-dom';
 
 const CalendarGoal = ({ item, isMe }) => {
   const queryClient = useQueryClient();
   const [isComment, setIsComment] = useState(false);
   const [commentForm, setCommentForm] = useState({
-    id: 0,
-    comment: '',
+    goalId: 0,
+    content: '',
+  });
+
+  const addCommentMutation = useMutation(commentApi.addComment, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(['peopleSearchDate']);
+    },
+  });
+
+  const deleteCommentMutation = useMutation(commentApi.deleteComment, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(['peopleSearchDate']);
+    },
   });
 
   const {
@@ -30,43 +44,8 @@ const CalendarGoal = ({ item, isMe }) => {
     privateCheck,
     heartCheck,
     goalFlag,
+    commentResponseDtoList,
   } = item;
-
-  const dummyData = [
-    {
-      id: 1,
-      name: '소연',
-      profileUrl: '',
-      comment: '댓글댓글댓글',
-      time: '3분 전',
-      me: true,
-    },
-    {
-      id: 2,
-      name: '민섭',
-      profileUrl: '',
-      comment: '댓글을 써보자',
-      time: '10분 전',
-      me: false,
-    },
-    {
-      id: 3,
-      name: '민섭김',
-      profileUrl: '',
-      comment:
-        '아주 아주 긴 문장도 써보자! 아주 아주 긴 문장도 써보자! 아주 아주 긴 문장도 써보자! 아주 아주 긴 문장도 써보자! 아주 아주 긴 문장도 써보자! 아주 아주 긴 문장도 써보자! 아주 아주 긴 문장도 써보자! 아주 아주 긴 문장도 써보자! 아주 아주 긴 문장도 써보자! 아주 아주 긴 문장도 써보자! 아주 아주 긴 문장도 써보자! ',
-      time: '12분 전',
-      me: false,
-    },
-    {
-      id: 4,
-      name: '전소연',
-      profileUrl: '',
-      comment: '민섭님 바보 바보',
-      time: '15분 전',
-      me: false,
-    },
-  ];
 
   const { mutate: likeMutation } = useMutation(goalApi.likeGoal, {
     // optimistic update
@@ -93,8 +72,6 @@ const CalendarGoal = ({ item, isMe }) => {
   const handleLikeButton = (goalFlag) => {
     likeMutation({ goalFlag: goalFlag });
   };
-
-  // console.log('commentForm', commentForm);
 
   return (
     <GoalContainer>
@@ -157,13 +134,14 @@ const CalendarGoal = ({ item, isMe }) => {
         {isComment && (
           <CommentContents onClick={(e) => e.stopPropagation()}>
             <CommentList>
-              {dummyData.map((item) => (
+              {commentResponseDtoList.map((item) => (
                 <Comment
-                  // commentData={dummyData}
-                  key={item.id}
-                  handleCommentDelete={(e) => {
-                    e.stopPropagation();
-                    console.log(id, '삭제 아이디 클릭!!!');
+                  isMe={isMe}
+                  key={item.commentId}
+                  commentData={item}
+                  handleCommentDelete={(commentId) => {
+                    deleteCommentMutation.mutate({ commentId: commentId });
+                    // console.log(commentId, '삭제 아이디 클릭!!!');
                   }}
                 />
               ))}
@@ -172,11 +150,11 @@ const CalendarGoal = ({ item, isMe }) => {
               <InputContainer>
                 <input
                   type='text'
-                  value={commentForm.comment}
+                  value={commentForm.content}
                   onChange={(e) => {
                     setCommentForm({
-                      id: id,
-                      comment: e.target.value,
+                      goalId: id,
+                      content: e.target.value,
                     });
                   }}
                 />
@@ -192,9 +170,10 @@ const CalendarGoal = ({ item, isMe }) => {
                   fc={colors.white}
                   bg={colors.orange500}
                   bd='none'
-                  handleButtonClick={() =>
-                    console.log('commentForm전송!', commentForm)
-                  }
+                  handleButtonClick={() => {
+                    addCommentMutation.mutate(commentForm);
+                    setCommentForm({ ...commentForm, content: '' });
+                  }}
                 />
               </FormButtonContainer>
             </CommentForm>
@@ -209,7 +188,7 @@ export default CalendarGoal;
 
 const GoalContainer = styled.div`
   display: flex;
-  align-items: center;
+  align-items: flex-start;
 
   & + & {
     margin-top: 16px;
@@ -230,7 +209,6 @@ const Container = styled.div`
 const Contents = styled.div`
   display: flex;
   justify-content: space-between;
-  border: 1px solid red;
 `;
 
 const RightContent = styled.div`
@@ -267,6 +245,7 @@ const IconContainer = styled.div`
   height: 24px;
 
   &.check-icon {
+    margin-top: 32px;
     margin-right: 8px;
   }
 
@@ -310,6 +289,7 @@ const CheckContainer = styled.div`
   margin: 2px 10px 2px 2px;
   border-radius: 50%;
   border: 2px solid ${colors.gray300};
+  margin-top: 34px;
 `;
 
 const CommentContents = styled.div`

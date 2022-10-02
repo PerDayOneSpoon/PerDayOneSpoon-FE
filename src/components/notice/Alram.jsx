@@ -6,6 +6,7 @@ import { ReactComponent as IconFollower } from '../../assets/icons/icon-notice-f
 import { ReactComponent as IconNotice } from '../../assets/icons/icon-notice.svg';
 import { ReactComponent as IconHeart } from '../../assets/icons/icon-notice-heart.svg';
 import { ReactComponent as IconBadge } from '../../assets/icons/icon-notice-badge.svg';
+import { ReactComponent as IconComment } from '../../assets/icons/icon-notice-comment.svg';
 
 const Alram = ({ data, handleDeleteNotice }) => {
   const handleAlramText = (type) => {
@@ -18,6 +19,8 @@ const Alram = ({ data, handleDeleteNotice }) => {
         return { text: '친구', icon: <IconFollower /> };
       case 'Badge':
         return { text: '뱃지', icon: <IconBadge /> };
+      case 'Comment':
+        return { text: '댓글', icon: <IconComment /> };
       default:
         return;
     }
@@ -119,7 +122,7 @@ const RightContent = styled.div`
   flex-direction: column;
   align-items: flex-end;
   justify-content: space-between;
-  width: 40px;
+  width: 60px;
   flex-shrink: 0;
   flex-basis: auto;
 `;

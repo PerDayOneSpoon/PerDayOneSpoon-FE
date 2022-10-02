@@ -3,28 +3,31 @@ import { colors } from '../theme/theme';
 import { ReactComponent as IconDelete } from '../assets/icons/icon-trash.svg';
 import CommonText from './elements/CommonText';
 
-const Comment = ({ commentData, handleCommentDelete }) => {
-  console.log(commentData);
-  return (
+const Comment = ({ commentData, handleCommentDelete, isMe }) => {
+  return commentData === undefined ? (
+    <div>아직 댓글이 없습니다.</div>
+  ) : (
     <Container>
       <ContentContainer>
         <ImgContainer>
-          {/* <img src={commentData.profileUrl} alt='' /> */}
+          <img src={commentData.profileImage} alt='프로필 이미지' />
         </ImgContainer>
         <TextContainer>
           <CommonText isFootnote1={true} isBold={true} fc={colors.gray700}>
-            {/* <Name>{commentData.name}</Name> {commentData.comment} */}
+            <Name>{commentData.nickname}</Name> {commentData.content}
           </CommonText>
           <CommonText fz='11px' fc={colors.gray500} mg='8px 0 0 0'>
-            {/* {commentData.time} */}
+            {commentData.createdAt}
           </CommonText>
         </TextContainer>
       </ContentContainer>
-      {/* {commentData.me && ( */}
-      <IconContainer onClick={handleCommentDelete}>
-        <IconDelete />
-      </IconContainer>
-      {/* )} */}
+      {(commentData.me || isMe) && (
+        <IconContainer
+          onClick={() => handleCommentDelete(commentData.commentId)}
+        >
+          <IconDelete />
+        </IconContainer>
+      )}
     </Container>
   );
 };

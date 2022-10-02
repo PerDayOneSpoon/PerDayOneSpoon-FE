@@ -1,15 +1,13 @@
 import { instance } from '../shared/axios';
 
-export const addCommentApi = {
-  getBadge: ({ goalId, comment }) => {
+export const commentApi = {
+  addComment: ({ goalId, content }) => {
     return instance.post(`/create/comment/${goalId}`, {
-      content: comment,
+      content: content,
     });
   },
-};
 
-export const deleteCommentApi = {
-  getBadge: ({ goalId }) => {
-    return instance.delete(`/delete/comment/${goalId}`);
+  deleteComment: ({ commentId }) => {
+    return instance.delete(`/delete/comment/${commentId}`);
   },
 };
