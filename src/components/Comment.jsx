@@ -20,11 +20,11 @@ const Comment = ({ commentData, handleCommentDelete }) => {
           </CommonText>
         </TextContainer>
       </ContentContainer>
-      {/* {commentData.me && (
-        <IconContainer onClick={handleCommentDelete}>
-          <IconDelete />
-        </IconContainer>
-      )} */}
+      {/* {commentData.me && ( */}
+      <IconContainer onClick={handleCommentDelete}>
+        <IconDelete />
+      </IconContainer>
+      {/* )} */}
     </Container>
   );
 };

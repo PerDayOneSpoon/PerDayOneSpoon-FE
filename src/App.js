@@ -19,8 +19,6 @@ function App() {
     return () => window.removeEventListener('resize', setScreenSize);
   });
 
-  RouteChangeTracker();
-
   return (
     <ResponsiveContainer>
       <ImgContainer>
@@ -34,6 +32,7 @@ function App() {
       </ImgContainer>
 
       <Contents>
+        <RouteChangeTracker />
         <GlobalStyles />
         <Router />
       </Contents>

@@ -161,7 +161,10 @@ const CalendarGoal = ({ item, isMe }) => {
                 <Comment
                   // commentData={dummyData}
                   key={item.id}
-                  handleCommentDelete={(e) => e.stopPropagation()}
+                  handleCommentDelete={(e) => {
+                    e.stopPropagation();
+                    console.log(id, '삭제 아이디 클릭!!!');
+                  }}
                 />
               ))}
             </CommentList>
