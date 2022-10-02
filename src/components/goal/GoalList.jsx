@@ -63,7 +63,9 @@ const GoalList = ({ isMain, data, isMe }) => {
   };
 
   if (data === undefined || data.length === 0) {
-    return <GoalEmpty />;
+    return (
+      <GoalEmpty emptyText='추가하신 습관이 없습니다 습관을 추가해 주세요!' />
+    );
   }
 
   if (isMain) {

@@ -8,6 +8,8 @@ import { ReactComponent as IconNotificationAlram } from '../../assets/icons/icon
 import { getAccessToken } from '../../shared/localStorage';
 import CommonText from '../elements/CommonText';
 import { colors } from '../../theme/theme';
+import { useRecoilState } from 'recoil';
+import { realTimeNoticeState } from '../../recoil/realTimeData';
 
 const Header = ({
   hasBack,
@@ -19,6 +21,7 @@ const Header = ({
   rightButton,
 }) => {
   const navigate = useNavigate();
+  const [noticeData, setNoticeData] = useRecoilState(realTimeNoticeState);
 
   const handleIcons = (icon) => {
     if (icon === 'addFriend') {
@@ -28,7 +31,18 @@ const Header = ({
       return <IconNotification onClick={() => navigate('/notice')} />;
     }
     if (icon === 'notificationAlram') {
-      return <IconNotificationAlram onClick={() => navigate('/notice')} />;
+      return (
+        <IconNotificationAlram
+          onClick={() => {
+            navigate('/notice');
+            setNoticeData(
+              noticeData.map((item) => {
+                return { ...item, read: true };
+              })
+            );
+          }}
+        />
+      );
     }
   };
 

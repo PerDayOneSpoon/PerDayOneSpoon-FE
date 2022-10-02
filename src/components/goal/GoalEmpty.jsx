@@ -3,14 +3,14 @@ import { colors } from '../../theme/theme';
 import emptyImg from '../../assets/imgs/character-gray.png';
 import CommonText from '../elements/CommonText';
 
-const GoalEmpty = () => {
+const GoalEmpty = ({ emptyText }) => {
   return (
     <Container>
       <ImgContainer>
         <EmptyImg src={emptyImg} />
       </ImgContainer>
       <CommonText isSentece2={true} fc={colors.gray500} wd='164px' lh='22px'>
-        추가하신 습관이 없습니다 습관을 추가해 주세요!
+        {emptyText}
       </CommonText>
     </Container>
   );

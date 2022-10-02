@@ -21,25 +21,27 @@ import { getAccessToken } from './localStorage';
 import useUpdateEffect from '../hooks/useUpdateEffect';
 import { useRecoilState } from 'recoil';
 
-import { realTimeNoticeState } from '../recoil/realTimeData';
+import {
+  realTimeNoticeState,
+  welcomeMessageState,
+} from '../recoil/realTimeData';
 import { loginState } from '../recoil/common';
 
 const Router = () => {
   const [listening, setListening] = useState(false);
   const [data, setData] = useRecoilState(realTimeNoticeState);
   const [isLogin, setIsLogin] = useRecoilState(loginState);
+  const [welcomeMessage, setWelcomeMessage] =
+    useRecoilState(welcomeMessageState);
 
   const EventSource = EventSourcePolyfill || NativeEventSource;
 
   /* 실시간 알림 */
   useEffect(() => {
-    console.log('매번 실행되는지');
     console.log('listening', listening);
     let eventSource;
 
-    if (!listening) {
-      console.log('구독시작!');
-
+    if (isLogin && !listening) {
       const fetchData = async () => {
         try {
           eventSource = new EventSource(
@@ -48,30 +50,29 @@ const Router = () => {
               headers: {
                 Authorization: getAccessToken(),
               },
-              heartbeatTimeout: 300 * 1000,
               withCredentials: true,
+              heartbeatTimeout: 300 * 1000,
             }
           );
-          console.log('EVENT_SOURCE 선언!', eventSource);
 
           eventSource.onopen = (event) => {
-            console.log('connection opened', event);
+            // console.log('connection opened', event);
           };
 
           eventSource.onmessage = (event) => {
-            const result = event.data;
-            console.log('파싱한 RESULT', JSON.parse(result));
-            setData((old) => [...old, event.data]);
+            const result = JSON.parse(event.data);
+
+            if (result.notificationType === 'Notice') {
+              setWelcomeMessage(result.message);
+            }
+
+            if (!result.read && result.notificationType !== 'Notice') {
+              setData((old) => [...old, result]);
+            }
           };
 
           eventSource.onerror = (event) => {
-            console.log('ERROR', event);
-            // if (event.target.readyState === EventSource.CLOSED) {
-            //   console.log(
-            //     'EVENT_SOURCE closed (' + event.target.readyState + ')'
-            //   );
-            // }
-            // eventSource.close();
+            // console.log('ERROR', event);
           };
         } catch (error) {
           alert(error);
@@ -84,60 +85,12 @@ const Router = () => {
 
     return () => {
       eventSource.close();
-      console.log('eventsource closed');
     };
   }, []);
 
   useUpdateEffect(() => {
-    console.log('useUpdateEffect data(파싱x): ', data);
+    // console.log('useUpdateEffect data: ', data);
   }, [data]);
-
-  // useEffect(() => {
-  //   console.log('listening', listening);
-
-  //   let eventSource = undefined;
-
-  //   const eventSourceOptions = {
-  //     headers: {
-  //       Authorization: getAccessToken(),
-  //     },
-  //     heartbeatTimeout: 300 * 1000,
-  //     withCredentials: true,
-  //   };
-
-  //   if (isLogin && !listening) {
-  //     eventSource = new EventSource(
-  //       `${process.env.REACT_APP_BASE_URL}/sse/subscribe`,
-  //       eventSourceOptions
-  //     ); //구독
-
-  //     console.log('eventSource', eventSource);
-
-  //     eventSource.onopen = (event) => {
-  //       console.log('connection opened');
-  //     };
-
-  //     eventSource.onmessage = (event) => {
-  //       console.log('result', event.data);
-  //       setData((old) => [...old, event.data]);
-  //     };
-
-  //     eventSource.onerror = (event) => {
-  //       console.log(event.target.readyState);
-  //       if (event.target.readyState === EventSource.CLOSED) {
-  //         console.log('eventsource closed (' + event.target.readyState + ')');
-  //       }
-  //       eventSource.close();
-  //     };
-
-  //     setListening(true);
-  //   }
-
-  //   return () => {
-  //     eventSource.close();
-  //     console.log('eventsource closed');
-  //   };
-  // }, []);
 
   return (
     <BrowserRouter>
