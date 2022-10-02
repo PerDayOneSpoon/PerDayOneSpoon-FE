@@ -3,6 +3,7 @@ import styled from 'styled-components';
 const CommonButton = ({
   text,
   wd,
+  ht,
   pd,
   mg,
   bg,
@@ -18,9 +19,10 @@ const CommonButton = ({
   className,
 }) => {
   return (
-    <ButtonContainer mg={mg}>
+    <ButtonContainer mg={mg} ht={ht}>
       <Button
         wd={wd}
+        // ht={ht}
         pd={pd}
         bg={bg}
         bd={bd}
@@ -44,11 +46,12 @@ export default CommonButton;
 
 const ButtonContainer = styled.div`
   margin: ${({ mg }) => mg};
+  height: ${({ ht }) => ht};
 `;
 
 const Button = styled.button`
   width: ${({ wd }) => wd};
-  height: ${({ ht }) => ht};
+  height: 100%;
   padding: ${({ pd }) => pd};
   background: ${({ bg }) => bg};
   border: ${({ bd }) => bd};
