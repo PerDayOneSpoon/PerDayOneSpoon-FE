@@ -214,6 +214,7 @@ const Goal = ({
                         // handleStartCilck();
                       }}
                       wd='50px'
+                      ht='28px'
                       mg='-4px 0 0 16px'
                       pd='6px 4px'
                       bdrs='20px'
