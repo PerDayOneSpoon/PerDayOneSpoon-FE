@@ -3,6 +3,7 @@ import { ReactComponent as IconHeartFill } from '../../assets/icons/icon-heart-f
 import { ReactComponent as IconHeartEmpty } from '../../assets/icons/icon-heart-empty.svg';
 import { ReactComponent as IconCalendar } from '../../assets/icons/icon-calendar.svg';
 import { ReactComponent as IconCheck } from '../../assets/icons/icon-check.svg';
+import { ReactComponent as IconComment } from '../../assets/icons/icon-comment.svg';
 import { colors } from '../../theme/theme';
 import { useMutation, useQueryClient } from 'react-query';
 import { goalApi } from '../../api/goalApi';
@@ -10,10 +11,13 @@ import { useState } from 'react';
 import CommonText from '../elements/CommonText';
 import CommonButton from '../elements/CommonButton';
 import Comment from '../Comment';
+import ToastModal from '../global/ToastModal';
 import { commentApi } from '../../api/commentApi';
 
 const CalendarGoal = ({ item, isMe }) => {
   const queryClient = useQueryClient();
+  const [toastMessage, setToastMessage] = useState('');
+  const [toast, setToast] = useState(true);
   const [isComment, setIsComment] = useState(false);
   const [commentForm, setCommentForm] = useState({
     goalId: 0,
@@ -72,6 +76,21 @@ const CalendarGoal = ({ item, isMe }) => {
     likeMutation({ goalFlag: goalFlag });
   };
 
+  const handleAddForm = () => {
+    if (commentForm.content === '') {
+      setToast(false);
+      setToastMessage('내용을 입력해주세요');
+      setTimeout(() => setToast(true), 3000);
+    } else if (commentForm.content.length > 80) {
+      setToast(false);
+      setToastMessage('댓글은 80자 이내로 작성해주세요');
+      setTimeout(() => setToast(true), 3000);
+    } else {
+      setCommentForm({ ...commentForm, content: '' });
+      addCommentMutation.mutate(commentForm);
+    }
+  };
+
   return (
     <GoalContainer>
       {achievementCheck ? (
@@ -101,6 +120,9 @@ const CalendarGoal = ({ item, isMe }) => {
             </TextBox>
           </RightContent>
           <LikeContent>
+            <IconContainer>
+              <IconComment />
+            </IconContainer>
             {isMe ? (
               <IconContainer>
                 <IconHeartFill onClick={(e) => e.stopPropagation()} />
@@ -156,6 +178,11 @@ const CalendarGoal = ({ item, isMe }) => {
                       content: e.target.value,
                     });
                   }}
+                  onKeyPress={(e) => {
+                    if (e.key === 'Enter') {
+                      handleAddForm();
+                    }
+                  }}
                 />
               </InputContainer>
               <FormButtonContainer>
@@ -169,16 +196,16 @@ const CalendarGoal = ({ item, isMe }) => {
                   fc={colors.white}
                   bg={colors.orange500}
                   bd='none'
-                  handleButtonClick={() => {
-                    addCommentMutation.mutate(commentForm);
-                    setCommentForm({ ...commentForm, content: '' });
-                  }}
+                  handleButtonClick={handleAddForm}
                 />
               </FormButtonContainer>
             </CommentForm>
           </CommentContents>
         )}
       </Container>
+      {toastMessage !== '' ? (
+        <ToastModal toastMessage={toastMessage} displayNone={toast} />
+      ) : null}
     </GoalContainer>
   );
 };

@@ -42,6 +42,7 @@ const SettingPage = () => {
       onSuccess: () => {
         queryClient.invalidateQueries(['userInfo']);
         queryClient.invalidateQueries(['myCalendar']);
+        queryClient.invalidateQueries(['peopleSearchDate']);
       },
       onError: (error) => {
         console.log('updateUserProfile ERROR', error);
