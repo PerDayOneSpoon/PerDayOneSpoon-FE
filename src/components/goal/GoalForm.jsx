@@ -65,9 +65,7 @@ const GoalForm = ({
                     key={i}
                     bgColor={color}
                     onClick={() => handleColorClick(color)}
-                    className={
-                      form.characterId === i + 1 && color.replace('#', '')
-                    }
+                    className={form.characterId === i + 1 && 'active'}
                   ></CharacterLi>
                 ))}
               </CharacterUl>
@@ -362,26 +360,12 @@ const CharacterLi = styled.li`
   height: 24px;
   border-radius: 50%;
   background-color: ${({ bgColor }) => bgColor};
+  /* position: relative; */
   cursor: pointer;
 
-  &.fbe5a5 {
-    box-shadow: 0 0 0 3px #ffd24c inset;
-  }
-
-  &.f29bca {
-    box-shadow: 0 0 0 3px #ff5cb3 inset;
-  }
-
-  &.dbb4f4 {
-    box-shadow: 0 0 0 3px #c56bfd inset;
-  }
-
-  &.bbdcad {
-    box-shadow: 0 0 0 3px #5fd42d inset;
-  }
-
-  &.b4d7fc {
-    box-shadow: 0 0 0 3px #479ffc inset;
+  &.active {
+    outline: 2px solid #fff;
+    outline-offset: -4px;
   }
 
   & + & {

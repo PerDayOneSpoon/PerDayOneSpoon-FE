@@ -11,7 +11,6 @@ import CommonText from '../elements/CommonText';
 import CommonButton from '../elements/CommonButton';
 import Comment from '../Comment';
 import { commentApi } from '../../api/commentApi';
-import { Form } from 'react-router-dom';
 
 const CalendarGoal = ({ item, isMe }) => {
   const queryClient = useQueryClient();

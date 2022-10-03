@@ -57,7 +57,7 @@ const GoalList = ({ isMain, data, isMe }) => {
     setInitClickId(id);
     setKindOfModal('timer');
     setModalText(
-      '한 번 시작한 습관은 정지할 수 없으며 페이지를 이동하면 멈춥니다. 타이머를 시작하시겠습니까?'
+      '한 번 시작한 습관은 정지할 수 없으며 페이지를 이동하면 멈춥니다. 집중해서 습관을 달성해주세요!'
     );
     setModal({ open: true, type: 'confirm' });
   };
