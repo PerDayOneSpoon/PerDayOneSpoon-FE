@@ -77,7 +77,7 @@ const CalendarGoal = ({ item, isMe }) => {
   };
 
   const handleAddForm = () => {
-    if (commentForm.content === '') {
+    if (commentForm.content.trim() === '') {
       setToast(false);
       setToastMessage('내용을 입력해주세요');
       setTimeout(() => setToast(true), 3000);
