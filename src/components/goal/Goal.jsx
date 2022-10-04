@@ -16,7 +16,7 @@ import { timeToString } from '../../utils/timeToString';
 import { isStartState } from '../../recoil/goal';
 
 import { useRecoilState, useRecoilStateLoadable } from 'recoil';
-import { goalTimeFamily, goalTimeFamilyKey } from '../../recoil/goal';
+import { goalTimeFamily } from '../../recoil/goal';
 import { goalTimeId } from '../../recoil/goal';
 
 const Goal = ({
@@ -29,7 +29,6 @@ const Goal = ({
 
   const [isTimer, setIsTimer] = useState(false);
   const [isStart, setIsStart] = useRecoilState(isStartState);
-  const [key, setKey] = useRecoilState(goalTimeFamilyKey);
   const [clickedId, setClickedId] = useRecoilState(goalTimeId);
 
   const achieveGoalMutation = useMutation(goalApi.achieveGoal, {

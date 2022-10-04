@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import NavBar from '../components/global/NavBar';
 import { isMobile } from 'react-device-detect';
 import { colors } from '../theme/theme';

@@ -1,10 +1,8 @@
 import Layout from '../layout/Layout';
 import Header from '../components/global/Header';
 import CollectionList from '../components/collection/CollectionList';
-import Modal from '../components/global/Modal';
 import { useSetRecoilState } from 'recoil';
 import { modalState } from '../recoil/common';
-import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { navBarState } from '../recoil/common';
 

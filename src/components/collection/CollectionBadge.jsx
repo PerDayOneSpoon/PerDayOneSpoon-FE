@@ -1,6 +1,4 @@
 import styled from 'styled-components';
-import { colors } from '../../theme/theme';
-import badgeTestImg from '../../assets/imgs/character-question-mark.png';
 import CommonText from '../elements/CommonText';
 
 const CollectionBadge = ({ badge, handleBadgeClick }) => {

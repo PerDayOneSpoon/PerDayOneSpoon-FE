@@ -19,6 +19,7 @@ const GoalForm = ({
   endDate,
   startDate,
   character,
+  characterText,
 }) => {
   const [bottomModal, setBottomModal] = useRecoilState(bottomModalState);
 
@@ -51,8 +52,16 @@ const GoalForm = ({
               <Icon src={character} />
             </IconContainer>
           </FlexContainer>
-          <CommonText isSentence3={true} fc={colors.orange700}>
-            캐릭터를 선택해 주세요
+          <CommonText
+            isSentence3={true}
+            fc={
+              characterText === '캐릭터를 선택해 주세요'
+                ? colors.orange700
+                : colors.textBlack
+            }
+            fw={characterText === '캐릭터를 선택해 주세요' ? '400' : '600'}
+          >
+            {characterText}
           </CommonText>
         </SetForm>
         {characterClick && (
@@ -360,13 +369,21 @@ const CharacterLi = styled.li`
   height: 24px;
   border-radius: 50%;
   background-color: ${({ bgColor }) => bgColor};
-  /* position: relative; */
+  position: relative;
   cursor: pointer;
 
-  &.active {
-    outline: 2px solid #fff;
+  &.active::after {
+    content: '';
+    position: absolute;
+    border: 3px solid ${colors.white};
+    top: 4px;
+    left: 4px;
+    bottom: 4px;
+    right: 4px;
+    border-radius: 100%;
+    /* outline: 2px solid #fff;
     outline-offset: -4px;
-    border-radius: 50%;
+    border-radius: 50%; */
   }
 
   & + & {
