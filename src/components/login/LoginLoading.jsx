@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { colors } from '../../theme/theme';
-import characterImg from '../../assets/imgs/character1.webp';
+import characterImg from '../../assets/imgs/character1.png';
 import CommonText from '../elements/CommonText';
 
 const LoginLoading = () => {
