@@ -42,8 +42,8 @@ const Calendar = () => {
       // staleTime: Infinity,
       // keepPreviousData: true,
 
-      // staleTime: Infinity,
-      // cacheTime: Infinity,
+      staleTime: Infinity,
+      cacheTime: Infinity,
       enabled: !!dateValue,
       keepPreviousData: true,
     }

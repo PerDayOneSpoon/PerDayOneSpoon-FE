@@ -162,7 +162,6 @@ const CalendarGoal = ({ item, isMe }) => {
                   commentData={item}
                   handleCommentDelete={(commentId) => {
                     deleteCommentMutation.mutate({ commentId: commentId });
-                    // console.log(commentId, '삭제 아이디 클릭!!!');
                   }}
                 />
               ))}
@@ -183,6 +182,7 @@ const CalendarGoal = ({ item, isMe }) => {
                       handleAddForm();
                     }
                   }}
+                  placeholder={'습관에 댓글을 남겨보세요'}
                 />
               </InputContainer>
               <FormButtonContainer>
@@ -345,6 +345,10 @@ const InputContainer = styled.div`
     background: transparent;
     border: none;
     outline: none;
+
+    ::placeholder {
+      color: ${colors.gray300};
+    }
   }
 `;
 

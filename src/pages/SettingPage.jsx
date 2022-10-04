@@ -11,6 +11,7 @@ import { getAccessToken } from '../shared/localStorage';
 import { useRecoilState } from 'recoil';
 import { userInfoState } from '../recoil/common';
 import imageCompression from 'browser-image-compression';
+import ToastModal from '../components/global/ToastModal';
 
 const SettingPage = () => {
   const navigate = useNavigate();
@@ -18,6 +19,9 @@ const SettingPage = () => {
   const [editUserInfo, setEditUserInfo] = useRecoilState(userInfoState);
   const [file, setFile] = useState('');
   const [previewImg, setPreviewImg] = useState('');
+  const [onlyView, setOnlyView] = useState(true);
+  const [toastMessage, setToastMessage] = useState('');
+  const [toast, setToast] = useState(true);
 
   const {
     isLoading,
@@ -32,10 +36,8 @@ const SettingPage = () => {
         status: data.data.status,
       });
     },
-    staleTime: 60000,
+    // staleTime: 60000,
   });
-
-  const [onlyView, setOnlyView] = useState(true);
 
   const { isLoading: isUpdateLoading, mutate: updateUserProfileMutation } =
     useMutation(userApi.updateUserProfile, {
@@ -46,6 +48,9 @@ const SettingPage = () => {
       },
       onError: (error) => {
         console.log('updateUserProfile ERROR', error);
+      },
+      onSettled: () => {
+        queryClient.invalidateQueries(['userInfo']);
       },
     });
 
@@ -86,23 +91,40 @@ const SettingPage = () => {
   };
 
   const handleRightButtonClick = (e) => {
-    setOnlyView(!onlyView);
+    if (e.target.innerText === '수정') {
+      setOnlyView(false);
+    }
 
     if (e.target.innerText === '저장') {
-      const formData = new FormData();
-
       const newForm = {
         nickname: editUserInfo.nickname,
         status: editUserInfo.status,
       };
 
-      formData.append('multipartFile', file);
-      formData.append(
-        'dto',
-        new Blob([JSON.stringify(newForm)], { type: 'application/json' })
-      );
+      if (newForm.nickname.length === 0) {
+        setToast(false);
+        setToastMessage('이름을 설정해 주세요');
+        setTimeout(() => setToast(true), 3000);
+      } else if (newForm.nickname.length > 8) {
+        setToast(false);
+        setToastMessage('이름은 8자 이하만 가능합니다');
+        setTimeout(() => setToast(true), 3000);
+      } else if (newForm.status.length > 50) {
+        setToast(false);
+        setToastMessage('상태메시지는 50자 이하로 작성해 주세요');
+        setTimeout(() => setToast(true), 3000);
+      } else {
+        setOnlyView(true);
+        const formData = new FormData();
 
-      updateUserProfileMutation(formData);
+        formData.append('multipartFile', file);
+        formData.append(
+          'dto',
+          new Blob([JSON.stringify(newForm)], { type: 'application/json' })
+        );
+
+        updateUserProfileMutation(formData);
+      }
     }
   };
 
@@ -114,7 +136,7 @@ const SettingPage = () => {
     }
   }, []);
 
-  if (isLoading || isFetching) {
+  if (isLoading || isUpdateLoading || isFetching) {
     return <Loading />;
   }
 
@@ -134,6 +156,9 @@ const SettingPage = () => {
         handleInputChange={handleInputChange}
         handleChangeImg={handleChangeImg}
       />
+      {toastMessage !== '' ? (
+        <ToastModal toastMessage={toastMessage} displayNone={toast} />
+      ) : null}
     </Layout>
   );
 };
