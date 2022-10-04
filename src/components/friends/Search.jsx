@@ -6,6 +6,7 @@ import { colors } from '../../theme/theme';
 import { useNavigate } from 'react-router-dom';
 import { friendsApi } from '../../api/friendsApi';
 import { useQuery } from 'react-query';
+import GoalEmpty from '../goal/GoalEmpty';
 
 const Search = () => {
   const navigate = useNavigate();
@@ -39,10 +40,16 @@ const Search = () => {
           취소
         </CancelButton>
       </InputBox>
-      {searchFriends &&
+      {searchFriends ? (
         searchFriends.data.map((val, key) => {
           return <FriendsItem val={val} key={key} isSearch={true} />;
-        })}
+        })
+      ) : (
+        <GoalEmpty
+          emptyText=' 친구의 이름이나 친구의 이메일 또는'
+          emptyText2='친구의 검색코드(마이페이지 > 프로필 편집)를  검색해주세요'
+        />
+      )}
     </Container>
   );
 };

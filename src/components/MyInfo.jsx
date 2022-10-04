@@ -14,13 +14,16 @@ import { userInfoState } from '../recoil/common';
 import { loginState } from '../recoil/common';
 import { ReactComponent as IconFeedback } from '../assets/icons/icon-feedback.svg';
 import { navBarState } from '../recoil/common';
+import { modalState } from '../recoil/common';
+import { useRecoilState } from 'recoil';
+import Modal from './global/Modal';
 
 const MyInfo = () => {
   const navigate = useNavigate();
   const setUserInfoState = useSetRecoilState(userInfoState);
   const setIsLogin = useSetRecoilState(loginState);
-
   const setNavBar = useSetRecoilState(navBarState);
+  const [modal, setModal] = useRecoilState(modalState);
 
   const {
     isLoading,
@@ -53,6 +56,10 @@ const MyInfo = () => {
       setIsLogin(false);
     },
   });
+
+  const handleLogoutModal = () => {
+    setModal({ open: true, type: 'confirm' });
+  };
 
   if (isLoading) {
     return <Loading />;
@@ -92,7 +99,8 @@ const MyInfo = () => {
         </BoxContainer>
       </Info>
       <div>
-        <LinkButtonContainer>
+        <LinkButtonContainer></LinkButtonContainer>
+        <ButtonGroup>
           <LinkButton>
             <a
               href='https://docs.google.com/forms/d/e/1FAIpQLSfruf4XRxmHZ2rfO6q3TmV5W8P4fOFvfhhoaHT6nNBt3jheyA/viewform'
@@ -101,14 +109,12 @@ const MyInfo = () => {
             >
               피드백 보내기
             </a>
-            <IconContainer>
+            {/* <IconContainer>
               <IconFeedback />
-            </IconContainer>
+            </IconContainer> */}
           </LinkButton>
-        </LinkButtonContainer>
-        <ButtonGroup>
           <CommonButton
-            handleButtonClick={() => logoutMutation()}
+            handleButtonClick={() => handleLogoutModal()}
             text='로그아웃'
             wd='116px'
             pd='8px 0'
@@ -119,7 +125,8 @@ const MyInfo = () => {
             bdrs='22px'
             bd={`1px solid ${colors.gray300}`}
           />
-          <CommonButton
+          {/* 계정 삭제 기능 임시 제거 */}
+          {/* <CommonButton
             handleButtonClick={() => unregisterMutation()}
             text='계정 삭제하기'
             wd='116px'
@@ -130,9 +137,15 @@ const MyInfo = () => {
             fw='600'
             bdrs='22px'
             bd={`1px solid ${colors.softDanger}`}
-          />
+          /> */}
         </ButtonGroup>
       </div>
+      {modal.open && (
+        <Modal
+          modalText='로그아웃 하시겠습니까?'
+          handleModalOk={() => logoutMutation()}
+        />
+      )}
     </Container>
   );
 };
@@ -180,13 +193,13 @@ const LinkButtonContainer = styled.div`
 
 const LinkButton = styled.div`
   width: fit-content;
-  margin-bottom: 20px;
+  /* margin-bottom: 20px; */
   position: relative;
 
   a {
     text-align: center;
     display: inline-block;
-    width: 232px;
+    width: 116px;
     /* border: 1px solid ${colors.gray300}; */
     background-color: ${colors.orange500};
     text-decoration: none;

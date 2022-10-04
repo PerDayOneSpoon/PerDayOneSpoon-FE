@@ -3,14 +3,17 @@ import { colors } from '../../theme/theme';
 import emptyImg from '../../assets/imgs/character-gray.png';
 import CommonText from '../elements/CommonText';
 
-const GoalEmpty = ({ emptyText }) => {
+const GoalEmpty = ({ emptyText, emptyText2 }) => {
   return (
     <Container>
       <ImgContainer>
         <EmptyImg src={emptyImg} />
       </ImgContainer>
-      <CommonText isSentece2={true} fc={colors.gray500} wd='164px' lh='22px'>
+      <CommonText isSentece2={true} fc={colors.gray500} lh='22px'>
         {emptyText}
+      </CommonText>
+      <CommonText isSentece2={true} fc={colors.gray500} lh='22px'>
+        {emptyText2}
       </CommonText>
     </Container>
   );
@@ -37,12 +40,4 @@ const ImgContainer = styled.div`
 const EmptyImg = styled.img`
   width: 100%;
   object-fit: cover;
-`;
-
-const EmptyText = styled.p`
-  width: 170px;
-  font-size: 14px;
-  line-height: 1.4;
-  word-break: keep-all;
-  text-align: center;
 `;
