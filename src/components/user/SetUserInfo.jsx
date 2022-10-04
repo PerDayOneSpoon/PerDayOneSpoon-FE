@@ -151,7 +151,7 @@ const SettingForm = styled.div`
 const FormInput = styled.div`
   position: relative;
   width: 100%;
-  /* height: 48px; */
+  height: 48px;
   padding: 16px 8px;
   margin-top: 8px;
   box-sizing: border-box;

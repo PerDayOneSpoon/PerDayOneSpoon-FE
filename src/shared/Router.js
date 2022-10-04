@@ -1,20 +1,22 @@
+import { lazy } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-import MainPage from '../pages/MainPage';
+// import MainPage from '../pages/MainPage';
+// import CollectionPage from '../pages/CollectionPage';
+// import CreatePage from '../pages/CreatePage';
+// import CalendarPage from '../pages/CalendarPage';
+// import MyPage from '../pages/MyPage';
+// import SearchPage from '../pages/SearchPage';
+// import FollowerListPage from '../pages/FollowerListPage';
+// import FollowingListPage from '../pages/FollowingListPage';
+// import SettingPage from '../pages/SettingPage';
+// import NoticePage from '../pages/NoticePage';
+// import ChattingPage from '../pages/ChattingPage';
+
 import LoginPage from '../pages/LoginPage';
-import CollectionPage from '../pages/CollectionPage';
-import CreatePage from '../pages/CreatePage';
-import CalendarPage from '../pages/CalendarPage';
-import MyPage from '../pages/MyPage';
-import SearchPage from '../pages/SearchPage';
-import FollowerListPage from '../pages/FollowerListPage';
-import FollowingListPage from '../pages/FollowingListPage';
 import KakaoLogin from '../components/login/KakaoLogin';
 import GoogleLogin from '../components/login/GoogleLogin';
 import NaverLogin from '../components/login/NaverLogin';
-import SettingPage from '../pages/SettingPage';
 import ScrollToTop from './ScrollToTop';
-import ChattingPage from '../pages/ChattingPage';
-import NoticePage from '../pages/NoticePage';
 import { EventSourcePolyfill, NativeEventSource } from 'event-source-polyfill';
 import { useEffect, useState } from 'react';
 import { getAccessToken } from './localStorage';
@@ -26,6 +28,18 @@ import {
   welcomeMessageState,
 } from '../recoil/realTimeData';
 import { loginState } from '../recoil/common';
+
+const MainPage = lazy(() => import('../pages/MainPage'));
+const CollectionPage = lazy(() => import('../pages/CollectionPage'));
+const CreatePage = lazy(() => import('../pages/CreatePage'));
+const CalendarPage = lazy(() => import('../pages/CalendarPage'));
+const MyPage = lazy(() => import('../pages/MyPage'));
+const SearchPage = lazy(() => import('../pages/SearchPage'));
+const FollowerListPage = lazy(() => import('../pages/FollowerListPage'));
+const FollowingListPage = lazy(() => import('../pages/FollowingListPage'));
+const SettingPage = lazy(() => import('../pages/SettingPage'));
+const NoticePage = lazy(() => import('../pages/NoticePage'));
+// const ChattingPage = lazy(() => import('../pages/ChattingPage'));
 
 const Router = () => {
   const [listening, setListening] = useState(false);
@@ -109,8 +123,8 @@ const Router = () => {
           <Route path='/setting' element={<SettingPage />} />
           <Route path='/following' element={<FollowingListPage />} />
           <Route path='/follower' element={<FollowerListPage />} />
-          <Route path='/chatting' element={<ChattingPage />} />
           <Route path='/notice' element={<NoticePage />} />
+          {/* <Route path='/chatting' element={<ChattingPage />} /> */}
         </Routes>
       </ScrollToTop>
     </BrowserRouter>
