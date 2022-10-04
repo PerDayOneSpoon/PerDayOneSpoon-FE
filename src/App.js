@@ -81,8 +81,6 @@ const Contents = styled.div`
 
 const ImgContainer = styled.div`
   display: none;
-  /* width: 897px; */
-  /* height: 582px; */
 
   @media (min-width: 1025px) {
     display: flex;

@@ -1,5 +1,4 @@
 import { lazy } from 'react';
-// import { ErrorBoundary } from 'react-error-boundary';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 // import MainPage from '../pages/MainPage';
 // import CollectionPage from '../pages/CollectionPage';
@@ -40,7 +39,7 @@ const FollowerListPage = lazy(() => import('../pages/FollowerListPage'));
 const FollowingListPage = lazy(() => import('../pages/FollowingListPage'));
 const SettingPage = lazy(() => import('../pages/SettingPage'));
 const NoticePage = lazy(() => import('../pages/NoticePage'));
-const ChattingPage = lazy(() => import('../pages/ChattingPage'));
+// const ChattingPage = lazy(() => import('../pages/ChattingPage'));
 
 const Router = () => {
   const [listening, setListening] = useState(false);
@@ -124,8 +123,8 @@ const Router = () => {
           <Route path='/setting' element={<SettingPage />} />
           <Route path='/following' element={<FollowingListPage />} />
           <Route path='/follower' element={<FollowerListPage />} />
-          <Route path='/chatting' element={<ChattingPage />} />
           <Route path='/notice' element={<NoticePage />} />
+          {/* <Route path='/chatting' element={<ChattingPage />} /> */}
         </Routes>
       </ScrollToTop>
     </BrowserRouter>
