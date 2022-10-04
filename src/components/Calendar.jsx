@@ -6,7 +6,7 @@ import Loading from './global/Loading';
 import dayjs from 'dayjs';
 import { useQuery } from 'react-query';
 import { calendarApi } from '../api/calendarApi';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { calendarUserIdState } from '../recoil/common';
 

@@ -35,6 +35,7 @@ const CreatePage = () => {
     dayjs().add(2, 'days').format('YYYY년 MM월 DD일')
   );
   const [character, setCharacter] = useState(characterQuestion);
+  const [characterText, setCharacterText] = useState('캐릭터를 선택해 주세요');
   const [selectTime, setSelectTime] = useState({
     hour: '00',
     minute: '01',
@@ -110,22 +111,27 @@ const CreatePage = () => {
     switch (color) {
       case colors.char1:
         setCharacter(character1);
+        setCharacterText('성실한 노랑 만두');
         setForm({ ...form, characterId: 1 });
         break;
       case colors.char2:
         setCharacter(character2);
+        setCharacterText('의지 가득 분홍 만두');
         setForm({ ...form, characterId: 2 });
         break;
       case colors.char3:
         setCharacter(character3);
+        setCharacterText('신나는 보라 만두');
         setForm({ ...form, characterId: 3 });
         break;
       case colors.char4:
         setCharacter(character4);
+        setCharacterText('재미 없는 초록 만두');
         setForm({ ...form, characterId: 4 });
         break;
       case colors.char5:
         setCharacter(character5);
+        setCharacterText('기분 좋은 파랑 만두');
         setForm({ ...form, characterId: 5 });
         break;
       default:
@@ -175,6 +181,7 @@ const CreatePage = () => {
         handleTimeOkClick={handleTimeOkClick}
         handlePrivateClick={handlePrivateClick}
         handleColorClick={handleColorClick}
+        characterText={characterText}
       />
       {toastMessage !== '' ? (
         <ToastModal toastMessage={toastMessage} displayNone={toast} />

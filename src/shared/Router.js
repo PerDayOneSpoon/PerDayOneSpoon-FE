@@ -1,5 +1,5 @@
 import { lazy } from 'react';
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 // import MainPage from '../pages/MainPage';
 // import CollectionPage from '../pages/CollectionPage';
 // import CreatePage from '../pages/CreatePage';
