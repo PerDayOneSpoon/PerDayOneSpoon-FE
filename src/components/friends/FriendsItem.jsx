@@ -117,7 +117,6 @@ export default FriendsItem;
 
 const SearchList = styled.div`
   width: 100%;
-  /* height: 56px; */
   padding: 16px 0;
   display: flex;
   justify-content: space-between;

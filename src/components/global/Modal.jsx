@@ -99,7 +99,7 @@ const ButtonGroup = styled.div`
 
 const ModalButton = styled.button`
   width: 100%;
-  height: 50px;
+  height: 46px;
   background-color: ${({ deleteButton }) =>
     deleteButton ? colors.danger : colors.orange500};
   font-size: 16px;
