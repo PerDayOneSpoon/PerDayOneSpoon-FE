@@ -220,13 +220,13 @@ const Container = styled.div`
 `;
 
 const IconContainer = styled.div`
-  width: 84px;
-  height: 74px;
+  width: 90px;
+  /* height: 74px; */
 `;
 
 const Icon = styled.img`
   width: 100%;
-  height: 100%;
+  /* height: 100%; */
   object-fit: cover;
 `;
 

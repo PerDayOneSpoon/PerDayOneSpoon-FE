@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { colors } from '../../theme/theme';
-import characterImg from '../../assets/imgs/login-character1.png';
+import characterImg from '../../assets/imgs/character1.webp';
 import CommonText from '../elements/CommonText';
 
 const LoginLoading = () => {
@@ -51,7 +51,10 @@ const ImgContainer = styled.div`
   box-shadow: 0px 4px 16px rgba(255, 181, 95, 0.46);
   border-radius: 50px;
 `;
-const CharacterImg = styled.img``;
+const CharacterImg = styled.img`
+  width: 70%;
+  height: 70%;
+`;
 
 const CustomText = styled(CommonText)`
   width: 220px;

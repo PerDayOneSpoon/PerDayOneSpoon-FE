@@ -4,7 +4,7 @@ import {
   GOOGLE_AUTH_URL,
   NAVER_AUTH_URL,
 } from '../../constants/common';
-import char1 from '../../assets/imgs/character1.png';
+import char1 from '../../assets/imgs/character1.webp';
 import { ReactComponent as IconGoogle } from '../../assets/icons/icon-google.svg';
 import { ReactComponent as IconKakao } from '../../assets/icons/icon-kakao.svg';
 import { ReactComponent as IconNaver } from '../../assets/icons/icon-naver.svg';
