@@ -366,6 +366,7 @@ const CharacterLi = styled.li`
   &.active {
     outline: 2px solid #fff;
     outline-offset: -4px;
+    border-radius: 50%;
   }
 
   & + & {

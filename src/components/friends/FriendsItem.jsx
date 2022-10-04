@@ -24,7 +24,6 @@ const FriendsItem = ({
 
   const handleFollow = (friendId) => {
     addFriendMutation.mutate({ friendId: friendId });
-    // setIsFollow(true);
   };
 
   return (
@@ -118,7 +117,7 @@ export default FriendsItem;
 
 const SearchList = styled.div`
   width: 100%;
-  height: 56px;
+  /* height: 56px; */
   padding: 16px 0;
   display: flex;
   justify-content: space-between;
@@ -129,6 +128,7 @@ const ProfileBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  word-break: break-all;
 `;
 
 const ImgContainer = styled.div`
@@ -137,6 +137,8 @@ const ImgContainer = styled.div`
   border-radius: 50%;
   margin-right: 16px;
   overflow: hidden;
+  flex-shrink: 0;
+  flex-basis: auto;
 `;
 
 const ProfileImg = styled.img`
@@ -146,6 +148,6 @@ const ProfileImg = styled.img`
 `;
 
 const ProfileStatusBox = styled.div`
-  max-width: 240px;
   word-break: break-all;
+  margin-right: 16px;
 `;

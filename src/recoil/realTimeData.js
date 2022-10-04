@@ -3,6 +3,7 @@ import { recoilPersist } from 'recoil-persist';
 
 const { persistAtom } = recoilPersist({
   key: 'realTime-data',
+  storage: sessionStorage,
 });
 
 export const realTimeNoticeState = atom({
