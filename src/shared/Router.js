@@ -15,6 +15,7 @@ import SettingPage from '../pages/SettingPage';
 import ScrollToTop from './ScrollToTop';
 import ChattingPage from '../pages/ChattingPage';
 import NoticePage from '../pages/NoticePage';
+import WelcomePage from '../pages/WelcomePage';
 import { EventSourcePolyfill, NativeEventSource } from 'event-source-polyfill';
 import { useEffect, useState } from 'react';
 import { getAccessToken } from './localStorage';
@@ -97,6 +98,7 @@ const Router = () => {
       <ScrollToTop>
         <Routes>
           <Route path='/' element={<MainPage />} />
+          <Route path='/welcome' element={<WelcomePage />} />
           <Route path='/login' element={<LoginPage />} />
           <Route path='/user/login/callback' element={<KakaoLogin />} />
           <Route path='/user/login/google' element={<GoogleLogin />} />
