@@ -9,7 +9,7 @@
 - **[하루한줌 바로가기](https://www.perday-onespoon.com/)<br>**
 - **[발표 자료](https://docs.google.com/presentation/d/1u2x1SL4Bt863htJeiWeb8mTztDs20Rne1hU_DN310EU/edit?usp=sharing)<br>**
 - **[팀 노션 주소](https://www.notion.so/3-8b744f1d04da4c41812b94df4ad65035)**
-- **[시연 영상]()<br>**
+- **[시연 영상](https://youtu.be/PDkd_5A_j4k)<br>**
   <br>
   <br>
 
