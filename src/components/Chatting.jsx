@@ -1,7 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 import SockJS from 'sockjs-client';
 import { Stomp } from '@stomp/stompjs';
-
 import styled from 'styled-components';
 import { colors } from '../theme/theme';
 
@@ -37,19 +36,19 @@ const Chatting = () => {
     // 채팅페이지 들어오면 전에 채팅내용들도 불러와야 함
     // api get
     // const response = [{},{},{},{},{},{}]
-    //  setChatList(response);
+    // setChatList(response);
   }, []);
 
   useEffect(() => {
-    // let sock = new SockJS('주소');
-    // let client = Stomp.over(sock);
-    // wsRef.current = client;
-    // wsRef.current.connect(() => {
-    //   console.log('connected well');
-    //   wsRef.current.subscribe('/getchat', (data) => {
-    //     setChatList([...chatList, data]);
-    //   });
-    // });
+    let sock = new SockJS('http://3.35.218.108/websocket');
+    let client = Stomp.over(sock);
+    wsRef.current = client;
+    wsRef.current.connect(() => {
+      console.log('connected well');
+      // wsRef.current.subscribe('/comm/room/enter/1', (data) => {
+      //   setChatList([...chatList, data]);
+      // });
+    });
     // 연결 꼭 끊어주자...
     // return () => {
     //   wsRef.current.disconnect();
