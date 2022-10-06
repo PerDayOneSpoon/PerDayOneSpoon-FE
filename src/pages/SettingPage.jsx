@@ -109,7 +109,7 @@ const SettingPage = () => {
         setToast(false);
         setToastMessage('이름은 8자 이하만 가능합니다');
         setTimeout(() => setToast(true), 3000);
-      } else if (newForm.status.length > 50) {
+      } else if (newForm.status?.length > 50) {
         setToast(false);
         setToastMessage('상태메시지는 50자 이하로 작성해 주세요');
         setTimeout(() => setToast(true), 3000);

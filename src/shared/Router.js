@@ -17,9 +17,9 @@ import KakaoLogin from '../components/login/KakaoLogin';
 import GoogleLogin from '../components/login/GoogleLogin';
 import NaverLogin from '../components/login/NaverLogin';
 import ScrollToTop from './ScrollToTop';
-import ChattingPage from '../pages/ChattingPage';
-import NoticePage from '../pages/NoticePage';
-import WelcomePage from '../pages/WelcomePage';
+// import ChattingPage from '../pages/ChattingPage';
+// import NoticePage from '../pages/NoticePage';
+// import WelcomePage from '../pages/WelcomePage';
 
 import { EventSourcePolyfill, NativeEventSource } from 'event-source-polyfill';
 import { useEffect, useState } from 'react';
@@ -43,7 +43,8 @@ const FollowerListPage = lazy(() => import('../pages/FollowerListPage'));
 const FollowingListPage = lazy(() => import('../pages/FollowingListPage'));
 const SettingPage = lazy(() => import('../pages/SettingPage'));
 const NoticePage = lazy(() => import('../pages/NoticePage'));
-// const ChattingPage = lazy(() => import('../pages/ChattingPage'));
+const WelcomePage = lazy(() => import('../pages/WelcomePage'));
+const ChattingPage = lazy(() => import('../pages/ChattingPage'));
 
 const Router = () => {
   const [listening, setListening] = useState(false);
