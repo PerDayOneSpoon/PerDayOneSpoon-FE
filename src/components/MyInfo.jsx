@@ -3,7 +3,7 @@ import UserInfo from './user/UserInfo';
 import Achievement from './user/Achievement';
 import CommonButton from './elements/CommonButton';
 import Loading from './global/Loading';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useQuery, useMutation } from 'react-query';
 import { colors } from '../theme/theme';
 import { removeToken } from '../shared/localStorage';

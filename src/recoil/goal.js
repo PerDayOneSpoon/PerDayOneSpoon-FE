@@ -2,15 +2,9 @@ import { atom, atomFamily, selectorFamily } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
 import { goalApi } from '../api/goalApi';
 import { stringToTime } from '../utils/stringToTime';
-import { useRef } from 'react';
 
 const { persistAtom } = recoilPersist({
   key: 'goals-info',
-});
-
-export const goalTimeFamilyKey = atom({
-  key: 'goalTimeFamilyKey',
-  default: 0,
 });
 
 export const goalTimeFamily = atomFamily({

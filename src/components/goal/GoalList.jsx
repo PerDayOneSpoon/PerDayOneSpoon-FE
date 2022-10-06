@@ -3,7 +3,7 @@ import Goal from './Goal';
 import CalendarGoal from './CalendarGoal';
 import GoalEmpty from './GoalEmpty';
 import Modal from '../global/Modal';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { modalState } from '../../recoil/common';
 import { useMutation, useQueryClient } from 'react-query';

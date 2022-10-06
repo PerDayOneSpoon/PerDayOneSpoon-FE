@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import Friend from './Friend';
 import { useHorizontalScroll } from '../../hooks/useHorizontalScroll';
 import { colors } from '../../theme/theme';
-import React, { useRef, createRef } from 'react';
 
 const FriendsList = ({ peopleList, handleUserClick }) => {
   const scrollRef = useHorizontalScroll();
@@ -22,7 +21,7 @@ const FriendsList = ({ peopleList, handleUserClick }) => {
   );
 };
 
-export default React.memo(FriendsList);
+export default FriendsList;
 
 const Container = styled.div`
   display: flex;

@@ -82,7 +82,7 @@ const NavContainer = styled.div`
   align-items: center;
   justify-content: space-evenly;
   width: 100%;
-  height: ${NAV_BAR_HEIGHT}px;
+  min-height: ${NAV_BAR_HEIGHT}px;
   background-color: ${colors.white};
   box-shadow: 0px -1px 20px rgba(0, 0, 0, 0.07);
 `;

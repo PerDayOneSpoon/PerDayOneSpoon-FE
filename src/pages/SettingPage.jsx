@@ -36,7 +36,7 @@ const SettingPage = () => {
         status: data.data.status,
       });
     },
-    // staleTime: 60000,
+    staleTime: 60000,
   });
 
   const { isLoading: isUpdateLoading, mutate: updateUserProfileMutation } =

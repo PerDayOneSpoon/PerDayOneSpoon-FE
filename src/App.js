@@ -1,10 +1,13 @@
-import { useEffect } from 'react';
+import { useEffect, Suspense } from 'react';
 import Router from './shared/Router';
 import GlobalStyles from './GlobalStyle';
 import styled from 'styled-components';
 import { colors } from './theme/theme';
 import backgroundImg from './assets/imgs/background.png';
 import RouteChangeTracker from './shared/RouteChangeTracker';
+import { ErrorBoundary } from 'react-error-boundary';
+import ErrorLog from './components/global/ErrorLog';
+import Loading from './components/global/Loading';
 
 function App() {
   const setScreenSize = () => {
@@ -34,7 +37,12 @@ function App() {
       <Contents>
         <RouteChangeTracker />
         <GlobalStyles />
-        <Router />
+
+        <ErrorBoundary FallbackComponent={ErrorLog}>
+          <Suspense fallback={<Loading />}>
+            <Router />
+          </Suspense>
+        </ErrorBoundary>
       </Contents>
     </ResponsiveContainer>
   );
@@ -73,8 +81,6 @@ const Contents = styled.div`
 
 const ImgContainer = styled.div`
   display: none;
-  /* width: 897px; */
-  /* height: 582px; */
 
   @media (min-width: 1025px) {
     display: flex;
