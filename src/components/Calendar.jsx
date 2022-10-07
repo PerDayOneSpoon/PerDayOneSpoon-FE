@@ -42,7 +42,7 @@ const Calendar = () => {
       // staleTime: Infinity,
       // keepPreviousData: true,
 
-      staleTime: Infinity,
+      // staleTime: Infinity,
       cacheTime: Infinity,
       enabled: !!dateValue,
       keepPreviousData: true,
@@ -62,7 +62,7 @@ const Calendar = () => {
       // enabled: !!month,
       // keepPreviousData: true,
 
-      staleTime: Infinity,
+      // staleTime: Infinity,
       cacheTime: Infinity,
       enabled: !!month,
       keepPreviousData: true,

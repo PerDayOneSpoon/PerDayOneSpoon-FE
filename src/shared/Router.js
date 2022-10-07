@@ -86,7 +86,7 @@ const Router = () => {
             }
 
             if (!result.read && result.notificationType !== 'Notice') {
-              setData((old) => [...old, result]);
+              setData((old) => [result, ...old]);
             }
           };
 

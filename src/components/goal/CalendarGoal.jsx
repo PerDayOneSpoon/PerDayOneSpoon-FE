@@ -120,36 +120,43 @@ const CalendarGoal = ({ item, isMe }) => {
             </TextBox>
           </RightContent>
           <LikeContent>
-            <IconContainer>
-              <IconComment />
-            </IconContainer>
-            {isMe ? (
-              <IconContainer>
-                <IconHeartFill onClick={(e) => e.stopPropagation()} />
+            <IconContent>
+              <IconContainer className='comment-icon'>
+                <IconComment />
               </IconContainer>
-            ) : heartCheck ? (
-              <IconContainer>
-                <IconHeartFill
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleLikeButton(goalFlag);
-                  }}
-                />
-              </IconContainer>
-            ) : (
-              <IconContainer>
-                <IconHeartEmpty
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleLikeButton(goalFlag);
-                  }}
-                />
-              </IconContainer>
-            )}
+              <CommonText isFootnote2={true} fc={colors.gray600}>
+                {commentResponseDtoList.length}
+              </CommonText>
+            </IconContent>
+            <IconContent>
+              {isMe ? (
+                <IconContainer>
+                  <IconHeartFill onClick={(e) => e.stopPropagation()} />
+                </IconContainer>
+              ) : heartCheck ? (
+                <IconContainer>
+                  <IconHeartFill
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleLikeButton(goalFlag);
+                    }}
+                  />
+                </IconContainer>
+              ) : (
+                <IconContainer>
+                  <IconHeartEmpty
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleLikeButton(goalFlag);
+                    }}
+                  />
+                </IconContainer>
+              )}
 
-            <CommonText isFootnote2={true} fc={colors.gray600} mg='4px 0 0 0'>
-              {heartCnt}
-            </CommonText>
+              <CommonText isFootnote2={true} fc={colors.gray600}>
+                {heartCnt}
+              </CommonText>
+            </IconContent>
           </LikeContent>
         </Contents>
         {isComment && (
@@ -260,10 +267,20 @@ const Character = styled.img`
 
 const LikeContent = styled.div`
   display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+  /* flex-direction: column; */
+  justify-content: center;
   align-items: center;
   margin-left: 16px;
+`;
+
+const IconContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  & + & {
+    margin-left: 4px;
+  }
 `;
 
 const IconContainer = styled.div`
@@ -286,6 +303,16 @@ const IconContainer = styled.div`
       width: 100%;
       height: 100%;
       color: ${colors.gray300};
+    }
+  }
+
+  &.comment-icon {
+    width: 22px;
+    height: 22px;
+
+    svg {
+      width: 100%;
+      height: 100%;
     }
   }
 `;
