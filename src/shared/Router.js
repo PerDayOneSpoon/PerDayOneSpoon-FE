@@ -43,7 +43,7 @@ const FollowerListPage = lazy(() => import('../pages/FollowerListPage'));
 const FollowingListPage = lazy(() => import('../pages/FollowingListPage'));
 const SettingPage = lazy(() => import('../pages/SettingPage'));
 const NoticePage = lazy(() => import('../pages/NoticePage'));
-const WelcomePage = lazy(() => import('../pages/WelcomePage'));
+const OnboardingPage = lazy(() => import('../pages/OnboardingPage'));
 const ChattingPage = lazy(() => import('../pages/ChattingPage'));
 
 const Router = () => {
@@ -116,7 +116,7 @@ const Router = () => {
       <ScrollToTop>
         <Routes>
           <Route path='/' element={<MainPage />} />
-          <Route path='/welcome' element={<WelcomePage />} />
+          <Route path='/welcome' element={<OnboardingPage />} />
           <Route path='/login' element={<LoginPage />} />
           <Route path='/user/login/callback' element={<KakaoLogin />} />
           <Route path='/user/login/google' element={<GoogleLogin />} />
