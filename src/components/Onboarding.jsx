@@ -14,7 +14,7 @@ import 'swiper/css/pagination';
 import { ReactComponent as IconLeft } from '../assets/icons/icon-left.svg';
 import { ReactComponent as IconRight } from '../assets/icons/icon-right.svg';
 
-const Welcome = () => {
+const Onboarding = () => {
   const [pagination, setPagination] = useState(1);
   const prevNavi = useRef(null);
   const nextNavi = useRef(null);
@@ -32,11 +32,12 @@ const Welcome = () => {
         onSlideChange={(e) => setPagination(e.activeIndex + 1)}
         modules={[Navigation]}
       >
+        {/* 화살표없이 사이드 누르거나 스와이프, 아래 동그라미 표시 */}
         <StPrev ref={prevNavi} page={pagination}>
-          <IconLeft />
+          {/* <IconLeft /> */}
         </StPrev>
         <StNext ref={nextNavi} page={pagination}>
-          <IconRight />
+          {/* <IconRight /> */}
         </StNext>
         <SwiperSlide>
           <TextContainer>
@@ -120,7 +121,7 @@ const Welcome = () => {
   );
 };
 
-export default Welcome;
+export default Onboarding;
 
 const Container = styled.div`
   width: 100%;

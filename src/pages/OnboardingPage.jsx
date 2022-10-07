@@ -1,13 +1,13 @@
 import Layout from '../layout/Layout';
 import { colors } from '../theme/theme';
-import Welcome from '../components/Welcome';
+import Onboarding from '../components/Onboarding';
 
-const WelcomePage = () => {
+const OnboardingPage = () => {
   return (
     <Layout hasNavBar={false} bgColor={colors.orange500}>
-      <Welcome />
+      <Onboarding />
     </Layout>
   );
 };
 
-export default WelcomePage;
+export default OnboardingPage;
