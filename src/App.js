@@ -38,11 +38,9 @@ function App() {
         <RouteChangeTracker />
         <GlobalStyles />
 
-        <ErrorBoundary FallbackComponent={ErrorLog}>
-          <Suspense fallback={<Loading />}>
-            <Router />
-          </Suspense>
-        </ErrorBoundary>
+        <Suspense fallback={<Loading />}>
+          <Router />
+        </Suspense>
       </Contents>
     </ResponsiveContainer>
   );

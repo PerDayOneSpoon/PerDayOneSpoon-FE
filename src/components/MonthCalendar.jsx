@@ -209,8 +209,8 @@ const MarkContainer = styled.div`
 
 const Mark = styled.span`
   display: inline-block;
-  width: 4px;
-  height: 4px;
+  width: 5px;
+  height: 5px;
   border-radius: 50%;
   /* background-color: orange; */
   background-color: ${({ bg }) => (bg === '#fbe5a5' ? 'orange' : bg)};

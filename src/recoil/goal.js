@@ -4,7 +4,7 @@ import { goalApi } from '../api/goalApi';
 import { stringToTime } from '../utils/stringToTime';
 
 const { persistAtom } = recoilPersist({
-  key: 'goals-info',
+  key: 'goals',
 });
 
 export const goalTimeFamily = atomFamily({
