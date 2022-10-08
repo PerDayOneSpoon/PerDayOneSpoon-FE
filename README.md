@@ -2,9 +2,12 @@
 
 ### 하루에 한 줌씩 🧑🏻‍🌾🌱 꾸준히 습관을 기록해보자! <br><br>
 
-하루 한 줌은 체득하고 싶은 습관들을 기록하여 꾸준히 이뤄나갈 수 있도록 도와주는 서비스입니다. <br>
-내 습관뿐만 아니라 친구의 습관까지 확인하고 독려할 수 있어요.
+> 하루 한 줌은 체득하고 싶은 습관들을 기록하여 꾸준히 이뤄나갈 수 있도록 도와주는 서비스입니다.<br><br>
+> 사용자들이 단순히 자신의 습관을 만드는 것보다 좀 더 재미있게 습관을 형성할 수 있도록 하자는 취지에서 시작된 프로젝트입니다. <br>
+> 따라서 내 습관뿐만 아니라 친구의 습관까지 확인하고 독려할 수 있습니다.
 <br>
+
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FmtAhG%2FbtrNhOL2bvc%2FnjDlPCDAfNPXkU5q19MNq0%2Fimg.jpg" width="800">
 
 - **[하루한줌 바로가기](https://www.perday-onespoon.com/)<br>**
 - **[발표 자료](https://docs.google.com/presentation/d/1u2x1SL4Bt863htJeiWeb8mTztDs20Rne1hU_DN310EU/edit?usp=sharing)<br>**
@@ -15,10 +18,13 @@
 
 ## 📆 프로젝트 기간 <br>
 
-<strong>2022/08/26~ 2022/10/07</strong>
+<ul>
+  <li>개발 기간: 2022/08/26 ~ 2022/10/07</li>
+  <li>런칭: 2022/10/03</li>
+  <li>유저 피드백: 2022/10/03 ~ 2022/10/07</li>
+  <li>추가 업데이트: 2022/10/03 ~ 진행 중</li>
+</ul>
 
-<br>
-<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FmtAhG%2FbtrNhOL2bvc%2FnjDlPCDAfNPXkU5q19MNq0%2Fimg.jpg" width="800">
 
 <br>
 <br>
@@ -26,6 +32,47 @@
 ## 📖 서비스 아키텍쳐<br>
 
 ![image](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fbg3Vqy%2FbtrNjyBAtmG%2Fz58lk6MglF7kHzwkWhkgBK%2Fimg.png)
+
+<br>
+<br>
+
+## 👊 아키텍쳐 도입 배경<br>
+
+### React-Query
+
+<ul>
+
+  <li>리액트에서 서버의 데이터 관리나 데이터 패칭, 캐싱 등을 효율적으로 관리하기 위해 도입했습니다.</li>
+  <li>기존에 배웠던 리덕스보다 작성해야 할 보일러 플레이트가 적습니다.</li>
+  <li>서버와 클라이언트 사이의 비동기 로직을 보다 쉽게 다룰 수 있습니다.</li>
+  <li>유저의 이벤트가 발생하면 자동으로 데이터를 업데이트 해줍니다.</li>
+  <li>페이징처리, 지연 로딩, 에러 핸들링 등을 손쉽게 할 수 있습니다.</li>
+  <li>리액트 hook과 문법이 비슷하여 별도의 깊은 학습이 필요하지 않습니다.</li>
+  
+</ul>
+
+### Recoil
+
+<ul>
+
+  <li>리액트에서 서버의 데이터 관리나 데이터 패칭, 캐싱 등을 효율적으로 관리하기 위해 도입</li>
+  <li>리덕스라는 대안이 있었으나 하루 한 줌 프로젝트에서 프론트의 상태 관리를 위해 리덕스를 설치한다는 것이 조금 과하게 느껴졌습니다.</li>
+  <li>비동기 요청을 중앙에서 관리해야 하는 경우, selector를 통해 간단하게 처리할 수 있습니다.</li>
+  <li>리액트 전용 상태 관리 라이브러리로 리액트 hook과 유사한 구조를 가져 쉽게 시작할 수 있습니다.</li>
+  <li>recoil은 정식으로 출시된 패키지가 아니어서 안정성의 우려로 현업에서도 잘 쓰이지 않는다고는 하나, 리코일 공식 Github Issue를 위주로 사용성에 문제가 없는지 검토해 보았고,  하루 한 줌 프로젝트에 적용하기에는 안정적이라고 판단하였습니다. 그 결과 프로덕션 환경에서도 특별한 이슈 없이 기능을 구현할 수 있었습니다.</li>
+  
+</ul>
+
+### Styled-Components  
+
+<ul>
+
+  <li>스타일 컴포넌트를 도입하여 하나의 컴포넌트에 HTML, CSS, JS를 모두 포함하였습니다. 따라서 컴포넌트 단위의 개발에 알맞게 css도 모듈화를 했습니다.</li>
+  <li>컴포넌트이므로 className이 겹치지 않아 중복이나 우선 순위 등에 의한 css의 혼선을 줄일 수 있었습니다.</li>
+  <li>리액트와 함께 사용하면 props를 활용하여 쉽게 조건부 스타일링이 가능합니다.</li>
+  <li>기존에 스타일링 된 컴포넌트에 추가로 스타일링을 할 수 있어 중복된 코드를 줄일 수 있고 분산된 스타일을 일관적으로 관리할 수 있어 유지보수 측면의 비용이 줄어들었습니다.</li>
+
+</ul>
 
 <br>
 <br>
@@ -95,7 +142,8 @@
 <br/>
 
 <ul>
-
+  <li>프라이빗을 설정한 습관은 친구들이 캘린더에서 볼 수 없습니다.</li>
+  
 [//]: # '<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FPpdcS%2FbtrDnkHNAya%2FfBPyWypz382bJSPn2KcHK1%2Fimg.png" width="600">'
 
 </ul>
@@ -128,6 +176,23 @@
   <ul>
 
   <li>뱃지 획득, 댓글, 좋아요, 습관 달성 시 실시간으로 알림을 받을 수 있습니다.</li>
+
+[//]: # '<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FsAMZp%2FbtrDy1TWRyO%2Fy0ddlC8V0ZFw85FBrPsdA1%2Fimg.png" width="700">'
+
+  </ul>
+
+</details>
+
+<details>
+
+  <summary><strong>🙍‍♂️내 프로필을 편집할 수 있어요!</strong></summary>
+
+  <br/>
+
+  <ul>
+
+  <li>사진과 이름, 상태메시지를 변경할 수 있습니다.</li>
+  <li>친구들의 상태메시지는 팔로우 또는 팔로워 목록에서 확인할 수 있습니다.</li>
 
 [//]: # '<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FsAMZp%2FbtrDy1TWRyO%2Fy0ddlC8V0ZFw85FBrPsdA1%2Fimg.png" width="700">'
 
