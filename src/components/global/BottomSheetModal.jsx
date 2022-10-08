@@ -10,61 +10,66 @@ import CommonText from '../elements/CommonText';
 const BottomSheetModal = ({ children, isHeader, title, handleOkClick }) => {
   const [bottomModal, setBottomModal] = useRecoilState(bottomModalState);
   const [isOpen, setIsOpen] = useState('openModal');
+  const [animationState, setAnimationState] = useState(false);
 
   const handleModalClose = () => {
-    setIsOpen('closeModal');
-    setTimeout(() => setBottomModal({ ...bottomModal, open: false }), 500);
+    setAnimationState(true);
+
+    setTimeout(() => {
+      setAnimationState(false);
+      setBottomModal({ ...bottomModal, open: false });
+    }, 400);
   };
 
-  useEffect(() => {
-    if (bottomModal.open) {
-      setTimeout(() => {
-        setIsOpen('');
-      }, 500);
-      document.body.style.cssText = `
-      position: fixed;
-      top: -${window.scrollY}px;
-      overflow-y: scroll;
-      width: 100%;`;
-      return () => {
-        const scrollY = document.body.style.top;
-        document.body.style.cssText = '';
-        window.scrollTo(0, parseInt(scrollY || '0', 10) * -1);
-      };
-    } else {
-      setIsOpen('openModal');
-    }
-  }, [bottomModal.open]);
-
-  if (!bottomModal.open) return null;
-
   return (
-    // modal.open && (
-    <ModalContainer
-      isOpen={isOpen}
-      isMobile={isMobile}
-      onClick={handleModalClose}
-    >
-      <ModalContent isOpen={isOpen} onClick={(e) => e.stopPropagation()}>
-        {isHeader && (
-          <ModalHeader>
-            <IconContainer>
-              <IconClose onClick={handleModalClose} />
-            </IconContainer>
-            <CommonText isBody={true}>{title}</CommonText>
-            <ButtonContainer>
-              <ModalButton onClick={handleOkClick}>확인</ModalButton>
-            </ButtonContainer>
-          </ModalHeader>
-        )}
-        {children}
-      </ModalContent>
-    </ModalContainer>
-    // )
+    bottomModal.open && (
+      <ModalContainer
+        animationState={animationState}
+        isMobile={isMobile}
+        onClick={handleModalClose}
+      >
+        <ModalContent
+          animationState={animationState}
+          // isOpen={isOpen}
+          onClick={(e) => e.stopPropagation()}
+        >
+          {isHeader && (
+            <ModalHeader>
+              <IconContainer>
+                <IconClose onClick={handleModalClose} />
+              </IconContainer>
+              <CommonText isBody={true}>{title}</CommonText>
+              <ButtonContainer>
+                <ModalButton onClick={handleOkClick}>확인</ModalButton>
+              </ButtonContainer>
+            </ModalHeader>
+          )}
+          {children}
+        </ModalContent>
+      </ModalContainer>
+    )
   );
 };
 
 export default BottomSheetModal;
+
+const fadeIn = keyframes`
+  from {
+      opacity: 0;
+  }
+  to {
+      opacity: 1;
+  }
+`;
+
+const fadeOut = keyframes`
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+`;
 
 const ModalContainer = styled.div`
   position: absolute;
@@ -77,23 +82,25 @@ const ModalContainer = styled.div`
   height: -webkit-fill-available;
   height: fill-available;
 
-  ${({ isOpen }) =>
-    isOpen === 'openModal'
-      ? css`
-          animation: ${opacity} 0.5s ease-in 0s 1 normal;
-        `
-      : isOpen === 'closeModal'
-      ? css`
-          animation: ${opacity} 0.5s ease-in 0s 1 reverse;
-        `
-      : css``};
+  animation: ${({ animationState }) => (animationState ? fadeOut : fadeIn)} 0.5s
+    ease-in;
 `;
-const opacity = keyframes`
+
+const slideUp = keyframes`
   from {
-      opacity: 0;
+    transform: translateY(0);
   }
   to {
-      opacity: 1;
+    transform: translateY(100%);
+  }
+`;
+
+const slideDown = keyframes`
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
   }
 `;
 
@@ -108,25 +115,8 @@ const ModalContent = styled.div`
   background-color: ${colors.white};
   box-sizing: border-box;
   border-radius: 10px 10px 0px 0px;
-  ${({ isOpen }) =>
-    isOpen === 'openModal'
-      ? css`
-          animation: ${slide} 0.5s ease-in 0s 1 normal;
-        `
-      : isOpen === ''
-      ? css``
-      : css`
-          animation: ${slide} 0.5s ease-in 0s 1 reverse;
-        `};
-`;
-
-const slide = keyframes`
-  from {
-    transform: translateY(100%);
-  }
-  to {
-    transform: translateY(0%);
-  }
+  animation: ${({ animationState }) => (animationState ? slideUp : slideDown)}
+    0.5s ease-in;
 `;
 
 const ModalHeader = styled.div`
