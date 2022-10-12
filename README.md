@@ -278,5 +278,5 @@
 
 ## 🚀 트러블슈팅
 
-- [타이머]()
-- [친구 검색 기능]()
+- [타이머](https://github.com/PerDayOneSpoon/PerDayOneSpoon-FE/wiki/%ED%8A%B8%EB%9F%AC%EB%B8%94%EC%8A%88%ED%8C%85----%ED%83%80%EC%9D%B4%EB%A8%B8-%EA%B8%B0%EB%8A%A5)
+- [친구 검색 기능](https://github.com/PerDayOneSpoon/PerDayOneSpoon-FE/wiki/%ED%8A%B8%EB%9F%AC%EB%B8%94%EC%8A%88%ED%8C%85---%EA%B2%80%EC%83%89-%EA%B8%B0%EB%8A%A5)
