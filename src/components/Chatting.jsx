@@ -45,7 +45,6 @@ const Chatting = () => {
   }, []);
 
   useEffect(() => {
-    // let sock = new SockJS('http://13.209.7.125/websocket');
     let sock = new SockJS(`${process.env.REACT_APP_BASE_URL}/websocket`);
     let client = Stomp.over(sock);
     wsRef.current = client;
