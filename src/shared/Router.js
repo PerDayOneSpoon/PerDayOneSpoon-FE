@@ -114,7 +114,7 @@ const Router = () => {
           <Route path='/following' element={<FollowingListPage />} />
           <Route path='/follower' element={<FollowerListPage />} />
           <Route path='/notice' element={<NoticePage />} />
-          {/* <Route path='/chatting' element={<ChattingPage />} /> */}
+          <Route path='/chatting' element={<ChattingPage />} />
         </Routes>
       </ScrollToTop>
     </BrowserRouter>
