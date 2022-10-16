@@ -1,10 +1,15 @@
 import { useEffect, useState, useRef } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import SockJS from 'sockjs-client';
 import { Stomp } from '@stomp/stompjs';
 import styled from 'styled-components';
 import { colors } from '../theme/theme';
 
 const Chatting = () => {
+  const navigate = useNavigate();
+  const params = useParams();
+  const roomId = params.id;
+
   const [chat, setChat] = useState('');
   const [chatList, setChatList] = useState([]);
 
@@ -40,10 +45,10 @@ const Chatting = () => {
   }, []);
 
   useEffect(() => {
-    let sock = new SockJS('http://3.35.218.108/websocket');
+    let sock = new SockJS(`${process.env.REACT_APP_BASE_URL}/websocket`);
     let client = Stomp.over(sock);
     wsRef.current = client;
-    wsRef.current.connect(() => {
+    wsRef.current.connect({}, () => {
       console.log('connected well');
       // wsRef.current.subscribe('/comm/room/enter/1', (data) => {
       //   setChatList([...chatList, data]);
