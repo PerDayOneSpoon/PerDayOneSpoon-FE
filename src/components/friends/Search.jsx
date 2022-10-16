@@ -18,6 +18,7 @@ const Search = () => {
     () => friendsApi.getSearchFriends(searchTerm),
     {
       enabled: !!searchTerm,
+      // staleTime: 6 * 10 * 1000,
       onSuccess: () => {},
     }
   );

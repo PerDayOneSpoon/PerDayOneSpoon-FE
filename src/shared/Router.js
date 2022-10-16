@@ -1,37 +1,21 @@
 import { lazy } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-// import MainPage from '../pages/MainPage';
-// import CollectionPage from '../pages/CollectionPage';
-// import CreatePage from '../pages/CreatePage';
-// import CalendarPage from '../pages/CalendarPage';
-// import MyPage from '../pages/MyPage';
-// import SearchPage from '../pages/SearchPage';
-// import FollowerListPage from '../pages/FollowerListPage';
-// import FollowingListPage from '../pages/FollowingListPage';
-// import SettingPage from '../pages/SettingPage';
-// import NoticePage from '../pages/NoticePage';
-// import ChattingPage from '../pages/ChattingPage';
+import { useEffect, useState } from 'react';
+import { useRecoilState } from 'recoil';
+import { EventSourcePolyfill, NativeEventSource } from 'event-source-polyfill';
+import useUpdateEffect from '../hooks/useUpdateEffect';
+import { getAccessToken } from './localStorage';
+import {
+  realTimeNoticeState,
+  welcomeMessageState,
+} from '../recoil/realTimeData';
+import { loginState } from '../recoil/common';
 
 import LoginPage from '../pages/LoginPage';
 import KakaoLogin from '../components/login/KakaoLogin';
 import GoogleLogin from '../components/login/GoogleLogin';
 import NaverLogin from '../components/login/NaverLogin';
 import ScrollToTop from './ScrollToTop';
-// import ChattingPage from '../pages/ChattingPage';
-// import NoticePage from '../pages/NoticePage';
-// import WelcomePage from '../pages/WelcomePage';
-
-import { EventSourcePolyfill, NativeEventSource } from 'event-source-polyfill';
-import { useEffect, useState } from 'react';
-import { getAccessToken } from './localStorage';
-import useUpdateEffect from '../hooks/useUpdateEffect';
-import { useRecoilState } from 'recoil';
-
-import {
-  realTimeNoticeState,
-  welcomeMessageState,
-} from '../recoil/realTimeData';
-import { loginState } from '../recoil/common';
 
 const MainPage = lazy(() => import('../pages/MainPage'));
 const CollectionPage = lazy(() => import('../pages/CollectionPage'));
