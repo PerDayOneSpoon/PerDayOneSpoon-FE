@@ -28,7 +28,8 @@ const FollowingListPage = lazy(() => import('../pages/FollowingListPage'));
 const SettingPage = lazy(() => import('../pages/SettingPage'));
 const NoticePage = lazy(() => import('../pages/NoticePage'));
 const OnboardingPage = lazy(() => import('../pages/OnboardingPage'));
-const ChattingPage = lazy(() => import('../pages/ChattingPage'));
+const ChatListPage = lazy(() => import('../pages/ChatListPage'));
+const ChatDetailPage = lazy(() => import('../pages/ChatDetailPage'));
 
 const Router = () => {
   const [listening, setListening] = useState(false);
@@ -114,7 +115,8 @@ const Router = () => {
           <Route path='/following' element={<FollowingListPage />} />
           <Route path='/follower' element={<FollowerListPage />} />
           <Route path='/notice' element={<NoticePage />} />
-          <Route path='/chatting' element={<ChattingPage />} />
+          <Route path='/chatlist' element={<ChatListPage />} />
+          <Route path='/chatdetail' element={<ChatDetailPage />} />
         </Routes>
       </ScrollToTop>
     </BrowserRouter>

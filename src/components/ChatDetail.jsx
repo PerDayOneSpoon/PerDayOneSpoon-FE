@@ -2,18 +2,45 @@ import { useEffect, useState, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import SockJS from 'sockjs-client';
 import { Stomp } from '@stomp/stompjs';
+import { useQueryClient, useMutation } from 'react-query';
+import { chatApi } from '../api/chatApi';
 import styled from 'styled-components';
 import { colors } from '../theme/theme';
 
-const Chatting = () => {
+const ChatDetail = () => {
   const navigate = useNavigate();
   const params = useParams();
   const roomId = params.id;
+  const queryClient = useQueryClient();
 
   const [chat, setChat] = useState('');
   const [chatList, setChatList] = useState([]);
-
   const wsRef = useRef();
+
+  // 상대방 정보
+  const [otherUserInfo, setOtherUserInfo] = useState([]);
+
+  // 상대방 정보 가져오기
+  useEffect(() => {
+    chatApi
+      .createChat(roomId)
+      .then((response) => {
+        setOtherUserInfo(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
+  const createChatMutation = useMutation(chatApi.createChat, {
+    onSuccess: (data) => {
+      queryClient.invalidateQueries('createChatRoom');
+    },
+  });
+
+  const handleCreateChat = (friendId) => {
+    createChatMutation.mutate({ friendId: friendId });
+  };
 
   const handleChatting = (e) => {
     setChat(e.target.value);
@@ -50,14 +77,15 @@ const Chatting = () => {
     wsRef.current = client;
     wsRef.current.connect({}, () => {
       console.log('connected well');
-      // wsRef.current.subscribe('/comm/room/enter/1', (data) => {
-      //   setChatList([...chatList, data]);
-      // });
+      wsRef.current.subscribe('/chat/room/1', (data) => {
+        setChatList([...chatList, data]);
+      });
     });
+
     // 연결 꼭 끊어주자...
-    // return () => {
-    //   wsRef.current.disconnect();
-    // };
+    return () => {
+      wsRef.current.disconnect();
+    };
   }, []);
 
   return (
@@ -78,13 +106,13 @@ const Chatting = () => {
           onChange={handleChatting}
           onKeyPress={handlePress}
         />
-        <button>전송</button>
+        <button onClick={handleCreateChat}>전송</button>
       </InputBox>
     </>
   );
 };
 
-export default Chatting;
+export default ChatDetail;
 
 const ChattingBox = styled.div`
   background-color: ${colors.white};
