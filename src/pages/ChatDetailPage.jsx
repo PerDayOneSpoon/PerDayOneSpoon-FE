@@ -2,15 +2,15 @@ import Layout from '../layout/Layout';
 import Header from '../components/global/Header';
 
 import { colors } from '../theme/theme';
-import Chatting from '../components/Chatting';
+import ChatDetail from '../components/ChatDetail';
 
-const ChattingPage = () => {
+const ChatDetailPage = () => {
   return (
     <Layout hasNavBar={false} bgColor={colors.bgColor}>
       <Header title='채팅' hasBack={true} />
-      <Chatting></Chatting>
+      <ChatDetail></ChatDetail>
     </Layout>
   );
 };
 
-export default ChattingPage;
+export default ChatDetailPage;
