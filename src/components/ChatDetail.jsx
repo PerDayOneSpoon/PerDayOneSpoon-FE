@@ -23,7 +23,7 @@ const ChatDetail = () => {
   // 상대방 정보 가져오기
   useEffect(() => {
     chatApi
-      .createChat(roomId)
+      .createChat('bee93e20-c166-4a7b-ba3f-49b4cf4e2958')
       .then((response) => {
         setOtherUserInfo(response.data);
       })
@@ -32,61 +32,77 @@ const ChatDetail = () => {
       });
   }, []);
 
-  const createChatMutation = useMutation(chatApi.createChat, {
-    onSuccess: (data) => {
-      queryClient.invalidateQueries('createChatRoom');
-    },
-  });
+  // const createChatMutation = useMutation(chatApi.createChat, {
+  //   onSuccess: (data) => {
+  //     queryClient.invalidateQueries('createChatRoom');
+  //   },
+  // });
 
-  const handleCreateChat = (friendId) => {
-    createChatMutation.mutate({ friendId: friendId });
-  };
+  // const handleCreateChat = (friendId) => {
+  //   createChatMutation.mutate({ friendId: friendId });
+  // };
 
   const handleChatting = (e) => {
     setChat(e.target.value);
   };
 
-  const handlePress = (e) => {
-    if (e.key === 'Enter') {
-      let tmp = {
-        // id: chatList.length + 1,
-        chat: chat,
-        // isMe: true,
-        // createdAt: "2022-03-04 22:00"
-      };
-
-      setChatList([...chatList, tmp]);
-      // 소켓 보내는거
-
-      // wsRef.current.send(('/sendchat', tmp));
-      // 얘때문에 지금 아래꺼 안됨
-      setChat('');
-    }
-  };
-
+  // 채팅방 이전 메세지 가져오기
   useEffect(() => {
-    // 채팅페이지 들어오면 전에 채팅내용들도 불러와야 함
     // api get
     // const response = [{},{},{},{},{},{}]
     // setChatList(response);
   }, []);
 
+  // 소켓 연결
   useEffect(() => {
     let sock = new SockJS(`${process.env.REACT_APP_BASE_URL}/websocket`);
     let client = Stomp.over(sock);
     wsRef.current = client;
     wsRef.current.connect({}, () => {
       console.log('connected well');
-      wsRef.current.subscribe('/chat/room/1', (data) => {
+      wsRef.current.subscribe('/sub/chat/room/1', (data) => {
+        // const newMassage = JSON.parse(data.body);
         setChatList([...chatList, data]);
       });
     });
 
-    // 연결 꼭 끊어주자...
+    // 소켓 연결 해제
     return () => {
       wsRef.current.disconnect();
     };
   }, []);
+
+  // 메시지 발신
+  const handlePress = (e) => {
+    if (e.key === 'Enter') {
+      // 서버에 보낼 데이터
+      let data = {
+        // roomId: 'bee93e20-c166-4a7b-ba3f-49b4cf4e2958',
+        // id: chatList.length + 1,
+        message: chat,
+        // isMe: true,
+        // createdAt: "2022-03-04 22:00"
+      };
+
+      // 화면에 띄울 데이터
+      let tmp = {
+        // id: chatList.length + 1,
+        chat: chat,
+        isMe: false,
+        // createdAt: '2022-03-04 22:00',
+      };
+
+      setChatList([...chatList, tmp]);
+
+      if (chat === '') {
+        return;
+      }
+
+      // send massage
+      wsRef.current.send('/pub/chat/message', data);
+      setChat('');
+    }
+  };
 
   return (
     <>
@@ -106,7 +122,11 @@ const ChatDetail = () => {
           onChange={handleChatting}
           onKeyPress={handlePress}
         />
-        <button onClick={handleCreateChat}>전송</button>
+        <button
+        // onClick={handleCreateChat}
+        >
+          전송
+        </button>
       </InputBox>
     </>
   );
